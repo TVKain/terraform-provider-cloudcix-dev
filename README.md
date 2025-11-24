@@ -33,7 +33,9 @@ provider "cloudcix-dev" {
 }
 
 # Configure a resource
+resource "cloudcix-dev_compute_backup" "example_compute_backup" {
 
+}
 ```
 
 <!-- x-release-please-end -->
