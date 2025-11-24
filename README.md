@@ -22,7 +22,7 @@ terraform {
   required_providers {
     cloudcix-dev = {
       source  = "TVKain/cloudcix-dev"
-      version = "~> 0.1.0"
+      version = "~> 0.2.0"
     }
   }
 }
@@ -33,7 +33,9 @@ provider "cloudcix-dev" {
 }
 
 # Configure a resource
+resource "cloudcix-dev_compute_backup" "example_compute_backup" {
 
+}
 ```
 
 <!-- x-release-please-end -->
