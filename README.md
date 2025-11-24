@@ -22,7 +22,7 @@ terraform {
   required_providers {
     cloudcix-dev = {
       source  = "TVKain/cloudcix-dev"
-      version = "~> 0.0.1"
+      version = "~> 0.1.0"
     }
   }
 }
