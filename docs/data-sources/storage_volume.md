@@ -17,29 +17,21 @@ description: |-
 
 ### Read-Only
 
-- `content` (Attributes) (see [below for nested schema](#nestedatt--content))
-- `id` (Number) The ID of this resource.
-
-<a id="nestedatt--content"></a>
-### Nested Schema for `content`
-
-Read-Only:
-
-- `contra_instances` (Attributes List) A list of Compute Instances the Storage Volume is mounted to. (see [below for nested schema](#nestedatt--content--contra_instances))
+- `contra_instances` (Attributes List) A list of Compute Instances the Storage Volume is mounted to. (see [below for nested schema](#nestedatt--contra_instances))
 - `created` (String) Timestamp, in ISO format, of when the Storage Volume was created.
-- `id` (Number) The ID of the Storage Volume record
-- `instance` (Attributes) The "hyperv" Compute Instance the "hyperv" Storage Volume is attached to. (see [below for nested schema](#nestedatt--content--instance))
-- `metadata` (Attributes) The metadata object of "ceph" Storage Volumes (see [below for nested schema](#nestedatt--content--metadata))
+- `id` (Number) The ID of this resource.
+- `instance` (Attributes) The "hyperv" Compute Instance the "hyperv" Storage Volume is attached to. (see [below for nested schema](#nestedatt--instance))
+- `metadata` (Attributes) The metadata object of "ceph" Storage Volumes (see [below for nested schema](#nestedatt--metadata))
 - `name` (String) The user-friendly name given to this Storage Volume
 - `project_id` (Number) The ID of the Project that this Storage Volume belongs to
-- `specs` (Attributes List) An array of the specs for the Storage Volume (see [below for nested schema](#nestedatt--content--specs))
+- `specs` (Attributes List) An array of the specs for the Storage Volume (see [below for nested schema](#nestedatt--specs))
 - `state` (Number) The current state of the Storage Volume
 - `type` (String) The type of the Storage Volume
 - `updated` (String) Timestamp, in ISO format, of when the Storage Volume was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Storage Volumes instance.
 
-<a id="nestedatt--content--contra_instances"></a>
-### Nested Schema for `content.contra_instances`
+<a id="nestedatt--contra_instances"></a>
+### Nested Schema for `contra_instances`
 
 Read-Only:
 
@@ -48,8 +40,8 @@ Read-Only:
 - `state` (Number) The current state of the Compute Instance the Storage Volume is attached to.
 
 
-<a id="nestedatt--content--instance"></a>
-### Nested Schema for `content.instance`
+<a id="nestedatt--instance"></a>
+### Nested Schema for `instance`
 
 Read-Only:
 
@@ -58,8 +50,8 @@ Read-Only:
 - `state` (Number) The current state of the "hyperv" Compute Instance the "hyperv" Storage Volume is attached to.
 
 
-<a id="nestedatt--content--metadata"></a>
-### Nested Schema for `content.metadata`
+<a id="nestedatt--metadata"></a>
+### Nested Schema for `metadata`
 
 Read-Only:
 
@@ -68,8 +60,8 @@ Read-Only:
 - `mount_path` (String) The mpunt path of the "ceph" Storage Volume on the "lxd" Compute instances.
 
 
-<a id="nestedatt--content--specs"></a>
-### Nested Schema for `content.specs`
+<a id="nestedatt--specs"></a>
+### Nested Schema for `specs`
 
 Read-Only:
 

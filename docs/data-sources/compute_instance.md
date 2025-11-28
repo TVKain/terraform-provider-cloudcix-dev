@@ -17,40 +17,32 @@ description: |-
 
 ### Read-Only
 
-- `content` (Attributes) (see [below for nested schema](#nestedatt--content))
-- `id` (Number) The ID of this resource.
-
-<a id="nestedatt--content"></a>
-### Nested Schema for `content`
-
-Read-Only:
-
 - `created` (String) Timestamp, in ISO format, of when the Compute Instance record was created.
 - `grace_period` (Number) Number of days after a user sets the state of the Compute Instance Resource to Scrub (8) before it is
 executed by robot.
-- `id` (Number) The ID of the Compute Instance record
-- `interfaces` (Attributes List) Array of the interfaces for the Compute Instance (see [below for nested schema](#nestedatt--content--interfaces))
-- `metadata` (Attributes) The metadata details of the Compute Instance (see [below for nested schema](#nestedatt--content--metadata))
+- `id` (Number) The ID of this resource.
+- `interfaces` (Attributes List) Array of the interfaces for the Compute Instance (see [below for nested schema](#nestedatt--interfaces))
+- `metadata` (Attributes) The metadata details of the Compute Instance (see [below for nested schema](#nestedatt--metadata))
 - `name` (String) The human-friendly name given to this Compute Instance
 - `project_id` (Number) The id of the Project that this Compute Instance belongs to
-- `specs` (Attributes) (see [below for nested schema](#nestedatt--content--specs))
+- `specs` (Attributes) (see [below for nested schema](#nestedatt--specs))
 - `state` (Number) The current state of the Compute Instance
 - `type` (String) The type of the Compute Instance
 - `updated` (String) Timestamp, in ISO format, of when the Compute Instance record was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Compute Instance.
 
-<a id="nestedatt--content--interfaces"></a>
-### Nested Schema for `content.interfaces`
+<a id="nestedatt--interfaces"></a>
+### Nested Schema for `interfaces`
 
 Read-Only:
 
 - `gateway` (Boolean) Indicates if this interface functions as the network gateway for the Compute instance.
-- `ipv4_addresses` (Attributes List) An array of the IPv4 addresses on the Interface. (see [below for nested schema](#nestedatt--content--interfaces--ipv4_addresses))
-- `ipv6_addresses` (Attributes List) An array of the IPv6 addresses on the Interface. (see [below for nested schema](#nestedatt--content--interfaces--ipv6_addresses))
+- `ipv4_addresses` (Attributes List) An array of the IPv4 addresses on the Interface. (see [below for nested schema](#nestedatt--interfaces--ipv4_addresses))
+- `ipv6_addresses` (Attributes List) An array of the IPv6 addresses on the Interface. (see [below for nested schema](#nestedatt--interfaces--ipv6_addresses))
 - `vlan` (Number) The VLAN assigned to this Interface
 
-<a id="nestedatt--content--interfaces--ipv4_addresses"></a>
-### Nested Schema for `content.interfaces.ipv4_addresses`
+<a id="nestedatt--interfaces--ipv4_addresses"></a>
+### Nested Schema for `interfaces.ipv4_addresses`
 
 Read-Only:
 
@@ -60,8 +52,8 @@ Read-Only:
 - `public_ip` (String) The Public IP address that the address is NATted to.
 
 
-<a id="nestedatt--content--interfaces--ipv6_addresses"></a>
-### Nested Schema for `content.interfaces.ipv6_addresses`
+<a id="nestedatt--interfaces--ipv6_addresses"></a>
+### Nested Schema for `interfaces.ipv6_addresses`
 
 Read-Only:
 
@@ -70,8 +62,8 @@ Read-Only:
 
 
 
-<a id="nestedatt--content--metadata"></a>
-### Nested Schema for `content.metadata`
+<a id="nestedatt--metadata"></a>
+### Nested Schema for `metadata`
 
 Read-Only:
 
@@ -82,8 +74,8 @@ Read-Only:
 - `userdata` (String) Configuration file to be used by Cloud Init. Returned if the type is "lxd".
 
 
-<a id="nestedatt--content--specs"></a>
-### Nested Schema for `content.specs`
+<a id="nestedatt--specs"></a>
+### Nested Schema for `specs`
 
 Read-Only:
 

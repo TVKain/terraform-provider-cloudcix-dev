@@ -17,31 +17,23 @@ description: |-
 
 ### Read-Only
 
-- `content` (Attributes) (see [below for nested schema](#nestedatt--content))
-- `id` (Number) The ID of this resource.
-
-<a id="nestedatt--content"></a>
-### Nested Schema for `content`
-
-Read-Only:
-
 - `created` (String) Timestamp, in ISO format, of when the Network VPN record was created.
-- `id` (Number) The ID of the Network VPN record
-- `metadata` (Attributes) The metadata for the configuration of the IKE and IPSec phases of the Network VPN. (see [below for nested schema](#nestedatt--content--metadata))
+- `id` (Number) The ID of this resource.
+- `metadata` (Attributes) The metadata for the configuration of the IKE and IPSec phases of the Network VPN. (see [below for nested schema](#nestedatt--metadata))
 - `name` (String) The user-friendly name given to this Network VPN instance
 - `project_id` (Number) The id of the Project that this Network VPN belongs to
-- `specs` (Attributes List) An array of the specs for the Network VPN (see [below for nested schema](#nestedatt--content--specs))
+- `specs` (Attributes List) An array of the specs for the Network VPN (see [below for nested schema](#nestedatt--specs))
 - `state` (Number) The current state of the Network VPN
 - `type` (String) The type of the Network VPN
 - `updated` (String) Timestamp, in ISO format, of when the Network VPN record was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Network VPN instance.
 
-<a id="nestedatt--content--metadata"></a>
-### Nested Schema for `content.metadata`
+<a id="nestedatt--metadata"></a>
+### Nested Schema for `metadata`
 
 Read-Only:
 
-- `child_sas` (Attributes List) An array of Child SAs (Security Associations) of the routes for the Network VPN. (see [below for nested schema](#nestedatt--content--metadata--child_sas))
+- `child_sas` (Attributes List) An array of Child SAs (Security Associations) of the routes for the Network VPN. (see [below for nested schema](#nestedatt--metadata--child_sas))
 - `ike_authentication` (String) Authentication algorithms for the IKE phase.
 - `ike_dh_groups` (String) Diffie-Helmen groups for the IKE phase.
 - `ike_encryption` (String) Encryption algorithms for the IKE phase.
@@ -60,8 +52,8 @@ Read-Only:
 - `stif_number` (Number) STIF number for the Network VPN.
 - `traffic_selector` (Boolean) Flag for it traffic selectors are enabled.
 
-<a id="nestedatt--content--metadata--child_sas"></a>
-### Nested Schema for `content.metadata.child_sas`
+<a id="nestedatt--metadata--child_sas"></a>
+### Nested Schema for `metadata.child_sas`
 
 Read-Only:
 
@@ -70,8 +62,8 @@ Read-Only:
 
 
 
-<a id="nestedatt--content--specs"></a>
-### Nested Schema for `content.specs`
+<a id="nestedatt--specs"></a>
+### Nested Schema for `specs`
 
 Read-Only:
 

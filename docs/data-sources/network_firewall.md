@@ -17,27 +17,19 @@ description: |-
 
 ### Read-Only
 
-- `content` (Attributes) (see [below for nested schema](#nestedatt--content))
-- `id` (Number) The ID of this resource.
-
-<a id="nestedatt--content"></a>
-### Nested Schema for `content`
-
-Read-Only:
-
 - `created` (String) Timestamp, in ISO format, of when the Network Firewall record was created.
-- `id` (Number) The ID of the Network Firewall record
+- `id` (Number) The ID of this resource.
 - `name` (String) The user-friendly name given to this Network Firewall instance
 - `project_id` (Number) The id of the Project that this Network Firewall belongs to
-- `rules` (Attributes List) List of rules for this Network Firewall. (see [below for nested schema](#nestedatt--content--rules))
-- `specs` (Attributes List) An array of the specs for the Network Firewall (see [below for nested schema](#nestedatt--content--specs))
+- `rules` (Attributes List) List of rules for this Network Firewall. (see [below for nested schema](#nestedatt--rules))
+- `specs` (Attributes List) An array of the specs for the Network Firewall (see [below for nested schema](#nestedatt--specs))
 - `state` (Number) The current state of the Network Firewall
 - `type` (String) The type of the Network Firewall
 - `updated` (String) Timestamp, in ISO format, of when the Network Firewall record was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Network Firewall instance.
 
-<a id="nestedatt--content--rules"></a>
-### Nested Schema for `content.rules`
+<a id="nestedatt--rules"></a>
+### Nested Schema for `rules`
 
 Read-Only:
 
@@ -54,8 +46,8 @@ Returned if the type is "project".
 - `version` (Number) IP version (4 or 6). Returned if the type is "project".
 
 
-<a id="nestedatt--content--specs"></a>
-### Nested Schema for `content.specs`
+<a id="nestedatt--specs"></a>
+### Nested Schema for `specs`
 
 Read-Only:
 

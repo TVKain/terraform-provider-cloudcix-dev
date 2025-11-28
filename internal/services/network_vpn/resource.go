@@ -11,13 +11,16 @@ import (
 	"github.com/TVKain/cloudcix-go"
 	"github.com/TVKain/cloudcix-go/option"
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/apijson"
+	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/importpath"
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/logging"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.ResourceWithConfigure = (*NetworkVpnResource)(nil)
 var _ resource.ResourceWithModifyPlan = (*NetworkVpnResource)(nil)
+var _ resource.ResourceWithImportState = (*NetworkVpnResource)(nil)
 
 func NewResource() resource.Resource {
 	return &NetworkVpnResource{}
@@ -66,6 +69,7 @@ func (r *NetworkVpnResource) Create(ctx context.Context, req resource.CreateRequ
 		return
 	}
 	res := new(http.Response)
+	env := NetworkVpnContentEnvelope{*data}
 	_, err = r.client.Network.Vpns.New(
 		ctx,
 		cloudcix.NetworkVpnNewParams{},
@@ -78,11 +82,12 @@ func (r *NetworkVpnResource) Create(ctx context.Context, req resource.CreateRequ
 		return
 	}
 	bytes, _ := io.ReadAll(res.Body)
-	err = apijson.UnmarshalComputed(bytes, &data)
+	err = apijson.UnmarshalComputed(bytes, &env)
 	if err != nil {
 		resp.Diagnostics.AddError("failed to deserialize http request", err.Error())
 		return
 	}
+	data = &env.Content
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -110,6 +115,7 @@ func (r *NetworkVpnResource) Update(ctx context.Context, req resource.UpdateRequ
 		return
 	}
 	res := new(http.Response)
+	env := NetworkVpnContentEnvelope{*data}
 	_, err = r.client.Network.Vpns.Update(
 		ctx,
 		data.ID.ValueInt64(),
@@ -123,11 +129,12 @@ func (r *NetworkVpnResource) Update(ctx context.Context, req resource.UpdateRequ
 		return
 	}
 	bytes, _ := io.ReadAll(res.Body)
-	err = apijson.UnmarshalComputed(bytes, &data)
+	err = apijson.UnmarshalComputed(bytes, &env)
 	if err != nil {
 		resp.Diagnostics.AddError("failed to deserialize http request", err.Error())
 		return
 	}
+	data = &env.Content
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -142,6 +149,7 @@ func (r *NetworkVpnResource) Read(ctx context.Context, req resource.ReadRequest,
 	}
 
 	res := new(http.Response)
+	env := NetworkVpnContentEnvelope{*data}
 	_, err := r.client.Network.Vpns.Get(
 		ctx,
 		data.ID.ValueInt64(),
@@ -158,17 +166,57 @@ func (r *NetworkVpnResource) Read(ctx context.Context, req resource.ReadRequest,
 		return
 	}
 	bytes, _ := io.ReadAll(res.Body)
-	err = apijson.Unmarshal(bytes, &data)
+	err = apijson.Unmarshal(bytes, &env)
 	if err != nil {
 		resp.Diagnostics.AddError("failed to deserialize http request", err.Error())
 		return
 	}
+	data = &env.Content
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *NetworkVpnResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 
+}
+
+func (r *NetworkVpnResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+	var data = new(NetworkVpnModel)
+
+	path := int64(0)
+	diags := importpath.ParseImportID(
+		req.ID,
+		"<id>",
+		&path,
+	)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	data.ID = types.Int64Value(path)
+
+	res := new(http.Response)
+	env := NetworkVpnContentEnvelope{*data}
+	_, err := r.client.Network.Vpns.Get(
+		ctx,
+		path,
+		option.WithResponseBodyInto(&res),
+		option.WithMiddleware(logging.Middleware(ctx)),
+	)
+	if err != nil {
+		resp.Diagnostics.AddError("failed to make http request", err.Error())
+		return
+	}
+	bytes, _ := io.ReadAll(res.Body)
+	err = apijson.Unmarshal(bytes, &env)
+	if err != nil {
+		resp.Diagnostics.AddError("failed to deserialize http request", err.Error())
+		return
+	}
+	data = &env.Content
+
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *NetworkVpnResource) ModifyPlan(ctx context.Context, req resource.ModifyPlanRequest, resp *resource.ModifyPlanResponse) {

@@ -8,11 +8,20 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
+type ComputeGPUContentEnvelope struct {
+	Content ComputeGPUModel `json:"content"`
+}
+
 type ComputeGPUModel struct {
-	ID      types.Int64                                      `tfsdk:"id" path:"id,required"`
-	Name    types.String                                     `tfsdk:"name" json:"name,optional,no_refresh"`
-	State   types.String                                     `tfsdk:"state" json:"state,optional,no_refresh"`
-	Content customfield.NestedObject[ComputeGPUContentModel] `tfsdk:"content" json:"content,computed"`
+	ID        types.Int64                                        `tfsdk:"id" path:"id,required"`
+	Name      types.String                                       `tfsdk:"name" json:"name,optional"`
+	State     types.String                                       `tfsdk:"state" json:"state,optional,no_refresh"`
+	Created   types.String                                       `tfsdk:"created" json:"created,computed"`
+	ProjectID types.Int64                                        `tfsdk:"project_id" json:"project_id,computed"`
+	Updated   types.String                                       `tfsdk:"updated" json:"updated,computed"`
+	Uri       types.String                                       `tfsdk:"uri" json:"uri,computed"`
+	Instance  customfield.NestedObject[ComputeGPUInstanceModel]  `tfsdk:"instance" json:"instance,computed"`
+	Specs     customfield.NestedObjectList[ComputeGPUSpecsModel] `tfsdk:"specs" json:"specs,computed"`
 }
 
 func (m ComputeGPUModel) MarshalJSON() (data []byte, err error) {
@@ -23,25 +32,13 @@ func (m ComputeGPUModel) MarshalJSONForUpdate(state ComputeGPUModel) (data []byt
 	return apijson.MarshalForUpdate(m, state)
 }
 
-type ComputeGPUContentModel struct {
-	ID        types.Int64                                               `tfsdk:"id" json:"id,computed"`
-	Created   types.String                                              `tfsdk:"created" json:"created,computed"`
-	Instance  customfield.NestedObject[ComputeGPUContentInstanceModel]  `tfsdk:"instance" json:"instance,computed"`
-	Name      types.String                                              `tfsdk:"name" json:"name,computed"`
-	ProjectID types.Int64                                               `tfsdk:"project_id" json:"project_id,computed"`
-	Specs     customfield.NestedObjectList[ComputeGPUContentSpecsModel] `tfsdk:"specs" json:"specs,computed"`
-	State     types.Int64                                               `tfsdk:"state" json:"state,computed"`
-	Updated   types.String                                              `tfsdk:"updated" json:"updated,computed"`
-	Uri       types.String                                              `tfsdk:"uri" json:"uri,computed"`
-}
-
-type ComputeGPUContentInstanceModel struct {
+type ComputeGPUInstanceModel struct {
 	ID    types.Int64  `tfsdk:"id" json:"id,computed"`
 	Name  types.String `tfsdk:"name" json:"name,computed"`
 	State types.Int64  `tfsdk:"state" json:"state,computed"`
 }
 
-type ComputeGPUContentSpecsModel struct {
+type ComputeGPUSpecsModel struct {
 	Quantity types.Int64  `tfsdk:"quantity" json:"quantity,computed"`
 	SKUName  types.String `tfsdk:"sku_name" json:"sku_name,computed"`
 }

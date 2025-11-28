@@ -17,40 +17,32 @@ description: |-
 
 ### Read-Only
 
-- `content` (Attributes) (see [below for nested schema](#nestedatt--content))
-- `id` (Number) The ID of this resource.
-
-<a id="nestedatt--content"></a>
-### Nested Schema for `content`
-
-Read-Only:
-
 - `created` (String) Timestamp, in ISO format, of when the Router Resource record was created.
 - `grace_period` (Number) Number of days after a user sets the state of the Router to Scrub (8) before it is executed by robot.
 The default value is 7 days for a Router.
-- `id` (Number) The ID of the Router Resource record
-- `metadata` (Attributes) (see [below for nested schema](#nestedatt--content--metadata))
+- `id` (Number) The ID of this resource.
+- `metadata` (Attributes) (see [below for nested schema](#nestedatt--metadata))
 - `name` (String) The user-friendly name given to this Router Resource instance
-- `networks` (Attributes List) An array of the list of networks defined on the Router (see [below for nested schema](#nestedatt--content--networks))
+- `networks` (Attributes List) An array of the list of networks defined on the Router (see [below for nested schema](#nestedatt--networks))
 - `project_id` (Number) The id of the Project that this Router Resource belongs to
-- `specs` (Attributes List) An array of the specs for the Router Resource (see [below for nested schema](#nestedatt--content--specs))
+- `specs` (Attributes List) An array of the specs for the Router Resource (see [below for nested schema](#nestedatt--specs))
 - `state` (Number) The current state of the Router Resource
 - `type` (String) The type of the Network Router
 - `updated` (String) Timestamp, in ISO format, of when the Router Resource record was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Network Routers instance.
 
-<a id="nestedatt--content--metadata"></a>
-### Nested Schema for `content.metadata`
+<a id="nestedatt--metadata"></a>
+### Nested Schema for `metadata`
 
 Read-Only:
 
-- `ipv4_address` (Attributes) (see [below for nested schema](#nestedatt--content--metadata--ipv4_address))
+- `ipv4_address` (Attributes) (see [below for nested schema](#nestedatt--metadata--ipv4_address))
 - `ipv4_address_id` (Number) The ID of the assigned public IPv4 address for the Router.
-- `ipv6_address` (Attributes) (see [below for nested schema](#nestedatt--content--metadata--ipv6_address))
+- `ipv6_address` (Attributes) (see [below for nested schema](#nestedatt--metadata--ipv6_address))
 - `ipv6_address_id` (Number) The ID of the assigned public IPv6 address for the Router.
 
-<a id="nestedatt--content--metadata--ipv4_address"></a>
-### Nested Schema for `content.metadata.ipv4_address`
+<a id="nestedatt--metadata--ipv4_address"></a>
+### Nested Schema for `metadata.ipv4_address`
 
 Read-Only:
 
@@ -59,13 +51,13 @@ Read-Only:
 - `id` (Number) The ID of the IPAddress record.
 - `name` (String) A verbose name given to the IPAddress record.
 - `notes` (String) The note attached to IPAddress that made it.
-- `public_ip` (Attributes) (see [below for nested schema](#nestedatt--content--metadata--ipv4_address--public_ip))
+- `public_ip` (Attributes) (see [below for nested schema](#nestedatt--metadata--ipv4_address--public_ip))
 - `public_ip_id` (Number) The ID of the Public IPAddress record.
 - `subnet_id` (Number) The ID of the Subnet record.
 - `updated` (String) Timestamp, in ISO format, of when the IPAddress record was last updated.
 
-<a id="nestedatt--content--metadata--ipv4_address--public_ip"></a>
-### Nested Schema for `content.metadata.ipv4_address.updated`
+<a id="nestedatt--metadata--ipv4_address--public_ip"></a>
+### Nested Schema for `metadata.ipv4_address.public_ip`
 
 Read-Only:
 
@@ -74,8 +66,8 @@ Read-Only:
 
 
 
-<a id="nestedatt--content--metadata--ipv6_address"></a>
-### Nested Schema for `content.metadata.ipv6_address`
+<a id="nestedatt--metadata--ipv6_address"></a>
+### Nested Schema for `metadata.ipv6_address`
 
 Read-Only:
 
@@ -84,13 +76,13 @@ Read-Only:
 - `id` (Number) The ID of the IPAddress record.
 - `name` (String) A verbose name given to the IPAddress record.
 - `notes` (String) The note attached to IPAddress that made it.
-- `public_ip` (Attributes) (see [below for nested schema](#nestedatt--content--metadata--ipv6_address--public_ip))
+- `public_ip` (Attributes) (see [below for nested schema](#nestedatt--metadata--ipv6_address--public_ip))
 - `public_ip_id` (Number) The ID of the Public IPAddress record.
 - `subnet_id` (Number) The ID of the Subnet record.
 - `updated` (String) Timestamp, in ISO format, of when the IPAddress record was last updated.
 
-<a id="nestedatt--content--metadata--ipv6_address--public_ip"></a>
-### Nested Schema for `content.metadata.ipv6_address.updated`
+<a id="nestedatt--metadata--ipv6_address--public_ip"></a>
+### Nested Schema for `metadata.ipv6_address.public_ip`
 
 Read-Only:
 
@@ -100,8 +92,8 @@ Read-Only:
 
 
 
-<a id="nestedatt--content--networks"></a>
-### Nested Schema for `content.networks`
+<a id="nestedatt--networks"></a>
+### Nested Schema for `networks`
 
 Read-Only:
 
@@ -117,8 +109,8 @@ packet to. Returned if the type is "static_route".
 - `vlan` (Number) The VLAN ID of the network. Returned if the type is "router".
 
 
-<a id="nestedatt--content--specs"></a>
-### Nested Schema for `content.specs`
+<a id="nestedatt--specs"></a>
+### Nested Schema for `specs`
 
 Read-Only:
 
