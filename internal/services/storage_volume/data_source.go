@@ -58,6 +58,7 @@ func (d *StorageVolumeDataSource) Read(ctx context.Context, req datasource.ReadR
 	}
 
 	res := new(http.Response)
+	env := StorageVolumeContentDataSourceEnvelope{*data}
 	_, err := d.client.Storage.Volumes.Get(
 		ctx,
 		data.ID.ValueInt64(),
@@ -69,11 +70,12 @@ func (d *StorageVolumeDataSource) Read(ctx context.Context, req datasource.ReadR
 		return
 	}
 	bytes, _ := io.ReadAll(res.Body)
-	err = apijson.UnmarshalComputed(bytes, &data)
+	err = apijson.UnmarshalComputed(bytes, &env)
 	if err != nil {
 		resp.Diagnostics.AddError("failed to deserialize http request", err.Error())
 		return
 	}
+	data = &env.Content
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }

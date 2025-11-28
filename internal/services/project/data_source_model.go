@@ -3,17 +3,15 @@
 package project
 
 import (
-	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/customfield"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-type ProjectDataSourceModel struct {
-	ID      types.Int64                                             `tfsdk:"id" path:"id,required"`
-	Content customfield.NestedObject[ProjectContentDataSourceModel] `tfsdk:"content" json:"content,computed"`
+type ProjectContentDataSourceEnvelope struct {
+	Content ProjectDataSourceModel `json:"content,computed"`
 }
 
-type ProjectContentDataSourceModel struct {
-	ID         types.Int64  `tfsdk:"id" json:"id,computed"`
+type ProjectDataSourceModel struct {
+	ID         types.Int64  `tfsdk:"id" path:"id,required"`
 	AddressID  types.Int64  `tfsdk:"address_id" json:"address_id,computed"`
 	Closed     types.Bool   `tfsdk:"closed" json:"closed,computed"`
 	Created    types.String `tfsdk:"created" json:"created,computed"`

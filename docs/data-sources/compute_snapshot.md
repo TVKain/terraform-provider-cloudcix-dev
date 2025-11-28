@@ -17,29 +17,21 @@ description: |-
 
 ### Read-Only
 
-- `content` (Attributes) (see [below for nested schema](#nestedatt--content))
-- `id` (Number) The ID of this resource.
-
-<a id="nestedatt--content"></a>
-### Nested Schema for `content`
-
-Read-Only:
-
 - `created` (String) Timestamp, in ISO format, of when the Compute Snapshots record was created.
-- `id` (Number) The ID of the Compute Snapshots record
-- `instance` (Attributes) The Compute Instance the Compute Snapshot record is of. (see [below for nested schema](#nestedatt--content--instance))
+- `id` (Number) The ID of this resource.
+- `instance` (Attributes) The Compute Instance the Compute Snapshot record is of. (see [below for nested schema](#nestedatt--instance))
 - `metadata` (Attributes) The metadata details of the The metadata details of the "hyperv" Compute Snapshot. Returned if the type
-is "hyperv". (see [below for nested schema](#nestedatt--content--metadata))
+is "hyperv". (see [below for nested schema](#nestedatt--metadata))
 - `name` (String) The user-friendly name given to this Compute Snapshots instance
 - `project_id` (Number) The id of the Project that this Compute Snapshots belongs to
-- `specs` (Attributes List) An array of the specs for the Compute Snapshots (see [below for nested schema](#nestedatt--content--specs))
+- `specs` (Attributes List) An array of the specs for the Compute Snapshots (see [below for nested schema](#nestedatt--specs))
 - `state` (Number) The current state of the Compute Snapshots
 - `type` (String) The type of the Compute Snapshots
 - `updated` (String) Timestamp, in ISO format, of when the Compute Snapshots record was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Compute Snapshots instance.
 
-<a id="nestedatt--content--instance"></a>
-### Nested Schema for `content.instance`
+<a id="nestedatt--instance"></a>
+### Nested Schema for `instance`
 
 Read-Only:
 
@@ -48,8 +40,8 @@ Read-Only:
 - `state` (Number) The current state of the Compute Instance the Compute Snapshot is of.
 
 
-<a id="nestedatt--content--metadata"></a>
-### Nested Schema for `content.metadata`
+<a id="nestedatt--metadata"></a>
+### Nested Schema for `metadata`
 
 Read-Only:
 
@@ -57,8 +49,8 @@ Read-Only:
 - `remove_subtree` (Boolean) Indicates if the "hyperv" Compute Snapshot should remove the subtree when deleted.
 
 
-<a id="nestedatt--content--specs"></a>
-### Nested Schema for `content.specs`
+<a id="nestedatt--specs"></a>
+### Nested Schema for `specs`
 
 Read-Only:
 

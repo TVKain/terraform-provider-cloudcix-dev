@@ -7,25 +7,24 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
+type NetworkFirewallContentDataSourceEnvelope struct {
+	Content NetworkFirewallDataSourceModel `json:"content,computed"`
+}
+
 type NetworkFirewallDataSourceModel struct {
-	ID      types.Int64                                                     `tfsdk:"id" path:"id,required"`
-	Content customfield.NestedObject[NetworkFirewallContentDataSourceModel] `tfsdk:"content" json:"content,computed"`
+	ID        types.Int64                                                       `tfsdk:"id" path:"id,required"`
+	Created   types.String                                                      `tfsdk:"created" json:"created,computed"`
+	Name      types.String                                                      `tfsdk:"name" json:"name,computed"`
+	ProjectID types.Int64                                                       `tfsdk:"project_id" json:"project_id,computed"`
+	State     types.Int64                                                       `tfsdk:"state" json:"state,computed"`
+	Type      types.String                                                      `tfsdk:"type" json:"type,computed"`
+	Updated   types.String                                                      `tfsdk:"updated" json:"updated,computed"`
+	Uri       types.String                                                      `tfsdk:"uri" json:"uri,computed"`
+	Rules     customfield.NestedObjectList[NetworkFirewallRulesDataSourceModel] `tfsdk:"rules" json:"rules,computed"`
+	Specs     customfield.NestedObjectList[NetworkFirewallSpecsDataSourceModel] `tfsdk:"specs" json:"specs,computed"`
 }
 
-type NetworkFirewallContentDataSourceModel struct {
-	ID        types.Int64                                                              `tfsdk:"id" json:"id,computed"`
-	Created   types.String                                                             `tfsdk:"created" json:"created,computed"`
-	Name      types.String                                                             `tfsdk:"name" json:"name,computed"`
-	ProjectID types.Int64                                                              `tfsdk:"project_id" json:"project_id,computed"`
-	Rules     customfield.NestedObjectList[NetworkFirewallContentRulesDataSourceModel] `tfsdk:"rules" json:"rules,computed"`
-	Specs     customfield.NestedObjectList[NetworkFirewallContentSpecsDataSourceModel] `tfsdk:"specs" json:"specs,computed"`
-	State     types.Int64                                                              `tfsdk:"state" json:"state,computed"`
-	Type      types.String                                                             `tfsdk:"type" json:"type,computed"`
-	Updated   types.String                                                             `tfsdk:"updated" json:"updated,computed"`
-	Uri       types.String                                                             `tfsdk:"uri" json:"uri,computed"`
-}
-
-type NetworkFirewallContentRulesDataSourceModel struct {
+type NetworkFirewallRulesDataSourceModel struct {
 	Allow       types.Bool   `tfsdk:"allow" json:"allow,computed"`
 	Description types.String `tfsdk:"description" json:"description,computed"`
 	Destination types.String `tfsdk:"destination" json:"destination,computed"`
@@ -38,7 +37,7 @@ type NetworkFirewallContentRulesDataSourceModel struct {
 	Version     types.Int64  `tfsdk:"version" json:"version,computed"`
 }
 
-type NetworkFirewallContentSpecsDataSourceModel struct {
+type NetworkFirewallSpecsDataSourceModel struct {
 	Quantity types.Int64  `tfsdk:"quantity" json:"quantity,computed"`
 	SKUName  types.String `tfsdk:"sku_name" json:"sku_name,computed"`
 }

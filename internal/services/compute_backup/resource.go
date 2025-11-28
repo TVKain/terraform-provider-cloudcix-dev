@@ -11,13 +11,16 @@ import (
 	"github.com/TVKain/cloudcix-go"
 	"github.com/TVKain/cloudcix-go/option"
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/apijson"
+	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/importpath"
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/logging"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.ResourceWithConfigure = (*ComputeBackupResource)(nil)
 var _ resource.ResourceWithModifyPlan = (*ComputeBackupResource)(nil)
+var _ resource.ResourceWithImportState = (*ComputeBackupResource)(nil)
 
 func NewResource() resource.Resource {
 	return &ComputeBackupResource{}
@@ -66,6 +69,7 @@ func (r *ComputeBackupResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 	res := new(http.Response)
+	env := ComputeBackupContentEnvelope{*data}
 	_, err = r.client.Compute.Backups.New(
 		ctx,
 		cloudcix.ComputeBackupNewParams{},
@@ -78,11 +82,12 @@ func (r *ComputeBackupResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 	bytes, _ := io.ReadAll(res.Body)
-	err = apijson.UnmarshalComputed(bytes, &data)
+	err = apijson.UnmarshalComputed(bytes, &env)
 	if err != nil {
 		resp.Diagnostics.AddError("failed to deserialize http request", err.Error())
 		return
 	}
+	data = &env.Content
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -110,6 +115,7 @@ func (r *ComputeBackupResource) Update(ctx context.Context, req resource.UpdateR
 		return
 	}
 	res := new(http.Response)
+	env := ComputeBackupContentEnvelope{*data}
 	_, err = r.client.Compute.Backups.Update(
 		ctx,
 		data.ID.ValueInt64(),
@@ -123,11 +129,12 @@ func (r *ComputeBackupResource) Update(ctx context.Context, req resource.UpdateR
 		return
 	}
 	bytes, _ := io.ReadAll(res.Body)
-	err = apijson.UnmarshalComputed(bytes, &data)
+	err = apijson.UnmarshalComputed(bytes, &env)
 	if err != nil {
 		resp.Diagnostics.AddError("failed to deserialize http request", err.Error())
 		return
 	}
+	data = &env.Content
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -142,6 +149,7 @@ func (r *ComputeBackupResource) Read(ctx context.Context, req resource.ReadReque
 	}
 
 	res := new(http.Response)
+	env := ComputeBackupContentEnvelope{*data}
 	_, err := r.client.Compute.Backups.Get(
 		ctx,
 		data.ID.ValueInt64(),
@@ -158,17 +166,57 @@ func (r *ComputeBackupResource) Read(ctx context.Context, req resource.ReadReque
 		return
 	}
 	bytes, _ := io.ReadAll(res.Body)
-	err = apijson.Unmarshal(bytes, &data)
+	err = apijson.Unmarshal(bytes, &env)
 	if err != nil {
 		resp.Diagnostics.AddError("failed to deserialize http request", err.Error())
 		return
 	}
+	data = &env.Content
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *ComputeBackupResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 
+}
+
+func (r *ComputeBackupResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+	var data = new(ComputeBackupModel)
+
+	path := int64(0)
+	diags := importpath.ParseImportID(
+		req.ID,
+		"<id>",
+		&path,
+	)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	data.ID = types.Int64Value(path)
+
+	res := new(http.Response)
+	env := ComputeBackupContentEnvelope{*data}
+	_, err := r.client.Compute.Backups.Get(
+		ctx,
+		path,
+		option.WithResponseBodyInto(&res),
+		option.WithMiddleware(logging.Middleware(ctx)),
+	)
+	if err != nil {
+		resp.Diagnostics.AddError("failed to make http request", err.Error())
+		return
+	}
+	bytes, _ := io.ReadAll(res.Body)
+	err = apijson.Unmarshal(bytes, &env)
+	if err != nil {
+		resp.Diagnostics.AddError("failed to deserialize http request", err.Error())
+		return
+	}
+	data = &env.Content
+
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *ComputeBackupResource) ModifyPlan(ctx context.Context, req resource.ModifyPlanRequest, resp *resource.ModifyPlanResponse) {

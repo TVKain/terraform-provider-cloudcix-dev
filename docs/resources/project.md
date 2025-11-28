@@ -26,23 +26,12 @@ description: |-
 
 ### Read-Only
 
-- `content` (Attributes) (see [below for nested schema](#nestedatt--content))
-- `id` (Number) The ID of this resource.
-
-<a id="nestedatt--content"></a>
-### Nested Schema for `content`
-
-Read-Only:
-
 - `address_id` (Number) The ID of the Project address.
 - `closed` (Boolean) A flag stating whether or not the Project is classified as closed. A Project is classified as closed when
 all the infrastructure in it is in a Closed (99) state.
 - `created` (String) The date that the Project entry was created
 - `id` (Number) The ID of the Project.
 - `manager_id` (Number) The ID of the User that manages the Project
-- `name` (String) The name of the Project.
-- `note` (String) The note attached to the Project.
-- `region_id` (Number) The region ID that the Project is in.
 - `reseller_id` (Number) The Address ID that will send the bill for the Project to the customer.
 - `updated` (String) The date that the Project entry was last updated
 - `uri` (String) The absolute URL of the Project that can be used to perform `Read`, `Update` and `Delete`
