@@ -9,7 +9,7 @@ import (
 )
 
 type ProjectModel struct {
-	ID       types.Int64                                   `tfsdk:"id" path:"id,optional" json:"id,required,no_refresh"`
+	ID       types.Int64                                   `tfsdk:"id" path:"id,optional"`
 	RegionID types.Int64                                   `tfsdk:"region_id" json:"region_id,required,no_refresh"`
 	Name     types.String                                  `tfsdk:"name" json:"name,optional,no_refresh"`
 	Note     types.String                                  `tfsdk:"note" json:"note,optional,no_refresh"`
