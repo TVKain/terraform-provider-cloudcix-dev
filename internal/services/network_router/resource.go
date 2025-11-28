@@ -11,13 +11,16 @@ import (
 	"github.com/TVKain/cloudcix-go"
 	"github.com/TVKain/cloudcix-go/option"
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/apijson"
+	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/importpath"
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/logging"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.ResourceWithConfigure = (*NetworkRouterResource)(nil)
 var _ resource.ResourceWithModifyPlan = (*NetworkRouterResource)(nil)
+var _ resource.ResourceWithImportState = (*NetworkRouterResource)(nil)
 
 func NewResource() resource.Resource {
 	return &NetworkRouterResource{}
@@ -66,6 +69,7 @@ func (r *NetworkRouterResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 	res := new(http.Response)
+	env := NetworkRouterContentEnvelope{*data}
 	_, err = r.client.Network.Routers.New(
 		ctx,
 		cloudcix.NetworkRouterNewParams{},
@@ -78,11 +82,12 @@ func (r *NetworkRouterResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 	bytes, _ := io.ReadAll(res.Body)
-	err = apijson.UnmarshalComputed(bytes, &data)
+	err = apijson.UnmarshalComputed(bytes, &env)
 	if err != nil {
 		resp.Diagnostics.AddError("failed to deserialize http request", err.Error())
 		return
 	}
+	data = &env.Content
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -110,6 +115,7 @@ func (r *NetworkRouterResource) Update(ctx context.Context, req resource.UpdateR
 		return
 	}
 	res := new(http.Response)
+	env := NetworkRouterContentEnvelope{*data}
 	_, err = r.client.Network.Routers.Update(
 		ctx,
 		data.ID.ValueInt64(),
@@ -123,11 +129,12 @@ func (r *NetworkRouterResource) Update(ctx context.Context, req resource.UpdateR
 		return
 	}
 	bytes, _ := io.ReadAll(res.Body)
-	err = apijson.UnmarshalComputed(bytes, &data)
+	err = apijson.UnmarshalComputed(bytes, &env)
 	if err != nil {
 		resp.Diagnostics.AddError("failed to deserialize http request", err.Error())
 		return
 	}
+	data = &env.Content
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -142,6 +149,7 @@ func (r *NetworkRouterResource) Read(ctx context.Context, req resource.ReadReque
 	}
 
 	res := new(http.Response)
+	env := NetworkRouterContentEnvelope{*data}
 	_, err := r.client.Network.Routers.Get(
 		ctx,
 		data.ID.ValueInt64(),
@@ -158,17 +166,57 @@ func (r *NetworkRouterResource) Read(ctx context.Context, req resource.ReadReque
 		return
 	}
 	bytes, _ := io.ReadAll(res.Body)
-	err = apijson.Unmarshal(bytes, &data)
+	err = apijson.Unmarshal(bytes, &env)
 	if err != nil {
 		resp.Diagnostics.AddError("failed to deserialize http request", err.Error())
 		return
 	}
+	data = &env.Content
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *NetworkRouterResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 
+}
+
+func (r *NetworkRouterResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+	var data = new(NetworkRouterModel)
+
+	path := int64(0)
+	diags := importpath.ParseImportID(
+		req.ID,
+		"<id>",
+		&path,
+	)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	data.ID = types.Int64Value(path)
+
+	res := new(http.Response)
+	env := NetworkRouterContentEnvelope{*data}
+	_, err := r.client.Network.Routers.Get(
+		ctx,
+		path,
+		option.WithResponseBodyInto(&res),
+		option.WithMiddleware(logging.Middleware(ctx)),
+	)
+	if err != nil {
+		resp.Diagnostics.AddError("failed to make http request", err.Error())
+		return
+	}
+	bytes, _ := io.ReadAll(res.Body)
+	err = apijson.Unmarshal(bytes, &env)
+	if err != nil {
+		resp.Diagnostics.AddError("failed to deserialize http request", err.Error())
+		return
+	}
+	data = &env.Content
+
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *NetworkRouterResource) ModifyPlan(ctx context.Context, req resource.ModifyPlanRequest, resp *resource.ModifyPlanResponse) {

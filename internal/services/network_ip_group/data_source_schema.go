@@ -19,45 +19,35 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 			"id": schema.Int64Attribute{
 				Required: true,
 			},
-			"content": schema.SingleNestedAttribute{
-				Computed:   true,
-				CustomType: customfield.NewNestedObjectType[NetworkIPGroupContentDataSourceModel](ctx),
-				Attributes: map[string]schema.Attribute{
-					"id": schema.Int64Attribute{
-						Description: "The ID of the Network IP Goup record",
-						Computed:    true,
-					},
-					"cidrs": schema.ListAttribute{
-						Description: "An array of CIDR addresses in the Network IP Group.",
-						Computed:    true,
-						CustomType:  customfield.NewListType[types.String](ctx),
-						ElementType: types.StringType,
-					},
-					"created": schema.StringAttribute{
-						Description: "Timestamp, in ISO format, of when the Network IP Group was created.",
-						Computed:    true,
-					},
-					"name": schema.StringAttribute{
-						Description: "The name of the Network IP Group.",
-						Computed:    true,
-					},
-					"type": schema.StringAttribute{
-						Description: "The type of the Network IP Group",
-						Computed:    true,
-					},
-					"updated": schema.StringAttribute{
-						Description: "Timestamp, in ISO format, of when the Network IP Group was last updated.",
-						Computed:    true,
-					},
-					"uri": schema.StringAttribute{
-						Description: "The absolute URL of the Network IP Group record that can be used to perform `Read`, `Update` and `Delete`",
-						Computed:    true,
-					},
-					"version": schema.Int64Attribute{
-						Description: "The IP Version of the CIDRs in the group.",
-						Computed:    true,
-					},
-				},
+			"created": schema.StringAttribute{
+				Description: "Timestamp, in ISO format, of when the Network IP Group was created.",
+				Computed:    true,
+			},
+			"name": schema.StringAttribute{
+				Description: "The name of the Network IP Group.",
+				Computed:    true,
+			},
+			"type": schema.StringAttribute{
+				Description: "The type of the Network IP Group",
+				Computed:    true,
+			},
+			"updated": schema.StringAttribute{
+				Description: "Timestamp, in ISO format, of when the Network IP Group was last updated.",
+				Computed:    true,
+			},
+			"uri": schema.StringAttribute{
+				Description: "The absolute URL of the Network IP Group record that can be used to perform `Read`, `Update` and `Delete`",
+				Computed:    true,
+			},
+			"version": schema.Int64Attribute{
+				Description: "The IP Version of the CIDRs in the group.",
+				Computed:    true,
+			},
+			"cidrs": schema.ListAttribute{
+				Description: "An array of CIDR addresses in the Network IP Group.",
+				Computed:    true,
+				CustomType:  customfield.NewListType[types.String](ctx),
+				ElementType: types.StringType,
 			},
 		},
 	}

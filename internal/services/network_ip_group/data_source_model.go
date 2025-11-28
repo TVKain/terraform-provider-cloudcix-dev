@@ -7,18 +7,17 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-type NetworkIPGroupDataSourceModel struct {
-	ID      types.Int64                                                    `tfsdk:"id" path:"id,required"`
-	Content customfield.NestedObject[NetworkIPGroupContentDataSourceModel] `tfsdk:"content" json:"content,computed"`
+type NetworkIPGroupContentDataSourceEnvelope struct {
+	Content NetworkIPGroupDataSourceModel `json:"content,computed"`
 }
 
-type NetworkIPGroupContentDataSourceModel struct {
-	ID      types.Int64                    `tfsdk:"id" json:"id,computed"`
-	Cidrs   customfield.List[types.String] `tfsdk:"cidrs" json:"cidrs,computed"`
+type NetworkIPGroupDataSourceModel struct {
+	ID      types.Int64                    `tfsdk:"id" path:"id,required"`
 	Created types.String                   `tfsdk:"created" json:"created,computed"`
 	Name    types.String                   `tfsdk:"name" json:"name,computed"`
 	Type    types.String                   `tfsdk:"type" json:"type,computed"`
 	Updated types.String                   `tfsdk:"updated" json:"updated,computed"`
 	Uri     types.String                   `tfsdk:"uri" json:"uri,computed"`
 	Version types.Int64                    `tfsdk:"version" json:"version,computed"`
+	Cidrs   customfield.List[types.String] `tfsdk:"cidrs" json:"cidrs,computed"`
 }

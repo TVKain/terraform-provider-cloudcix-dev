@@ -17,27 +17,19 @@ description: |-
 
 ### Read-Only
 
-- `content` (Attributes) (see [below for nested schema](#nestedatt--content))
-- `id` (Number) The ID of this resource.
-
-<a id="nestedatt--content"></a>
-### Nested Schema for `content`
-
-Read-Only:
-
 - `created` (String) Timestamp, in ISO format, of when the Compute Backups record was created.
-- `id` (Number) The ID of the Compute Backups record
-- `instance` (Attributes) The Compute Instance the Compute Backup record is of. (see [below for nested schema](#nestedatt--content--instance))
+- `id` (Number) The ID of this resource.
+- `instance` (Attributes) The Compute Instance the Compute Backup record is of. (see [below for nested schema](#nestedatt--instance))
 - `name` (String) The user-friendly name given to this Compute Backups instance
 - `project_id` (Number) The id of the Project that this Compute Backups belongs to
-- `specs` (Attributes List) An array of the specs for the Compute Backups (see [below for nested schema](#nestedatt--content--specs))
+- `specs` (Attributes List) An array of the specs for the Compute Backups (see [below for nested schema](#nestedatt--specs))
 - `state` (Number) The current state of the Compute Backups
 - `type` (String) The type of the Compute Backups
 - `updated` (String) Timestamp, in ISO format, of when the Compute Backups record was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Compute Backups instance.
 
-<a id="nestedatt--content--instance"></a>
-### Nested Schema for `content.instance`
+<a id="nestedatt--instance"></a>
+### Nested Schema for `instance`
 
 Read-Only:
 
@@ -46,8 +38,8 @@ Read-Only:
 - `state` (Number) The current state of the Compute Instance the Compute Backup is of.
 
 
-<a id="nestedatt--content--specs"></a>
-### Nested Schema for `content.specs`
+<a id="nestedatt--specs"></a>
+### Nested Schema for `specs`
 
 Read-Only:
 

@@ -5,7 +5,6 @@ package compute_image
 import (
 	"context"
 
-	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/customfield"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 )
@@ -18,27 +17,17 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 			"id": schema.Int64Attribute{
 				Required: true,
 			},
-			"content": schema.SingleNestedAttribute{
-				Computed:   true,
-				CustomType: customfield.NewNestedObjectType[ComputeImageContentDataSourceModel](ctx),
-				Attributes: map[string]schema.Attribute{
-					"id": schema.Int64Attribute{
-						Description: "The ID of the Image.",
-						Computed:    true,
-					},
-					"filename": schema.StringAttribute{
-						Description: "The name of the file containing the Image.",
-						Computed:    true,
-					},
-					"os_variant": schema.StringAttribute{
-						Description: "Is a unique word to define each Image.",
-						Computed:    true,
-					},
-					"sku_name": schema.StringAttribute{
-						Description: "The name of the Image.",
-						Computed:    true,
-					},
-				},
+			"filename": schema.StringAttribute{
+				Description: "The name of the file containing the Image.",
+				Computed:    true,
+			},
+			"os_variant": schema.StringAttribute{
+				Description: "Is a unique word to define each Image.",
+				Computed:    true,
+			},
+			"sku_name": schema.StringAttribute{
+				Description: "The name of the Image.",
+				Computed:    true,
 			},
 		},
 	}

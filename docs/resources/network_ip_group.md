@@ -32,19 +32,8 @@ If not sent, it will default to 4.
 
 ### Read-Only
 
-- `content` (Attributes) (see [below for nested schema](#nestedatt--content))
-- `id` (Number) The ID of this resource.
-
-<a id="nestedatt--content"></a>
-### Nested Schema for `content`
-
-Read-Only:
-
-- `cidrs` (List of String) An array of CIDR addresses in the Network IP Group.
 - `created` (String) Timestamp, in ISO format, of when the Network IP Group was created.
 - `id` (Number) The ID of the Network IP Goup record
-- `name` (String) The name of the Network IP Group.
 - `type` (String) The type of the Network IP Group
 - `updated` (String) Timestamp, in ISO format, of when the Network IP Group was last updated.
 - `uri` (String) The absolute URL of the Network IP Group record that can be used to perform `Read`, `Update` and `Delete`
-- `version` (Number) The IP Version of the CIDRs in the group.

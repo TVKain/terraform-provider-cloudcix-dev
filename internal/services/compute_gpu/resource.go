@@ -69,6 +69,7 @@ func (r *ComputeGPUResource) Create(ctx context.Context, req resource.CreateRequ
 		return
 	}
 	res := new(http.Response)
+	env := ComputeGPUContentEnvelope{*data}
 	_, err = r.client.Compute.GPUs.Update(
 		ctx,
 		data.ID.ValueInt64(),
@@ -82,11 +83,12 @@ func (r *ComputeGPUResource) Create(ctx context.Context, req resource.CreateRequ
 		return
 	}
 	bytes, _ := io.ReadAll(res.Body)
-	err = apijson.UnmarshalComputed(bytes, &data)
+	err = apijson.UnmarshalComputed(bytes, &env)
 	if err != nil {
 		resp.Diagnostics.AddError("failed to deserialize http request", err.Error())
 		return
 	}
+	data = &env.Content
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -114,6 +116,7 @@ func (r *ComputeGPUResource) Update(ctx context.Context, req resource.UpdateRequ
 		return
 	}
 	res := new(http.Response)
+	env := ComputeGPUContentEnvelope{*data}
 	_, err = r.client.Compute.GPUs.Update(
 		ctx,
 		data.ID.ValueInt64(),
@@ -127,11 +130,12 @@ func (r *ComputeGPUResource) Update(ctx context.Context, req resource.UpdateRequ
 		return
 	}
 	bytes, _ := io.ReadAll(res.Body)
-	err = apijson.UnmarshalComputed(bytes, &data)
+	err = apijson.UnmarshalComputed(bytes, &env)
 	if err != nil {
 		resp.Diagnostics.AddError("failed to deserialize http request", err.Error())
 		return
 	}
+	data = &env.Content
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -146,6 +150,7 @@ func (r *ComputeGPUResource) Read(ctx context.Context, req resource.ReadRequest,
 	}
 
 	res := new(http.Response)
+	env := ComputeGPUContentEnvelope{*data}
 	_, err := r.client.Compute.GPUs.Get(
 		ctx,
 		data.ID.ValueInt64(),
@@ -162,11 +167,12 @@ func (r *ComputeGPUResource) Read(ctx context.Context, req resource.ReadRequest,
 		return
 	}
 	bytes, _ := io.ReadAll(res.Body)
-	err = apijson.Unmarshal(bytes, &data)
+	err = apijson.Unmarshal(bytes, &env)
 	if err != nil {
 		resp.Diagnostics.AddError("failed to deserialize http request", err.Error())
 		return
 	}
+	data = &env.Content
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -192,6 +198,7 @@ func (r *ComputeGPUResource) ImportState(ctx context.Context, req resource.Impor
 	data.ID = types.Int64Value(path)
 
 	res := new(http.Response)
+	env := ComputeGPUContentEnvelope{*data}
 	_, err := r.client.Compute.GPUs.Get(
 		ctx,
 		path,
@@ -203,11 +210,12 @@ func (r *ComputeGPUResource) ImportState(ctx context.Context, req resource.Impor
 		return
 	}
 	bytes, _ := io.ReadAll(res.Body)
-	err = apijson.Unmarshal(bytes, &data)
+	err = apijson.Unmarshal(bytes, &env)
 	if err != nil {
 		resp.Diagnostics.AddError("failed to deserialize http request", err.Error())
 		return
 	}
+	data = &env.Content
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }

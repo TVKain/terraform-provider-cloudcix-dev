@@ -8,14 +8,23 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
+type ComputeSnapshotContentEnvelope struct {
+	Content ComputeSnapshotModel `json:"content"`
+}
+
 type ComputeSnapshotModel struct {
-	ID         types.Int64                                           `tfsdk:"id" path:"id,optional"`
-	InstanceID types.Int64                                           `tfsdk:"instance_id" json:"instance_id,required,no_refresh"`
-	ProjectID  types.Int64                                           `tfsdk:"project_id" json:"project_id,required,no_refresh"`
-	Type       types.String                                          `tfsdk:"type" json:"type,optional,no_refresh"`
-	Name       types.String                                          `tfsdk:"name" json:"name,optional,no_refresh"`
-	State      types.String                                          `tfsdk:"state" json:"state,optional,no_refresh"`
-	Content    customfield.NestedObject[ComputeSnapshotContentModel] `tfsdk:"content" json:"content,computed"`
+	ID         types.Int64                                             `tfsdk:"id" json:"id,computed"`
+	InstanceID types.Int64                                             `tfsdk:"instance_id" json:"instance_id,required,no_refresh"`
+	ProjectID  types.Int64                                             `tfsdk:"project_id" json:"project_id,required"`
+	Type       types.String                                            `tfsdk:"type" json:"type,optional"`
+	Name       types.String                                            `tfsdk:"name" json:"name,optional"`
+	State      types.String                                            `tfsdk:"state" json:"state,optional,no_refresh"`
+	Created    types.String                                            `tfsdk:"created" json:"created,computed"`
+	Updated    types.String                                            `tfsdk:"updated" json:"updated,computed"`
+	Uri        types.String                                            `tfsdk:"uri" json:"uri,computed"`
+	Instance   customfield.NestedObject[ComputeSnapshotInstanceModel]  `tfsdk:"instance" json:"instance,computed"`
+	Metadata   customfield.NestedObject[ComputeSnapshotMetadataModel]  `tfsdk:"metadata" json:"metadata,computed"`
+	Specs      customfield.NestedObjectList[ComputeSnapshotSpecsModel] `tfsdk:"specs" json:"specs,computed"`
 }
 
 func (m ComputeSnapshotModel) MarshalJSON() (data []byte, err error) {
@@ -26,32 +35,18 @@ func (m ComputeSnapshotModel) MarshalJSONForUpdate(state ComputeSnapshotModel) (
 	return apijson.MarshalForUpdate(m, state)
 }
 
-type ComputeSnapshotContentModel struct {
-	ID        types.Int64                                                    `tfsdk:"id" json:"id,computed"`
-	Created   types.String                                                   `tfsdk:"created" json:"created,computed"`
-	Instance  customfield.NestedObject[ComputeSnapshotContentInstanceModel]  `tfsdk:"instance" json:"instance,computed"`
-	Metadata  customfield.NestedObject[ComputeSnapshotContentMetadataModel]  `tfsdk:"metadata" json:"metadata,computed"`
-	Name      types.String                                                   `tfsdk:"name" json:"name,computed"`
-	ProjectID types.Int64                                                    `tfsdk:"project_id" json:"project_id,computed"`
-	Specs     customfield.NestedObjectList[ComputeSnapshotContentSpecsModel] `tfsdk:"specs" json:"specs,computed"`
-	State     types.Int64                                                    `tfsdk:"state" json:"state,computed"`
-	Type      types.String                                                   `tfsdk:"type" json:"type,computed"`
-	Updated   types.String                                                   `tfsdk:"updated" json:"updated,computed"`
-	Uri       types.String                                                   `tfsdk:"uri" json:"uri,computed"`
-}
-
-type ComputeSnapshotContentInstanceModel struct {
+type ComputeSnapshotInstanceModel struct {
 	ID    types.Int64  `tfsdk:"id" json:"id,computed"`
 	Name  types.String `tfsdk:"name" json:"name,computed"`
 	State types.Int64  `tfsdk:"state" json:"state,computed"`
 }
 
-type ComputeSnapshotContentMetadataModel struct {
+type ComputeSnapshotMetadataModel struct {
 	Active        types.Bool `tfsdk:"active" json:"active,computed"`
 	RemoveSubtree types.Bool `tfsdk:"remove_subtree" json:"remove_subtree,computed"`
 }
 
-type ComputeSnapshotContentSpecsModel struct {
+type ComputeSnapshotSpecsModel struct {
 	Quantity types.Int64  `tfsdk:"quantity" json:"quantity,computed"`
 	SKUName  types.String `tfsdk:"sku_name" json:"sku_name,computed"`
 }

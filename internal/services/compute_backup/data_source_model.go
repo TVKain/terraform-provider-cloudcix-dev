@@ -7,31 +7,30 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
+type ComputeBackupContentDataSourceEnvelope struct {
+	Content ComputeBackupDataSourceModel `json:"content,computed"`
+}
+
 type ComputeBackupDataSourceModel struct {
-	ID      types.Int64                                                   `tfsdk:"id" path:"id,required"`
-	Content customfield.NestedObject[ComputeBackupContentDataSourceModel] `tfsdk:"content" json:"content,computed"`
+	ID        types.Int64                                                     `tfsdk:"id" path:"id,required"`
+	Created   types.String                                                    `tfsdk:"created" json:"created,computed"`
+	Name      types.String                                                    `tfsdk:"name" json:"name,computed"`
+	ProjectID types.Int64                                                     `tfsdk:"project_id" json:"project_id,computed"`
+	State     types.Int64                                                     `tfsdk:"state" json:"state,computed"`
+	Type      types.String                                                    `tfsdk:"type" json:"type,computed"`
+	Updated   types.String                                                    `tfsdk:"updated" json:"updated,computed"`
+	Uri       types.String                                                    `tfsdk:"uri" json:"uri,computed"`
+	Instance  customfield.NestedObject[ComputeBackupInstanceDataSourceModel]  `tfsdk:"instance" json:"instance,computed"`
+	Specs     customfield.NestedObjectList[ComputeBackupSpecsDataSourceModel] `tfsdk:"specs" json:"specs,computed"`
 }
 
-type ComputeBackupContentDataSourceModel struct {
-	ID        types.Int64                                                            `tfsdk:"id" json:"id,computed"`
-	Created   types.String                                                           `tfsdk:"created" json:"created,computed"`
-	Instance  customfield.NestedObject[ComputeBackupContentInstanceDataSourceModel]  `tfsdk:"instance" json:"instance,computed"`
-	Name      types.String                                                           `tfsdk:"name" json:"name,computed"`
-	ProjectID types.Int64                                                            `tfsdk:"project_id" json:"project_id,computed"`
-	Specs     customfield.NestedObjectList[ComputeBackupContentSpecsDataSourceModel] `tfsdk:"specs" json:"specs,computed"`
-	State     types.Int64                                                            `tfsdk:"state" json:"state,computed"`
-	Type      types.String                                                           `tfsdk:"type" json:"type,computed"`
-	Updated   types.String                                                           `tfsdk:"updated" json:"updated,computed"`
-	Uri       types.String                                                           `tfsdk:"uri" json:"uri,computed"`
-}
-
-type ComputeBackupContentInstanceDataSourceModel struct {
+type ComputeBackupInstanceDataSourceModel struct {
 	ID    types.Int64  `tfsdk:"id" json:"id,computed"`
 	Name  types.String `tfsdk:"name" json:"name,computed"`
 	State types.Int64  `tfsdk:"state" json:"state,computed"`
 }
 
-type ComputeBackupContentSpecsDataSourceModel struct {
+type ComputeBackupSpecsDataSourceModel struct {
 	Quantity types.Int64  `tfsdk:"quantity" json:"quantity,computed"`
 	SKUName  types.String `tfsdk:"sku_name" json:"sku_name,computed"`
 }
