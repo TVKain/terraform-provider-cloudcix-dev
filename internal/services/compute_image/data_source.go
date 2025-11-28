@@ -60,7 +60,7 @@ func (d *ComputeImageDataSource) Read(ctx context.Context, req datasource.ReadRe
 	res := new(http.Response)
 	_, err := d.client.Compute.Images.Get(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		option.WithResponseBodyInto(&res),
 		option.WithMiddleware(logging.Middleware(ctx)),
 	)

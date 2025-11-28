@@ -60,7 +60,7 @@ func (d *ComputeSnapshotDataSource) Read(ctx context.Context, req datasource.Rea
 	res := new(http.Response)
 	_, err := d.client.Compute.Snapshots.Get(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		option.WithResponseBodyInto(&res),
 		option.WithMiddleware(logging.Middleware(ctx)),
 	)

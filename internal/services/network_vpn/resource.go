@@ -112,7 +112,7 @@ func (r *NetworkVpnResource) Update(ctx context.Context, req resource.UpdateRequ
 	res := new(http.Response)
 	_, err = r.client.Network.Vpns.Update(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		cloudcix.NetworkVpnUpdateParams{},
 		option.WithRequestBody("application/json", dataBytes),
 		option.WithResponseBodyInto(&res),
@@ -144,7 +144,7 @@ func (r *NetworkVpnResource) Read(ctx context.Context, req resource.ReadRequest,
 	res := new(http.Response)
 	_, err := r.client.Network.Vpns.Get(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		option.WithResponseBodyInto(&res),
 		option.WithMiddleware(logging.Middleware(ctx)),
 	)

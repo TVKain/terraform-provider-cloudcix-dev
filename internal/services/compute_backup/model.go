@@ -9,7 +9,7 @@ import (
 )
 
 type ComputeBackupModel struct {
-	Pk         types.Int64                                         `tfsdk:"pk" path:"pk,optional"`
+	ID         types.Int64                                         `tfsdk:"id" path:"id,optional"`
 	InstanceID types.Int64                                         `tfsdk:"instance_id" json:"instance_id,required,no_refresh"`
 	ProjectID  types.Int64                                         `tfsdk:"project_id" json:"project_id,required,no_refresh"`
 	Type       types.String                                        `tfsdk:"type" json:"type,optional,no_refresh"`

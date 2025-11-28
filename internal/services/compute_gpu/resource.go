@@ -11,13 +11,16 @@ import (
 	"github.com/TVKain/cloudcix-go"
 	"github.com/TVKain/cloudcix-go/option"
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/apijson"
+	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/importpath"
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/logging"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.ResourceWithConfigure = (*ComputeGPUResource)(nil)
 var _ resource.ResourceWithModifyPlan = (*ComputeGPUResource)(nil)
+var _ resource.ResourceWithImportState = (*ComputeGPUResource)(nil)
 
 func NewResource() resource.Resource {
 	return &ComputeGPUResource{}
@@ -68,7 +71,7 @@ func (r *ComputeGPUResource) Create(ctx context.Context, req resource.CreateRequ
 	res := new(http.Response)
 	_, err = r.client.Compute.GPUs.Update(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		cloudcix.ComputeGPUUpdateParams{},
 		option.WithRequestBody("application/json", dataBytes),
 		option.WithResponseBodyInto(&res),
@@ -113,7 +116,7 @@ func (r *ComputeGPUResource) Update(ctx context.Context, req resource.UpdateRequ
 	res := new(http.Response)
 	_, err = r.client.Compute.GPUs.Update(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		cloudcix.ComputeGPUUpdateParams{},
 		option.WithRequestBody("application/json", dataBytes),
 		option.WithResponseBodyInto(&res),
@@ -145,7 +148,7 @@ func (r *ComputeGPUResource) Read(ctx context.Context, req resource.ReadRequest,
 	res := new(http.Response)
 	_, err := r.client.Compute.GPUs.Get(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		option.WithResponseBodyInto(&res),
 		option.WithMiddleware(logging.Middleware(ctx)),
 	)
@@ -170,6 +173,43 @@ func (r *ComputeGPUResource) Read(ctx context.Context, req resource.ReadRequest,
 
 func (r *ComputeGPUResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 
+}
+
+func (r *ComputeGPUResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+	var data = new(ComputeGPUModel)
+
+	path := int64(0)
+	diags := importpath.ParseImportID(
+		req.ID,
+		"<id>",
+		&path,
+	)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	data.ID = types.Int64Value(path)
+
+	res := new(http.Response)
+	_, err := r.client.Compute.GPUs.Get(
+		ctx,
+		path,
+		option.WithResponseBodyInto(&res),
+		option.WithMiddleware(logging.Middleware(ctx)),
+	)
+	if err != nil {
+		resp.Diagnostics.AddError("failed to make http request", err.Error())
+		return
+	}
+	bytes, _ := io.ReadAll(res.Body)
+	err = apijson.Unmarshal(bytes, &data)
+	if err != nil {
+		resp.Diagnostics.AddError("failed to deserialize http request", err.Error())
+		return
+	}
+
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *ComputeGPUResource) ModifyPlan(ctx context.Context, req resource.ModifyPlanRequest, resp *resource.ModifyPlanResponse) {

@@ -28,7 +28,6 @@ description: |-
 instance. (see [below for nested schema](#nestedatt--interfaces))
 - `name` (String) The user-friendly name for the Compute Intsance type. If not sent and the type is "lxd", it will default
 to the name 'LXD'. If not sent and the type is "hyperv", it will default to the name 'VM HyperV'.
-- `pk` (Number)
 - `state` (String) Change the state of the Compute Instance, triggering the CloudCIX Robot to perform the requested action.
 Users can only request state changes from certain current states, with specific allowed target states:
 
@@ -42,6 +41,7 @@ Users can only request state changes from certain current states, with specific 
 ### Read-Only
 
 - `content` (Attributes) (see [below for nested schema](#nestedatt--content))
+- `id` (Number) The ID of this resource.
 
 <a id="nestedatt--metadata"></a>
 ### Nested Schema for `metadata`

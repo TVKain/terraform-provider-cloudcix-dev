@@ -19,7 +19,7 @@ var _ resource.ResourceWithConfigValidators = (*StorageVolumeResource)(nil)
 func ResourceSchema(ctx context.Context) schema.Schema {
 	return schema.Schema{
 		Attributes: map[string]schema.Attribute{
-			"pk": schema.Int64Attribute{
+			"id": schema.Int64Attribute{
 				Optional:      true,
 				PlanModifiers: []planmodifier.Int64{int64planmodifier.RequiresReplace()},
 			},

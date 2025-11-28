@@ -60,7 +60,7 @@ func (d *NetworkVpnDataSource) Read(ctx context.Context, req datasource.ReadRequ
 	res := new(http.Response)
 	_, err := d.client.Network.Vpns.Get(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		option.WithResponseBodyInto(&res),
 		option.WithMiddleware(logging.Middleware(ctx)),
 	)

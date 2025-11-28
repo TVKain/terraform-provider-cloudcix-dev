@@ -112,7 +112,7 @@ func (r *ProjectResource) Update(ctx context.Context, req resource.UpdateRequest
 	res := new(http.Response)
 	_, err = r.client.Project.Update(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		cloudcix.ProjectUpdateParams{},
 		option.WithRequestBody("application/json", dataBytes),
 		option.WithResponseBodyInto(&res),
@@ -144,7 +144,7 @@ func (r *ProjectResource) Read(ctx context.Context, req resource.ReadRequest, re
 	res := new(http.Response)
 	_, err := r.client.Project.Get(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		option.WithResponseBodyInto(&res),
 		option.WithMiddleware(logging.Middleware(ctx)),
 	)

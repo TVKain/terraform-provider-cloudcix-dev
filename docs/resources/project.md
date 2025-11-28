@@ -23,11 +23,11 @@ description: |-
 
 - `name` (String) The name of the Project. Must be unique within an Address' Project collection.
 - `note` (String) A note about the project to store information. No length limit.
-- `pk` (Number)
 
 ### Read-Only
 
 - `content` (Attributes) (see [below for nested schema](#nestedatt--content))
+- `id` (Number) The ID of this resource.
 
 <a id="nestedatt--content"></a>
 ### Nested Schema for `content`

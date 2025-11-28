@@ -23,7 +23,6 @@ description: |-
 
 - `metadata` (Attributes) Optional. The metadata required to configure the Network VPN instance (see [below for nested schema](#nestedatt--metadata))
 - `name` (String) The user-friendly name for the Network VPN type. If not sent, it will default to current name.
-- `pk` (Number)
 - `state` (String) Change the state of the Network VPN, triggering the CloudCIX Robot to perform the requested action.
 Users can only request state changes from certain current states:
 
@@ -34,6 +33,7 @@ Users can only request state changes from certain current states:
 ### Read-Only
 
 - `content` (Attributes) (see [below for nested schema](#nestedatt--content))
+- `id` (Number) The ID of this resource.
 
 <a id="nestedatt--metadata"></a>
 ### Nested Schema for `metadata`

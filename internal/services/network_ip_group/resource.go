@@ -112,7 +112,7 @@ func (r *NetworkIPGroupResource) Update(ctx context.Context, req resource.Update
 	res := new(http.Response)
 	_, err = r.client.Network.IPGroups.Update(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		cloudcix.NetworkIPGroupUpdateParams{},
 		option.WithRequestBody("application/json", dataBytes),
 		option.WithResponseBodyInto(&res),
@@ -144,7 +144,7 @@ func (r *NetworkIPGroupResource) Read(ctx context.Context, req resource.ReadRequ
 	res := new(http.Response)
 	_, err := r.client.Network.IPGroups.Get(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		option.WithResponseBodyInto(&res),
 		option.WithMiddleware(logging.Middleware(ctx)),
 	)
@@ -178,7 +178,7 @@ func (r *NetworkIPGroupResource) Delete(ctx context.Context, req resource.Delete
 
 	err := r.client.Network.IPGroups.Delete(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		option.WithMiddleware(logging.Middleware(ctx)),
 	)
 	if err != nil {

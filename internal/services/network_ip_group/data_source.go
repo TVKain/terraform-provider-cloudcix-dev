@@ -60,7 +60,7 @@ func (d *NetworkIPGroupDataSource) Read(ctx context.Context, req datasource.Read
 	res := new(http.Response)
 	_, err := d.client.Network.IPGroups.Get(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		option.WithResponseBodyInto(&res),
 		option.WithMiddleware(logging.Middleware(ctx)),
 	)
