@@ -30,7 +30,6 @@ Existing networks (vlan property is not None) can have their names updated but I
 cannot be modified. To create a new network on the Network Router, append an object to the list with an
 `ipv4` key for an available RFC 1918 address range. The `ipv6` and `vlan` values will be generated based
 on what is available in the region. (see [below for nested schema](#nestedatt--networks))
-- `pk` (Number)
 - `state` (String) Change the state of the Network Router, triggering the CloudCIX Robot to perform the requested action.
 
 Available state transitions:
@@ -54,6 +53,7 @@ delete, delete_queue, or deleting.
 ### Read-Only
 
 - `content` (Attributes) (see [below for nested schema](#nestedatt--content))
+- `id` (Number) The ID of this resource.
 
 <a id="nestedatt--metadata"></a>
 ### Nested Schema for `metadata`

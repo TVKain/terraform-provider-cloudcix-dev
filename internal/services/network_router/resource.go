@@ -112,7 +112,7 @@ func (r *NetworkRouterResource) Update(ctx context.Context, req resource.UpdateR
 	res := new(http.Response)
 	_, err = r.client.Network.Routers.Update(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		cloudcix.NetworkRouterUpdateParams{},
 		option.WithRequestBody("application/json", dataBytes),
 		option.WithResponseBodyInto(&res),
@@ -144,7 +144,7 @@ func (r *NetworkRouterResource) Read(ctx context.Context, req resource.ReadReque
 	res := new(http.Response)
 	_, err := r.client.Network.Routers.Get(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		option.WithResponseBodyInto(&res),
 		option.WithMiddleware(logging.Middleware(ctx)),
 	)

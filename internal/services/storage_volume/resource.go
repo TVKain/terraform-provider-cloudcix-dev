@@ -112,7 +112,7 @@ func (r *StorageVolumeResource) Update(ctx context.Context, req resource.UpdateR
 	res := new(http.Response)
 	_, err = r.client.Storage.Volumes.Update(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		cloudcix.StorageVolumeUpdateParams{},
 		option.WithRequestBody("application/json", dataBytes),
 		option.WithResponseBodyInto(&res),
@@ -144,7 +144,7 @@ func (r *StorageVolumeResource) Read(ctx context.Context, req resource.ReadReque
 	res := new(http.Response)
 	_, err := r.client.Storage.Volumes.Get(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		option.WithResponseBodyInto(&res),
 		option.WithMiddleware(logging.Middleware(ctx)),
 	)

@@ -112,7 +112,7 @@ func (r *ComputeSnapshotResource) Update(ctx context.Context, req resource.Updat
 	res := new(http.Response)
 	_, err = r.client.Compute.Snapshots.Update(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		cloudcix.ComputeSnapshotUpdateParams{},
 		option.WithRequestBody("application/json", dataBytes),
 		option.WithResponseBodyInto(&res),
@@ -144,7 +144,7 @@ func (r *ComputeSnapshotResource) Read(ctx context.Context, req resource.ReadReq
 	res := new(http.Response)
 	_, err := r.client.Compute.Snapshots.Get(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		option.WithResponseBodyInto(&res),
 		option.WithMiddleware(logging.Middleware(ctx)),
 	)

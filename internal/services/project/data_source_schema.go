@@ -15,7 +15,7 @@ var _ datasource.DataSourceWithConfigValidators = (*ProjectDataSource)(nil)
 func DataSourceSchema(ctx context.Context) schema.Schema {
 	return schema.Schema{
 		Attributes: map[string]schema.Attribute{
-			"pk": schema.Int64Attribute{
+			"id": schema.Int64Attribute{
 				Required: true,
 			},
 			"content": schema.SingleNestedAttribute{

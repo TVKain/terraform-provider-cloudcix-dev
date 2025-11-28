@@ -23,7 +23,6 @@ exactly ONE project firewall and ONE geo firewall maximum.
 ### Optional
 
 - `name` (String) The user-friendly name for the Network Firewall type. If not sent, it will default to current name.
-- `pk` (Number)
 - `rules` (Attributes List) CRITICAL WARNING: This completely replaces ALL existing firewall rules. Any rules not included
 in this update will be permanently deleted. You must include the complete list of all rules
 you want to keep, both existing and new ones.
@@ -46,6 +45,7 @@ Valid options are:
 ### Read-Only
 
 - `content` (Attributes) (see [below for nested schema](#nestedatt--content))
+- `id` (Number) The ID of this resource.
 
 <a id="nestedatt--rules"></a>
 ### Nested Schema for `rules`

@@ -9,7 +9,7 @@ import (
 )
 
 type ComputeGPUModel struct {
-	Pk      types.Int64                                      `tfsdk:"pk" path:"pk,required"`
+	ID      types.Int64                                      `tfsdk:"id" path:"id,required"`
 	Name    types.String                                     `tfsdk:"name" json:"name,optional,no_refresh"`
 	State   types.String                                     `tfsdk:"state" json:"state,optional,no_refresh"`
 	Content customfield.NestedObject[ComputeGPUContentModel] `tfsdk:"content" json:"content,computed"`

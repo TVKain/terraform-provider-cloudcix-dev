@@ -9,7 +9,7 @@ import (
 )
 
 type NetworkIPGroupModel struct {
-	Pk      types.Int64                                          `tfsdk:"pk" path:"pk,optional"`
+	ID      types.Int64                                          `tfsdk:"id" path:"id,optional"`
 	Name    types.String                                         `tfsdk:"name" json:"name,required,no_refresh"`
 	Cidrs   *[]types.String                                      `tfsdk:"cidrs" json:"cidrs,required,no_refresh"`
 	Version types.Int64                                          `tfsdk:"version" json:"version,optional,no_refresh"`
