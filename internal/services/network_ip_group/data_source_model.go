@@ -8,7 +8,7 @@ import (
 )
 
 type NetworkIPGroupDataSourceModel struct {
-	Pk      types.Int64                                                    `tfsdk:"pk" path:"pk,required"`
+	ID      types.Int64                                                    `tfsdk:"id" path:"id,required"`
 	Content customfield.NestedObject[NetworkIPGroupContentDataSourceModel] `tfsdk:"content" json:"content,computed"`
 }
 

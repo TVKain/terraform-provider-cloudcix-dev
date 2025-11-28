@@ -60,7 +60,7 @@ func (d *ProjectDataSource) Read(ctx context.Context, req datasource.ReadRequest
 	res := new(http.Response)
 	_, err := d.client.Project.Get(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		option.WithResponseBodyInto(&res),
 		option.WithMiddleware(logging.Middleware(ctx)),
 	)

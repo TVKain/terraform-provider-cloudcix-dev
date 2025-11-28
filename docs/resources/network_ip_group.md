@@ -27,13 +27,13 @@ underscores, and hyphens.
 
 ### Optional
 
-- `pk` (Number)
 - `version` (Number) The IP version of the IP Address Group Objects in the IP Address Group. Accepted versions are 4 and 6.
 If not sent, it will default to 4.
 
 ### Read-Only
 
 - `content` (Attributes) (see [below for nested schema](#nestedatt--content))
+- `id` (Number) The ID of this resource.
 
 <a id="nestedatt--content"></a>
 ### Nested Schema for `content`

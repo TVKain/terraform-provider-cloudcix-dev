@@ -24,7 +24,6 @@ description: |-
 
 - `name` (String) The user-friendly name for the Compute Snapshots Resource. If not sent, it will default to the name
 current name.
-- `pk` (Number)
 - `state` (String) Change the state of the Compute Snapshot, triggering the CloudCIX Robot to perform the requested action.
 Users can only request state changes from certain current states:
 
@@ -36,6 +35,7 @@ Users can only request state changes from certain current states:
 ### Read-Only
 
 - `content` (Attributes) (see [below for nested schema](#nestedatt--content))
+- `id` (Number) The ID of this resource.
 
 <a id="nestedatt--content"></a>
 ### Nested Schema for `content`

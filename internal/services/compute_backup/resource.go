@@ -112,7 +112,7 @@ func (r *ComputeBackupResource) Update(ctx context.Context, req resource.UpdateR
 	res := new(http.Response)
 	_, err = r.client.Compute.Backups.Update(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		cloudcix.ComputeBackupUpdateParams{},
 		option.WithRequestBody("application/json", dataBytes),
 		option.WithResponseBodyInto(&res),
@@ -144,7 +144,7 @@ func (r *ComputeBackupResource) Read(ctx context.Context, req resource.ReadReque
 	res := new(http.Response)
 	_, err := r.client.Compute.Backups.Get(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		option.WithResponseBodyInto(&res),
 		option.WithMiddleware(logging.Middleware(ctx)),
 	)

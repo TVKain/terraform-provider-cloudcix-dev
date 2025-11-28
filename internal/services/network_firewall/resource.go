@@ -112,7 +112,7 @@ func (r *NetworkFirewallResource) Update(ctx context.Context, req resource.Updat
 	res := new(http.Response)
 	_, err = r.client.Network.Firewalls.Update(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		cloudcix.NetworkFirewallUpdateParams{},
 		option.WithRequestBody("application/json", dataBytes),
 		option.WithResponseBodyInto(&res),
@@ -144,7 +144,7 @@ func (r *NetworkFirewallResource) Read(ctx context.Context, req resource.ReadReq
 	res := new(http.Response)
 	_, err := r.client.Network.Firewalls.Get(
 		ctx,
-		data.Pk.ValueInt64(),
+		data.ID.ValueInt64(),
 		option.WithResponseBodyInto(&res),
 		option.WithMiddleware(logging.Middleware(ctx)),
 	)
