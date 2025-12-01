@@ -6,6 +6,7 @@ import (
 	"context"
 
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/customfield"
+	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 )
@@ -200,6 +201,7 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 						"nexthop": schema.StringAttribute{
 							Description: "An IP address from one of the networks configured on the Router in the Project to forward the\npacket to. Returned if the type is \"static_route\".",
 							Computed:    true,
+							CustomType:  jsontypes.NormalizedType{},
 						},
 						"vlan": schema.Int64Attribute{
 							Description: `The VLAN ID of the network. Returned if the type is "router".`,
