@@ -13,18 +13,18 @@ type NetworkRouterContentEnvelope struct {
 }
 
 type NetworkRouterModel struct {
-	ID          types.Int64                                           `tfsdk:"id" json:"id,computed"`
-	ProjectID   types.Int64                                           `tfsdk:"project_id" json:"project_id,required"`
-	Type        types.String                                          `tfsdk:"type" json:"type,optional"`
-	Name        types.String                                          `tfsdk:"name" json:"name,optional"`
-	State       types.String                                          `tfsdk:"state" json:"state,optional,no_refresh"`
-	Metadata    *NetworkRouterMetadataModel                           `tfsdk:"metadata" json:"metadata,optional"`
-	Networks    *[]*NetworkRouterNetworksModel                        `tfsdk:"networks" json:"networks,optional"`
-	Created     types.String                                          `tfsdk:"created" json:"created,computed"`
-	GracePeriod types.Int64                                           `tfsdk:"grace_period" json:"grace_period,computed"`
-	Updated     types.String                                          `tfsdk:"updated" json:"updated,computed"`
-	Uri         types.String                                          `tfsdk:"uri" json:"uri,computed"`
-	Specs       customfield.NestedObjectList[NetworkRouterSpecsModel] `tfsdk:"specs" json:"specs,computed"`
+	ID          types.Int64                                              `tfsdk:"id" json:"id,computed"`
+	ProjectID   types.Int64                                              `tfsdk:"project_id" json:"project_id,required"`
+	Type        types.String                                             `tfsdk:"type" json:"type,optional"`
+	Name        types.String                                             `tfsdk:"name" json:"name,optional"`
+	State       types.String                                             `tfsdk:"state" json:"state,optional,no_refresh"`
+	Metadata    *NetworkRouterMetadataModel                              `tfsdk:"metadata" json:"metadata,optional"`
+	Networks    customfield.NestedObjectList[NetworkRouterNetworksModel] `tfsdk:"networks" json:"networks,computed_optional"`
+	Created     types.String                                             `tfsdk:"created" json:"created,computed"`
+	GracePeriod types.Int64                                              `tfsdk:"grace_period" json:"grace_period,computed"`
+	Updated     types.String                                             `tfsdk:"updated" json:"updated,computed"`
+	Uri         types.String                                             `tfsdk:"uri" json:"uri,computed"`
+	Specs       customfield.NestedObjectList[NetworkRouterSpecsModel]    `tfsdk:"specs" json:"specs,computed"`
 }
 
 func (m NetworkRouterModel) MarshalJSON() (data []byte, err error) {
@@ -43,9 +43,9 @@ type NetworkRouterMetadataModel struct {
 
 type NetworkRouterNetworksModel struct {
 	Ipv4 types.String `tfsdk:"ipv4" json:"ipv4,optional"`
-	Ipv6 types.String `tfsdk:"ipv6" json:"ipv6,optional"`
+	Ipv6 types.String `tfsdk:"ipv6" json:"ipv6,computed_optional"`
 	Name types.String `tfsdk:"name" json:"name,optional"`
-	Vlan types.Int64  `tfsdk:"vlan" json:"vlan,optional"`
+	Vlan types.Int64  `tfsdk:"vlan" json:"vlan,computed_optional"`
 }
 
 type NetworkRouterSpecsModel struct {
