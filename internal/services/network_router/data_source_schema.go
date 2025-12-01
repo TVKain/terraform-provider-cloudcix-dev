@@ -166,6 +166,9 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 						Description: "The ID of the assigned public IPv6 address for the Router.",
 						Computed:    true,
 					},
+					"vlan": schema.Int64Attribute{
+						Computed: true,
+					},
 				},
 			},
 			"networks": schema.ListNestedAttribute{
