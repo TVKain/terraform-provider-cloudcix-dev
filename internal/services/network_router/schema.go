@@ -61,7 +61,9 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 			},
 			"networks": schema.ListNestedAttribute{
 				Description: "Networks for the Netork Routers of the type \"router\".\n\nAn array of the list of networks defined on the Network Router.\nExisting networks (vlan property is not None) can have their names updated but IPv4/IPv6 ranges and VLAN\ncannot be modified. To create a new network on the Network Router, append an object to the list with an\n`ipv4` key for an available RFC 1918 address range. The `ipv6` and `vlan` values will be generated based\non what is available in the region.",
+				Computed:    true,
 				Optional:    true,
+				CustomType:  customfield.NewNestedObjectListType[NetworkRouterNetworksModel](ctx),
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"ipv4": schema.StringAttribute{
@@ -70,7 +72,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 						},
 						"ipv6": schema.StringAttribute{
 							Description: "The IPv6 address range of the network",
-							Optional:    true,
+							Computed:    true,
 						},
 						"name": schema.StringAttribute{
 							Description: "The name of the network",
@@ -78,7 +80,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 						},
 						"vlan": schema.Int64Attribute{
 							Description: "The VLAN ID of the network.",
-							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},
