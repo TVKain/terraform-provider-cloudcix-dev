@@ -76,6 +76,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 							PlanModifiers: []planmodifier.String{
         						stringplanmodifier.UseStateForUnknown(),
     						},
+							Optional:    true,
 						},
 						"name": schema.StringAttribute{
 							Description: "The name of the network",
@@ -87,6 +88,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 							PlanModifiers: []planmodifier.Int64{
         						int64planmodifier.UseStateForUnknown(),
     						},
+							Optional:    true,
 						},
 					},
 				},
