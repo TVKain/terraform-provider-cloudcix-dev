@@ -6,6 +6,7 @@ import (
 	"context"
 
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/customfield"
+	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 )
@@ -165,6 +166,10 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 					"ipv6_address_id": schema.Int64Attribute{
 						Description: "The ID of the assigned public IPv6 address for the Router.",
 						Computed:    true,
+					},
+					"vlan": schema.StringAttribute{
+						Computed:   true,
+						CustomType: jsontypes.NormalizedType{},
 					},
 				},
 			},
