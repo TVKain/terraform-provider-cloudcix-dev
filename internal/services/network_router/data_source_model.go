@@ -4,7 +4,6 @@ package network_router
 
 import (
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/customfield"
-	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -32,7 +31,7 @@ type NetworkRouterMetadataDataSourceModel struct {
 	Ipv4AddressID types.Int64                                                               `tfsdk:"ipv4_address_id" json:"ipv4_address_id,computed"`
 	Ipv6Address   customfield.NestedObject[NetworkRouterMetadataIpv6AddressDataSourceModel] `tfsdk:"ipv6_address" json:"ipv6_address,computed"`
 	Ipv6AddressID types.Int64                                                               `tfsdk:"ipv6_address_id" json:"ipv6_address_id,computed"`
-	Vlan          jsontypes.Normalized                                                      `tfsdk:"vlan" json:"vlan,computed"`
+	Vlan          types.Int64                                                               `tfsdk:"vlan" json:"vlan,computed"`
 }
 
 type NetworkRouterMetadataIpv4AddressDataSourceModel struct {

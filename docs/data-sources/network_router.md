@@ -40,7 +40,7 @@ Read-Only:
 - `ipv4_address_id` (Number) The ID of the assigned public IPv4 address for the Router.
 - `ipv6_address` (Attributes) (see [below for nested schema](#nestedatt--metadata--ipv6_address))
 - `ipv6_address_id` (Number) The ID of the assigned public IPv6 address for the Router.
-- `vlan` (String)
+- `vlan` (Number)
 
 <a id="nestedatt--metadata--ipv4_address"></a>
 ### Nested Schema for `metadata.ipv4_address`
