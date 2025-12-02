@@ -5,6 +5,7 @@ package compute_instance
 import (
 	"context"
 
+	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/customfield"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
@@ -80,11 +81,14 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 			},
 			"interfaces": schema.ListNestedAttribute{
 				Description: "Optional. A list of network interfaces that represent the interfaces that will be configured on the LXD\ninstance.",
+				Computed:    true,
 				Optional:    true,
+				CustomType:  customfield.NewNestedObjectListType[ComputeInstanceInterfacesModel](ctx),
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"gateway": schema.BoolAttribute{
 							Description: "Flag representing if this interface will be the Gateway Interface to the Public\nInternet.",
+							Computed:    true,
 							Optional:    true,
 						},
 						"ipv4_addresses": schema.ListNestedAttribute{
@@ -105,7 +109,9 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 						},
 						"ipv6_addresses": schema.ListNestedAttribute{
 							Description: "A list of IPv6 address objects to be assigned to this interface. All addresses in this list\nmust be from the same network as the `ipv4_addresses`.",
+							Computed:    true,
 							Optional:    true,
+							CustomType:  customfield.NewNestedObjectListType[ComputeInstanceInterfacesIpv6AddressesModel](ctx),
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"address": schema.StringAttribute{
