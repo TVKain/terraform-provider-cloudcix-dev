@@ -5,7 +5,6 @@ package network_firewall
 import (
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/apijson"
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/customfield"
-	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -35,15 +34,15 @@ func (m NetworkFirewallModel) MarshalJSONForUpdate(state NetworkFirewallModel) (
 }
 
 type NetworkFirewallRulesModel struct {
-	Allow       types.Bool           `tfsdk:"allow" json:"allow,optional"`
-	Description types.String         `tfsdk:"description" json:"description,optional"`
-	Destination types.String         `tfsdk:"destination" json:"destination,optional"`
-	GroupName   types.String         `tfsdk:"group_name" json:"group_name,optional"`
-	Inbound     types.Bool           `tfsdk:"inbound" json:"inbound,optional"`
-	Port        types.String         `tfsdk:"port" json:"port,optional"`
-	Protocol    types.String         `tfsdk:"protocol" json:"protocol,optional"`
-	Source      types.String         `tfsdk:"source" json:"source,optional"`
-	Zone        jsontypes.Normalized `tfsdk:"zone" json:"zone,optional,no_refresh"`
+	Allow       types.Bool   `tfsdk:"allow" json:"allow,optional"`
+	Description types.String `tfsdk:"description" json:"description,optional"`
+	Destination types.String `tfsdk:"destination" json:"destination,optional"`
+	GroupName   types.String `tfsdk:"group_name" json:"group_name,optional"`
+	Inbound     types.Bool   `tfsdk:"inbound" json:"inbound,optional"`
+	Port        types.String `tfsdk:"port" json:"port,optional"`
+	Protocol    types.String `tfsdk:"protocol" json:"protocol,optional"`
+	Source      types.String `tfsdk:"source" json:"source,optional"`
+	Zone        types.String `tfsdk:"zone" json:"zone,optional"`
 }
 
 type NetworkFirewallSpecsModel struct {

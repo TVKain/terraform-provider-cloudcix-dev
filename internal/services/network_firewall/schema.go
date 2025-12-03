@@ -6,7 +6,6 @@ import (
 	"context"
 
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/customfield"
-	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
@@ -82,7 +81,6 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 						"zone": schema.StringAttribute{
 							Description: "Required if type is \"project\".\n\nA zone is a logical grouping of network interfaces or traffic sources that share the\nsame trust level. Firewall rules are defined in terms of traffic flows, simplifying policy\nmanagement. If not sent, it will default to `Public`.\n\nSupported options are:\n- `Public`: Represents connections between the CloudCIX Project networks and the public\n  internet.\n- `Private`: Represents connections between the CloudCIX Project networks.\n- `VPNS2S`: Represents connections between the CloudCIX Project Networks and the Customers'\n  on-premises network.",
 							Optional:    true,
-							CustomType:  jsontypes.NormalizedType{},
 						},
 					},
 				},
