@@ -68,13 +68,13 @@ type NetworkRouterMetadataIpv6AddressPublicIPDataSourceModel struct {
 }
 
 type NetworkRouterNetworksDataSourceModel struct {
-	Destination types.String `tfsdk:"destination" json:"destination,computed"`
 	Ipv4        types.String `tfsdk:"ipv4" json:"ipv4,computed"`
 	Ipv6        types.String `tfsdk:"ipv6" json:"ipv6,computed"`
+	Vlan        types.Int64  `tfsdk:"vlan" json:"vlan,computed"`
+	Destination types.String `tfsdk:"destination" json:"destination,computed"`
 	Name        types.String `tfsdk:"name" json:"name,computed"`
 	Nat         types.Bool   `tfsdk:"nat" json:"nat,computed"`
 	Nexthop     types.String `tfsdk:"nexthop" json:"nexthop,computed"`
-	Vlan        types.Int64  `tfsdk:"vlan" json:"vlan,computed"`
 }
 
 type NetworkRouterSpecsDataSourceModel struct {
