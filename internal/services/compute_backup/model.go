@@ -14,12 +14,12 @@ type ComputeBackupContentEnvelope struct {
 
 type ComputeBackupModel struct {
 	ID         types.Int64                                           `tfsdk:"id" json:"id,computed"`
-	InstanceID types.Int64                                           `tfsdk:"instance_id" json:"instance_id,required,no_refresh"`
+	InstanceID types.Int64                                           `tfsdk:"instance_id" json:"instance_id,required"`
 	ProjectID  types.Int64                                           `tfsdk:"project_id" json:"project_id,required"`
-	Type       types.String                                          `tfsdk:"type" json:"type,optional"`
 	Name       types.String                                          `tfsdk:"name" json:"name,optional"`
-	State      types.String                                          `tfsdk:"state" json:"state,optional"`
+	Type       types.String                                          `tfsdk:"type" json:"type,optional"`
 	Created    types.String                                          `tfsdk:"created" json:"created,computed"`
+	State      types.String                                          `tfsdk:"state" json:"state,computed"`
 	Updated    types.String                                          `tfsdk:"updated" json:"updated,computed"`
 	Uri        types.String                                          `tfsdk:"uri" json:"uri,computed"`
 	Instance   customfield.NestedObject[ComputeBackupInstanceModel]  `tfsdk:"instance" json:"instance,computed"`
@@ -31,7 +31,7 @@ func (m ComputeBackupModel) MarshalJSON() (data []byte, err error) {
 }
 
 func (m ComputeBackupModel) MarshalJSONForUpdate(state ComputeBackupModel) (data []byte, err error) {
-	return apijson.MarshalForPatch(m, state)
+	return apijson.MarshalForUpdate(m, state)
 }
 
 type ComputeBackupInstanceModel struct {

@@ -26,10 +26,6 @@ exactly ONE project firewall and ONE geo firewall maximum.
 to the name 'Geofilter'. If not sent and the type is "project", it will default to the name 'Firewall'.
 - `rules` (Attributes List) A list of the rules to be configured in the Network Firewall type. They will be applied in the order they
 are sent. (see [below for nested schema](#nestedatt--rules))
-- `state` (String) Change the state of the Network Firewall, triggering the CloudCIX Robot to perform the requested action.
-Users can only request state changes from certain current states:
-
-- running -> update_running or delete
 - `type` (String) The type of Network Firewall to create. Each project can have exactly ONE of each type.
 Valid options are:
 - "geo"
@@ -44,6 +40,7 @@ Valid options are:
 - `created` (String) Timestamp, in ISO format, of when the Network Firewall record was created.
 - `id` (Number) The ID of the Network Firewall record
 - `specs` (Attributes List) An array of the specs for the Network Firewall (see [below for nested schema](#nestedatt--specs))
+- `state` (String) The current state of the Network Firewall
 - `updated` (String) Timestamp, in ISO format, of when the Network Firewall record was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Network Firewall instance.
 

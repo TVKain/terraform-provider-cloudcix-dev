@@ -11,16 +11,13 @@ import (
 	"github.com/TVKain/cloudcix-go"
 	"github.com/TVKain/cloudcix-go/option"
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/apijson"
-	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/importpath"
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/logging"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
-	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.ResourceWithConfigure = (*ComputeBackupResource)(nil)
 var _ resource.ResourceWithModifyPlan = (*ComputeBackupResource)(nil)
-var _ resource.ResourceWithImportState = (*ComputeBackupResource)(nil)
 
 func NewResource() resource.Resource {
 	return &ComputeBackupResource{}
@@ -93,130 +90,15 @@ func (r *ComputeBackupResource) Create(ctx context.Context, req resource.CreateR
 }
 
 func (r *ComputeBackupResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var data *ComputeBackupModel
-
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	var state *ComputeBackupModel
-
-	resp.Diagnostics.Append(req.State.Get(ctx, &state)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	dataBytes, err := data.MarshalJSONForUpdate(*state)
-	if err != nil {
-		resp.Diagnostics.AddError("failed to serialize http request", err.Error())
-		return
-	}
-	res := new(http.Response)
-	env := ComputeBackupContentEnvelope{*data}
-	_, err = r.client.Compute.Backups.Update(
-		ctx,
-		data.ID.ValueInt64(),
-		cloudcix.ComputeBackupUpdateParams{},
-		option.WithRequestBody("application/json", dataBytes),
-		option.WithResponseBodyInto(&res),
-		option.WithMiddleware(logging.Middleware(ctx)),
-	)
-	if err != nil {
-		resp.Diagnostics.AddError("failed to make http request", err.Error())
-		return
-	}
-	bytes, _ := io.ReadAll(res.Body)
-	err = apijson.UnmarshalComputed(bytes, &env)
-	if err != nil {
-		resp.Diagnostics.AddError("failed to deserialize http request", err.Error())
-		return
-	}
-	data = &env.Content
-
-	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+	// Update is not supported for this resource
 }
 
 func (r *ComputeBackupResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var data *ComputeBackupModel
 
-	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	res := new(http.Response)
-	env := ComputeBackupContentEnvelope{*data}
-	_, err := r.client.Compute.Backups.Get(
-		ctx,
-		data.ID.ValueInt64(),
-		option.WithResponseBodyInto(&res),
-		option.WithMiddleware(logging.Middleware(ctx)),
-	)
-	if res != nil && res.StatusCode == 404 {
-		resp.Diagnostics.AddWarning("Resource not found", "The resource was not found on the server and will be removed from state.")
-		resp.State.RemoveResource(ctx)
-		return
-	}
-	if err != nil {
-		resp.Diagnostics.AddError("failed to make http request", err.Error())
-		return
-	}
-	bytes, _ := io.ReadAll(res.Body)
-	err = apijson.Unmarshal(bytes, &env)
-	if err != nil {
-		resp.Diagnostics.AddError("failed to deserialize http request", err.Error())
-		return
-	}
-	data = &env.Content
-
-	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *ComputeBackupResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 
-}
-
-func (r *ComputeBackupResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	var data = new(ComputeBackupModel)
-
-	path := int64(0)
-	diags := importpath.ParseImportID(
-		req.ID,
-		"<pk>",
-		&path,
-	)
-	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	data.ID = types.Int64Value(path)
-
-	res := new(http.Response)
-	env := ComputeBackupContentEnvelope{*data}
-	_, err := r.client.Compute.Backups.Get(
-		ctx,
-		path,
-		option.WithResponseBodyInto(&res),
-		option.WithMiddleware(logging.Middleware(ctx)),
-	)
-	if err != nil {
-		resp.Diagnostics.AddError("failed to make http request", err.Error())
-		return
-	}
-	bytes, _ := io.ReadAll(res.Body)
-	err = apijson.Unmarshal(bytes, &env)
-	if err != nil {
-		resp.Diagnostics.AddError("failed to deserialize http request", err.Error())
-		return
-	}
-	data = &env.Content
-
-	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *ComputeBackupResource) ModifyPlan(ctx context.Context, req resource.ModifyPlanRequest, resp *resource.ModifyPlanResponse) {

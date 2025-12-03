@@ -15,13 +15,13 @@ type NetworkRouterContentEnvelope struct {
 type NetworkRouterModel struct {
 	ID          types.Int64                                           `tfsdk:"id" json:"id,computed"`
 	ProjectID   types.Int64                                           `tfsdk:"project_id" json:"project_id,required"`
-	Type        types.String                                          `tfsdk:"type" json:"type,optional"`
 	Name        types.String                                          `tfsdk:"name" json:"name,optional"`
-	State       types.String                                          `tfsdk:"state" json:"state,optional"`
+	Type        types.String                                          `tfsdk:"type" json:"type,optional"`
 	Metadata    *NetworkRouterMetadataModel                           `tfsdk:"metadata" json:"metadata,optional"`
 	Networks    *[]*NetworkRouterNetworksModel                        `tfsdk:"networks" json:"networks,optional"`
 	Created     types.String                                          `tfsdk:"created" json:"created,computed"`
 	GracePeriod types.Int64                                           `tfsdk:"grace_period" json:"grace_period,computed"`
+	State       types.String                                          `tfsdk:"state" json:"state,computed"`
 	Updated     types.String                                          `tfsdk:"updated" json:"updated,computed"`
 	Uri         types.String                                          `tfsdk:"uri" json:"uri,computed"`
 	Specs       customfield.NestedObjectList[NetworkRouterSpecsModel] `tfsdk:"specs" json:"specs,computed"`
@@ -32,13 +32,13 @@ func (m NetworkRouterModel) MarshalJSON() (data []byte, err error) {
 }
 
 func (m NetworkRouterModel) MarshalJSONForUpdate(state NetworkRouterModel) (data []byte, err error) {
-	return apijson.MarshalForPatch(m, state)
+	return apijson.MarshalForUpdate(m, state)
 }
 
 type NetworkRouterMetadataModel struct {
-	Destination types.String `tfsdk:"destination" json:"destination,optional,no_refresh"`
-	Nat         types.Bool   `tfsdk:"nat" json:"nat,optional,no_refresh"`
-	Nexthop     types.String `tfsdk:"nexthop" json:"nexthop,optional,no_refresh"`
+	Destination types.String `tfsdk:"destination" json:"destination,optional"`
+	Nat         types.Bool   `tfsdk:"nat" json:"nat,optional"`
+	Nexthop     types.String `tfsdk:"nexthop" json:"nexthop,optional"`
 }
 
 type NetworkRouterNetworksModel struct {

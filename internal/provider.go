@@ -9,8 +9,6 @@ import (
 	"github.com/TVKain/cloudcix-go"
 	"github.com/TVKain/cloudcix-go/option"
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/services/compute_backup"
-	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/services/compute_gpu"
-	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/services/compute_image"
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/services/compute_instance"
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/services/compute_snapshot"
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/services/network_firewall"
@@ -108,7 +106,6 @@ func (p *CloudcixDevProvider) ConfigValidators(_ context.Context) []provider.Con
 func (p *CloudcixDevProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
 		compute_backup.NewResource,
-		compute_gpu.NewResource,
 		compute_instance.NewResource,
 		compute_snapshot.NewResource,
 		network_firewall.NewResource,
@@ -121,19 +118,7 @@ func (p *CloudcixDevProvider) Resources(ctx context.Context) []func() resource.R
 }
 
 func (p *CloudcixDevProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
-	return []func() datasource.DataSource{
-		compute_backup.NewComputeBackupDataSource,
-		compute_gpu.NewComputeGPUDataSource,
-		compute_image.NewComputeImageDataSource,
-		compute_instance.NewComputeInstanceDataSource,
-		compute_snapshot.NewComputeSnapshotDataSource,
-		network_firewall.NewNetworkFirewallDataSource,
-		network_ip_group.NewNetworkIPGroupDataSource,
-		network_router.NewNetworkRouterDataSource,
-		network_vpn.NewNetworkVpnDataSource,
-		project.NewProjectDataSource,
-		storage_volume.NewStorageVolumeDataSource,
-	}
+	return []func() datasource.DataSource{}
 }
 
 func NewProvider(version string) func() provider.Provider {

@@ -24,10 +24,6 @@ description: |-
 
 - `name` (String) The user-friendly name for the Compute Snapshot Resource. If not sent, it will default to the name
 "Compute Snapshot"
-- `state` (String) Change the state of the Compute Snapshot, triggering the CloudCIX Robot to perform the requested action.
-Users can only request state changes from certain current states:
-
-- running -> update_running or delete
 - `type` (String) The type of Compute Snapshot to create. Valid options are:
 - "hyperv"
 - "lxd"
@@ -40,6 +36,7 @@ Users can only request state changes from certain current states:
 - `metadata` (Attributes) The metadata details of the The metadata details of the "hyperv" Compute Snapshot. Returned if the type
 is "hyperv". (see [below for nested schema](#nestedatt--metadata))
 - `specs` (Attributes List) An array of the specs for the Compute Snapshots (see [below for nested schema](#nestedatt--specs))
+- `state` (String) The current state of the Compute Snapshots
 - `updated` (String) Timestamp, in ISO format, of when the Compute Snapshots record was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Compute Snapshots instance.
 
