@@ -32,7 +32,7 @@ func (m ComputeSnapshotModel) MarshalJSON() (data []byte, err error) {
 }
 
 func (m ComputeSnapshotModel) MarshalJSONForUpdate(state ComputeSnapshotModel) (data []byte, err error) {
-	return apijson.MarshalForPatch(m, state)
+	return apijson.MarshalForUpdate(m, state)
 }
 
 type ComputeSnapshotInstanceModel struct {
