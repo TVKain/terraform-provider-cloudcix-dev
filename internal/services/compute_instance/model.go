@@ -53,7 +53,7 @@ type ComputeInstanceInterfacesModel struct {
 }
 
 type ComputeInstanceInterfacesIpv4AddressesModel struct {
-	Address  types.String `tfsdk:"address" json:"address,optional"`
+	Address  types.String `tfsdk:"address" json:"address,computed_optional"`
 	Nat      types.Bool   `tfsdk:"nat" json:"nat,optional"`
 	PublicIP types.String `tfsdk:"public_ip" json:"public_ip,computed"`
 }

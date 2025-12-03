@@ -99,6 +99,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 								Attributes: map[string]schema.Attribute{
 									"address": schema.StringAttribute{
 										Description: "An RFC1918 IPv4 address to be configured on this interface on\nthe Compute Instance instance.",
+										Computed:    true,
 										Optional:    true,
 									},
 									"nat": schema.BoolAttribute{
