@@ -29,7 +29,7 @@ func (m ComputeGPUModel) MarshalJSON() (data []byte, err error) {
 }
 
 func (m ComputeGPUModel) MarshalJSONForUpdate(state ComputeGPUModel) (data []byte, err error) {
-	return apijson.MarshalForPatch(m, state)
+	return apijson.MarshalForUpdate(m, state)
 }
 
 type ComputeGPUInstanceModel struct {

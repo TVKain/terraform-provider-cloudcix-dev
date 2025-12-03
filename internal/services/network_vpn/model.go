@@ -30,7 +30,7 @@ func (m NetworkVpnModel) MarshalJSON() (data []byte, err error) {
 }
 
 func (m NetworkVpnModel) MarshalJSONForUpdate(state NetworkVpnModel) (data []byte, err error) {
-	return apijson.MarshalForPatch(m, state)
+	return apijson.MarshalForUpdate(m, state)
 }
 
 type NetworkVpnMetadataModel struct {

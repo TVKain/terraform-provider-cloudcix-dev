@@ -30,5 +30,5 @@ func (m ProjectModel) MarshalJSON() (data []byte, err error) {
 }
 
 func (m ProjectModel) MarshalJSONForUpdate(state ProjectModel) (data []byte, err error) {
-	return apijson.MarshalForPatch(m, state)
+	return apijson.MarshalForUpdate(m, state)
 }

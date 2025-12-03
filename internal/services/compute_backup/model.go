@@ -31,7 +31,7 @@ func (m ComputeBackupModel) MarshalJSON() (data []byte, err error) {
 }
 
 func (m ComputeBackupModel) MarshalJSONForUpdate(state ComputeBackupModel) (data []byte, err error) {
-	return apijson.MarshalForPatch(m, state)
+	return apijson.MarshalForUpdate(m, state)
 }
 
 type ComputeBackupInstanceModel struct {
