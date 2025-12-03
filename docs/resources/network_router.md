@@ -17,6 +17,12 @@ description: |-
 
 ### Required
 
+- `networks` (Attributes List) Option if type is "router". If not sent, defaults will be applied.
+
+An array of the list of networks defined on the Router. To create a new network on the Network
+Router, append an object to the list with an `ipv4` key for an available RFC 1918 address range. The `ipv6`
+and `vlan` values will be generated based on what is available in the region. If networks is not sent, the
+default address range 10.0.0.1/24 will be assigned to `ipv4`. (see [below for nested schema](#nestedatt--networks))
 - `project_id` (Number) The ID of the User's Project into which this Network Router should be added.
 
 ### Optional
@@ -26,12 +32,6 @@ description: |-
 Metadata for the Static Route resource. (see [below for nested schema](#nestedatt--metadata))
 - `name` (String) The user-friendly name for the Network Router.  If not sent and the type is "router", it will default to
 the name 'Router'. If not sent and the type is "static_route", it will default to the name 'Static Route'.
-- `networks` (Attributes List) Option if type is "router". If not sent, defaults will be applied.
-
-An array of the list of networks defined on the Router. To create a new network on the Network
-Router, append an object to the list with an `ipv4` key for an available RFC 1918 address range. The `ipv6`
-and `vlan` values will be generated based on what is available in the region. If networks is not sent, the
-default address range 10.0.0.1/24 will be assigned to `ipv4`. (see [below for nested schema](#nestedatt--networks))
 - `state` (String) Change the state of the Network Router, triggering the CloudCIX Robot to perform the requested action.
 
 Available state transitions:
@@ -62,6 +62,15 @@ The default value is 7 days for a Router.
 - `updated` (String) Timestamp, in ISO format, of when the Router Resource record was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Network Routers instance.
 
+<a id="nestedatt--networks"></a>
+### Nested Schema for `networks`
+
+Optional:
+
+- `ipv4` (String) The IPv4 address range of the network
+- `name` (String) The name of the network
+
+
 <a id="nestedatt--metadata"></a>
 ### Nested Schema for `metadata`
 
@@ -78,15 +87,6 @@ Note:
 Project's Router. It will default to False if not sent.
 - `nexthop` (String) An IP address from one of the networks configured on the Router in the Project to forward the
 packet to.
-
-
-<a id="nestedatt--networks"></a>
-### Nested Schema for `networks`
-
-Optional:
-
-- `ipv4` (String) The IPv4 address range of the network
-- `name` (String) The name of the network
 
 
 <a id="nestedatt--specs"></a>

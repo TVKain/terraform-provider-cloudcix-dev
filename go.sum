@@ -9,8 +9,8 @@ github.com/Microsoft/go-winio v0.5.2 h1:a9IhgEQBCUEk6QCdml9CiJGhAws+YwffDHEMp1VM
 github.com/Microsoft/go-winio v0.5.2/go.mod h1:WpS1mjBmmwHBEWmogvA2mj8546UReBk4v8QkMxJ6pZY=
 github.com/ProtonMail/go-crypto v0.0.0-20230217124315-7d5c6f04bbb8 h1:wPbRQzjjwFc0ih8puEVAOFGELsn1zoIIYdxvML7mDxA=
 github.com/ProtonMail/go-crypto v0.0.0-20230217124315-7d5c6f04bbb8/go.mod h1:I0gYDMZ6Z5GRU7l58bNFSkPTFN6Yl12dsUlAZ8xy98g=
-github.com/TVKain/cloudcix-go v0.10.1 h1:vibukhj0QPS9lnvtle3LCQEBCAW56gGWKTfvUviHnO0=
-github.com/TVKain/cloudcix-go v0.10.1/go.mod h1:/mI6pT1a8l4zXTDNOO4Ef25Md+02QGuUA6pyOr+rQE0=
+github.com/TVKain/cloudcix-go v0.13.0 h1:vRK+IoQyNTDu7q9xqftuy3BlXcsr87jUtcvs+jubxmo=
+github.com/TVKain/cloudcix-go v0.13.0/go.mod h1:/mI6pT1a8l4zXTDNOO4Ef25Md+02QGuUA6pyOr+rQE0=
 github.com/acomagu/bufpipe v1.0.4 h1:e3H4WUzM3npvo5uv95QuJM3cQspFNtFBzvJ2oNjKIDQ=
 github.com/acomagu/bufpipe v1.0.4/go.mod h1:mxdxdup/WdsKVreO5GpW4+M/1CE2sMG4jeGJ2sYmHc4=
 github.com/apparentlymart/go-textseg/v13 v13.0.0 h1:Y+KvPE1NYz0xl601PVImeQfFyEy6iT90AvPUL1NNfNw=
