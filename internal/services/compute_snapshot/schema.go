@@ -21,7 +21,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 			"id": schema.Int64Attribute{
 				Description:   "The ID of the Compute Snapshots record",
 				Computed:      true,
-				PlanModifiers: []planmodifier.Int64{int64planmodifier.UseStateForUnknown()},
+				PlanModifiers: []planmodifier.Int64{int64planmodifier.UseStateForUnknown(), int64planmodifier.RequiresReplace()},
 			},
 			"instance_id": schema.Int64Attribute{
 				Description:   "The id of the Compute Instance the Compute Snapshot is to be taken of.",
@@ -33,21 +33,22 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				Required:      true,
 				PlanModifiers: []planmodifier.Int64{int64planmodifier.RequiresReplace()},
 			},
+			"name": schema.StringAttribute{
+				Description:   "The user-friendly name for the Compute Snapshot Resource. If not sent, it will default to the name\n\"Compute Snapshot\"",
+				Optional:      true,
+				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
+			},
 			"type": schema.StringAttribute{
 				Description:   "The type of Compute Snapshot to create. Valid options are:\n- \"hyperv\"\n- \"lxd\"",
 				Optional:      true,
 				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
 			},
-			"name": schema.StringAttribute{
-				Description: "The user-friendly name for the Compute Snapshot Resource. If not sent, it will default to the name\n\"Compute Snapshot\"",
-				Optional:    true,
-			},
-			"state": schema.StringAttribute{
-				Description: "Change the state of the Compute Snapshot, triggering the CloudCIX Robot to perform the requested action.\nUsers can only request state changes from certain current states:\n\n- running -> update_running or delete",
-				Optional:    true,
-			},
 			"created": schema.StringAttribute{
 				Description: "Timestamp, in ISO format, of when the Compute Snapshots record was created.",
+				Computed:    true,
+			},
+			"state": schema.StringAttribute{
+				Description: "The current state of the Compute Snapshots",
 				Computed:    true,
 			},
 			"updated": schema.StringAttribute{
@@ -71,7 +72,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 						Description: "The user-friendly name of the Compute Instance the Compute Snapshot is of.",
 						Computed:    true,
 					},
-					"state": schema.Int64Attribute{
+					"state": schema.StringAttribute{
 						Description: "The current state of the Compute Instance the Compute Snapshot is of.",
 						Computed:    true,
 					},

@@ -14,14 +14,14 @@ type ComputeInstanceContentEnvelope struct {
 type ComputeInstanceModel struct {
 	ID          types.Int64                        `tfsdk:"id" json:"id,computed"`
 	ProjectID   types.Int64                        `tfsdk:"project_id" json:"project_id,required"`
-	Type        types.String                       `tfsdk:"type" json:"type,optional"`
 	Metadata    *ComputeInstanceMetadataModel      `tfsdk:"metadata" json:"metadata,required"`
-	Specs       *[]*ComputeInstanceSpecsModel      `tfsdk:"specs" json:"specs,required,no_refresh"`
+	Specs       *[]*ComputeInstanceSpecsModel      `tfsdk:"specs" json:"specs,required"`
 	GracePeriod types.Int64                        `tfsdk:"grace_period" json:"grace_period,optional"`
 	Name        types.String                       `tfsdk:"name" json:"name,optional"`
-	State       types.String                       `tfsdk:"state" json:"state,optional,no_refresh"`
+	Type        types.String                       `tfsdk:"type" json:"type,optional"`
 	Interfaces  *[]*ComputeInstanceInterfacesModel `tfsdk:"interfaces" json:"interfaces,optional"`
 	Created     types.String                       `tfsdk:"created" json:"created,computed"`
+	State       types.String                       `tfsdk:"state" json:"state,computed"`
 	Updated     types.String                       `tfsdk:"updated" json:"updated,computed"`
 	Uri         types.String                       `tfsdk:"uri" json:"uri,computed"`
 }

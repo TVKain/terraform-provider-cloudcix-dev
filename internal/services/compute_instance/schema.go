@@ -8,6 +8,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 )
@@ -20,17 +22,12 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 			"id": schema.Int64Attribute{
 				Description:   "The ID of the Compute Instance record",
 				Computed:      true,
-				PlanModifiers: []planmodifier.Int64{int64planmodifier.UseStateForUnknown()},
+				PlanModifiers: []planmodifier.Int64{int64planmodifier.UseStateForUnknown(), int64planmodifier.RequiresReplace()},
 			},
 			"project_id": schema.Int64Attribute{
 				Description:   "The ID of the Project which this Compute Intsance Resource should be in.",
 				Required:      true,
 				PlanModifiers: []planmodifier.Int64{int64planmodifier.RequiresReplace()},
-			},
-			"type": schema.StringAttribute{
-				Description:   "The type of Compute Instance to create. Valid options are:\n- \"hyperv\"\n- \"lxd\"",
-				Optional:      true,
-				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
 			},
 			"metadata": schema.SingleNestedAttribute{
 				Description: "Optional. The metadata required to configure in an Compute Instance.",
@@ -49,6 +46,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 						Optional:    true,
 					},
 				},
+				PlanModifiers: []planmodifier.Object{objectplanmodifier.RequiresReplace()},
 			},
 			"specs": schema.ListNestedAttribute{
 				Description: "List of specs (SKUs) for the Compute Instance resource.",
@@ -65,18 +63,22 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 						},
 					},
 				},
+				PlanModifiers: []planmodifier.List{listplanmodifier.RequiresReplace()},
 			},
 			"grace_period": schema.Int64Attribute{
-				Description: "The number of days after a Compute Intsance is closed before it is permanently deleted.",
-				Optional:    true,
+				Description:   "The number of days after a Compute Intsance is closed before it is permanently deleted.",
+				Optional:      true,
+				PlanModifiers: []planmodifier.Int64{int64planmodifier.RequiresReplace()},
 			},
 			"name": schema.StringAttribute{
-				Description: "The user-friendly name for the Compute Intsance type. If not sent and the type is \"lxd\", it will default\nto the name 'LXD'. If not sent and the type is \"hyperv\", it will default to the name 'HyperV'.",
-				Optional:    true,
+				Description:   "The user-friendly name for the Compute Intsance type. If not sent and the type is \"lxd\", it will default\nto the name 'LXD'. If not sent and the type is \"hyperv\", it will default to the name 'HyperV'.",
+				Optional:      true,
+				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
 			},
-			"state": schema.StringAttribute{
-				Description: "Change the state of the Compute Instance, triggering the CloudCIX Robot to perform the requested action.\nUsers can only request state changes from certain current states, with specific allowed target states:\n\n- running        -> stop, delete, or update_running\n- stopped        -> restart, delete, or update_stopped\n- delete_queue   -> restart or stop",
-				Optional:    true,
+			"type": schema.StringAttribute{
+				Description:   "The type of Compute Instance to create. Valid options are:\n- \"hyperv\"\n- \"lxd\"",
+				Optional:      true,
+				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
 			},
 			"interfaces": schema.ListNestedAttribute{
 				Description: "Optional. A list of network interfaces that represent the interfaces that will be configured on the LXD\ninstance.",
@@ -117,9 +119,14 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 						},
 					},
 				},
+				PlanModifiers: []planmodifier.List{listplanmodifier.RequiresReplace()},
 			},
 			"created": schema.StringAttribute{
 				Description: "Timestamp, in ISO format, of when the Compute Instance record was created.",
+				Computed:    true,
+			},
+			"state": schema.StringAttribute{
+				Description: "The current state of the Compute Instance",
 				Computed:    true,
 			},
 			"updated": schema.StringAttribute{

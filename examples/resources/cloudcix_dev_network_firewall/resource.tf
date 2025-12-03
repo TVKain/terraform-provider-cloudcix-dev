@@ -10,6 +10,9 @@ resource "cloudcix-dev_network_firewall" "example_network_firewall" {
     port = "port"
     protocol = "protocol"
     source = "source"
+    zone = {
+
+    }
   }]
   type = "geo"
 }

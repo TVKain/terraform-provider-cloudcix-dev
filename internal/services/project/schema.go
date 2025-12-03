@@ -9,6 +9,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 )
 
 var _ resource.ResourceWithConfigValidators = (*ProjectResource)(nil)
@@ -19,20 +20,22 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 			"id": schema.Int64Attribute{
 				Description:   "The ID of the Project.",
 				Computed:      true,
-				PlanModifiers: []planmodifier.Int64{int64planmodifier.UseStateForUnknown()},
+				PlanModifiers: []planmodifier.Int64{int64planmodifier.UseStateForUnknown(), int64planmodifier.RequiresReplace()},
+			},
+			"name": schema.StringAttribute{
+				Description:   "The name of the Project. Must be unique within an Address' Project collection.",
+				Required:      true,
+				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
 			},
 			"region_id": schema.Int64Attribute{
 				Description:   "The Address ID of the CloudCIX region that the Project will be deployed in.",
 				Required:      true,
 				PlanModifiers: []planmodifier.Int64{int64planmodifier.RequiresReplace()},
 			},
-			"name": schema.StringAttribute{
-				Description: "The name of the Project. Must be unique within an Address' Project collection.",
-				Required:    true,
-			},
 			"note": schema.StringAttribute{
-				Description: "An optional note providing a description of what the Project is used for.",
-				Optional:    true,
+				Description:   "An optional note providing a description of what the Project is used for.",
+				Optional:      true,
+				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
 			},
 			"address_id": schema.Int64Attribute{
 				Description: "The ID of the Project address.",

@@ -26,10 +26,6 @@ exactly ONE project firewall and ONE geo firewall maximum.
 to the name 'Geofilter'. If not sent and the type is "project", it will default to the name 'Firewall'.
 - `rules` (Attributes List) A list of the rules to be configured in the Network Firewall type. They will be applied in the order they
 are sent. (see [below for nested schema](#nestedatt--rules))
-- `state` (String) Change the state of the Network Firewall, triggering the CloudCIX Robot to perform the requested action.
-Users can only request state changes from certain current states:
-
-- running -> update_running or delete
 - `type` (String) The type of Network Firewall to create. Each project can have exactly ONE of each type.
 Valid options are:
 - "geo"
@@ -44,6 +40,7 @@ Valid options are:
 - `created` (String) Timestamp, in ISO format, of when the Network Firewall record was created.
 - `id` (Number) The ID of the Network Firewall record
 - `specs` (Attributes List) An array of the specs for the Network Firewall (see [below for nested schema](#nestedatt--specs))
+- `state` (String) The current state of the Network Firewall
 - `updated` (String) Timestamp, in ISO format, of when the Network Firewall record was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Network Firewall instance.
 
@@ -99,6 +96,18 @@ that indicates what the destination of traffic should be in order to match this 
 It can also be just a `*` character, which will indicate that any source is allowed.
 
 Both source and destination must use the same IP Version.
+- `zone` (String) Required if type is "project".
+
+A zone is a logical grouping of network interfaces or traffic sources that share the
+same trust level. Firewall rules are defined in terms of traffic flows, simplifying policy
+management. If not sent, it will default to `Public`.
+
+Supported options are:
+- `Public`: Represents connections between the CloudCIX Project networks and the public
+  internet.
+- `Private`: Represents connections between the CloudCIX Project networks.
+- `VPNS2S`: Represents connections between the CloudCIX Project Networks and the Customers'
+  on-premises network.
 
 
 <a id="nestedatt--specs"></a>

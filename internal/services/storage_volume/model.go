@@ -15,17 +15,17 @@ type StorageVolumeContentEnvelope struct {
 type StorageVolumeModel struct {
 	ID              types.Int64                                                     `tfsdk:"id" json:"id,computed"`
 	ProjectID       types.Int64                                                     `tfsdk:"project_id" json:"project_id,required"`
-	InstanceID      types.Int64                                                     `tfsdk:"instance_id" json:"instance_id,optional,no_refresh"`
-	Type            types.String                                                    `tfsdk:"type" json:"type,optional"`
 	Specs           *[]*StorageVolumeSpecsModel                                     `tfsdk:"specs" json:"specs,required"`
+	InstanceID      types.Int64                                                     `tfsdk:"instance_id" json:"instance_id,optional"`
 	Name            types.String                                                    `tfsdk:"name" json:"name,optional"`
-	State           types.String                                                    `tfsdk:"state" json:"state,optional,no_refresh"`
-	Metadata        *StorageVolumeMetadataModel                                     `tfsdk:"metadata" json:"metadata,optional"`
+	Type            types.String                                                    `tfsdk:"type" json:"type,optional"`
 	Created         types.String                                                    `tfsdk:"created" json:"created,computed"`
+	State           types.String                                                    `tfsdk:"state" json:"state,computed"`
 	Updated         types.String                                                    `tfsdk:"updated" json:"updated,computed"`
 	Uri             types.String                                                    `tfsdk:"uri" json:"uri,computed"`
 	ContraInstances customfield.NestedObjectList[StorageVolumeContraInstancesModel] `tfsdk:"contra_instances" json:"contra_instances,computed"`
 	Instance        customfield.NestedObject[StorageVolumeInstanceModel]            `tfsdk:"instance" json:"instance,computed"`
+	Metadata        customfield.NestedObject[StorageVolumeMetadataModel]            `tfsdk:"metadata" json:"metadata,computed"`
 }
 
 func (m StorageVolumeModel) MarshalJSON() (data []byte, err error) {
@@ -41,20 +41,20 @@ type StorageVolumeSpecsModel struct {
 	SKUName  types.String `tfsdk:"sku_name" json:"sku_name,optional"`
 }
 
-type StorageVolumeMetadataModel struct {
-	AttachInstanceIDs *[]types.Int64 `tfsdk:"attach_instance_ids" json:"attach_instance_ids,optional"`
-	DetachInstanceIDs *[]types.Int64 `tfsdk:"detach_instance_ids" json:"detach_instance_ids,optional"`
-	MountPath         types.String   `tfsdk:"mount_path" json:"mount_path,optional"`
-}
-
 type StorageVolumeContraInstancesModel struct {
 	ID    types.Int64  `tfsdk:"id" json:"id,computed"`
 	Name  types.String `tfsdk:"name" json:"name,computed"`
-	State types.Int64  `tfsdk:"state" json:"state,computed"`
+	State types.String `tfsdk:"state" json:"state,computed"`
 }
 
 type StorageVolumeInstanceModel struct {
 	ID    types.Int64  `tfsdk:"id" json:"id,computed"`
 	Name  types.String `tfsdk:"name" json:"name,computed"`
-	State types.Int64  `tfsdk:"state" json:"state,computed"`
+	State types.String `tfsdk:"state" json:"state,computed"`
+}
+
+type StorageVolumeMetadataModel struct {
+	AttachInstanceIDs customfield.List[types.Int64] `tfsdk:"attach_instance_ids" json:"attach_instance_ids,computed"`
+	DetachInstanceIDs customfield.List[types.Int64] `tfsdk:"detach_instance_ids" json:"detach_instance_ids,computed"`
+	MountPath         types.String                  `tfsdk:"mount_path" json:"mount_path,computed"`
 }

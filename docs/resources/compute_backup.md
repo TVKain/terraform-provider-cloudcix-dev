@@ -24,10 +24,6 @@ description: |-
 
 - `name` (String) The user-friendly name for the Compute Backup. If not sent, it will default to the name
 "Backup HyperV" or "Backup LXD" depending on the type chosen.
-- `state` (String) Change the state of the Compute Backup, triggering the CloudCIX Robot to perform the requested action.
-Users can only request state changes from certain current states:
-
-- running -> delete
 - `type` (String) The type of Compute Backup to create. Valid options are:
 - "hyperv"
 - "lxd"
@@ -38,6 +34,7 @@ Users can only request state changes from certain current states:
 - `id` (Number) The ID of the Compute Backups record
 - `instance` (Attributes) The Compute Instance the Compute Backup record is of. (see [below for nested schema](#nestedatt--instance))
 - `specs` (Attributes List) An array of the specs for the Compute Backups (see [below for nested schema](#nestedatt--specs))
+- `state` (String) The current state of the Compute Backups
 - `updated` (String) Timestamp, in ISO format, of when the Compute Backups record was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Compute Backups instance.
 
@@ -48,7 +45,7 @@ Read-Only:
 
 - `id` (Number) The ID of the Compute Instance the Compute Backup is of.
 - `name` (String) The user-friendly name of the Compute Instance the Compute Backup is of.
-- `state` (Number) The current state of the Compute Instance the Compute Backup is of.
+- `state` (String) The current state of the Compute Instance the Compute Backup is of.
 
 
 <a id="nestedatt--specs"></a>
