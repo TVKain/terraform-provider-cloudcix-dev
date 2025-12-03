@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.20.0 (2025-12-03)
+
+Full Changelog: [v0.19.0...v0.20.0](https://github.com/TVKain/terraform-provider-cloudcix-dev/compare/v0.19.0...v0.20.0)
+
+### Features
+
+* **api:** manual updates ([9b41907](https://github.com/TVKain/terraform-provider-cloudcix-dev/commit/9b41907cf750a7de0b909442a08ebca76491ba9c))
+
 ## 0.19.0 (2025-12-03)
 
 Full Changelog: [v0.18.1...v0.19.0](https://github.com/TVKain/terraform-provider-cloudcix-dev/compare/v0.18.1...v0.19.0)
