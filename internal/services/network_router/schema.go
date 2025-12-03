@@ -34,7 +34,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
 			},
 			"name": schema.StringAttribute{
-				Description: "The user-friendly name for the Network Router. If not sent, it will default to current name.",
+				Description: "The user-friendly name for the Network Router.  If not sent and the type is \"router\", it will default to\nthe name 'Router'. If not sent and the type is \"static_route\", it will default to the name 'Static Route'.",
 				Optional:    true,
 			},
 			"state": schema.StringAttribute{
@@ -42,28 +42,26 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				Optional:    true,
 			},
 			"metadata": schema.SingleNestedAttribute{
-				Description: `Metadata for the Netork Routers of the type "static_route".`,
+				Description: "Required if type is \"static_route\".\n\nMetadata for the Static Route resource.",
 				Optional:    true,
 				Attributes: map[string]schema.Attribute{
 					"destination": schema.StringAttribute{
-						Description: "CIDR notation of the destination address range of the target network of the static route.\nThe destination cannot be updated.",
+						Description: "CIDR notation of the destination address range of the target network of the static route.\n\nNote:\n- The sent address range cannot overlap with the destination of other Static Routes in the same\n  Project.\n- The sent address range can overlap with the networks configured on the Router in the Project.\n- The sent address range cannot overlap with the \"remote_ts\" of Network VPNs in the same Project.",
 						Optional:    true,
 					},
 					"nat": schema.BoolAttribute{
-						Description: "Flag indicating if traffic from the destination can be routed to the Public internet via the\nProject's Router.",
+						Description: "Flag indicating if traffic from the destination can be routed to the Public internet via the\nProject's Router. It will default to False if not sent.",
 						Optional:    true,
 					},
 					"nexthop": schema.StringAttribute{
-						Description: "An IP address from one of the networks configured on the Router in the Project to forward the\npacket to. The nexthop cannot be updated.",
+						Description: "An IP address from one of the networks configured on the Router in the Project to forward the\npacket to.",
 						Optional:    true,
 					},
 				},
 			},
 			"networks": schema.ListNestedAttribute{
-				Description: "Networks for the Netork Routers of the type \"router\".\n\nAn array of the list of networks defined on the Network Router.\nExisting networks (vlan property is not None) can have their names updated but IPv4/IPv6 ranges and VLAN\ncannot be modified. To create a new network on the Network Router, append an object to the list with an\n`ipv4` key for an available RFC 1918 address range. The `ipv6` and `vlan` values will be generated based\non what is available in the region.",
-				Computed:    true,
+				Description: "Option if type is \"router\". If not sent, defaults will be applied.\n\nAn array of the list of networks defined on the Router. To create a new network on the Network\nRouter, append an object to the list with an `ipv4` key for an available RFC 1918 address range. The `ipv6`\nand `vlan` values will be generated based on what is available in the region. If networks is not sent, the\ndefault address range 10.0.0.1/24 will be assigned to `ipv4`.",
 				Optional:    true,
-				CustomType:  customfield.NewNestedObjectListType[NetworkRouterNetworksModel](ctx),
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"ipv4": schema.StringAttribute{

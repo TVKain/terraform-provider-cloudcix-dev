@@ -22,8 +22,8 @@ description: |-
 
 ### Optional
 
-- `name` (String) The user-friendly name for the Compute Backups Resource. If not sent, it will default to the
-current name.
+- `name` (String) The user-friendly name for the Compute Backup. If not sent, it will default to the name
+"Backup HyperV" or "Backup LXD" depending on the type chosen.
 - `state` (String) Change the state of the Compute Backup, triggering the CloudCIX Robot to perform the requested action.
 Users can only request state changes from certain current states:
 

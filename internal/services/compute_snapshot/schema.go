@@ -39,7 +39,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
 			},
 			"name": schema.StringAttribute{
-				Description: "The user-friendly name for the Compute Snapshots Resource. If not sent, it will default to the name\ncurrent name.",
+				Description: "The user-friendly name for the Compute Snapshot Resource. If not sent, it will default to the name\n\"Compute Snapshot\"",
 				Optional:    true,
 			},
 			"state": schema.StringAttribute{

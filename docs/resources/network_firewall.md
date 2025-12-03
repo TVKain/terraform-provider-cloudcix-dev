@@ -22,13 +22,10 @@ exactly ONE project firewall and ONE geo firewall maximum.
 
 ### Optional
 
-- `name` (String) The user-friendly name for the Network Firewall type. If not sent, it will default to current name.
-- `rules` (Attributes List) CRITICAL WARNING: This completely replaces ALL existing firewall rules. Any rules not included
-in this update will be permanently deleted. You must include the complete list of all rules
-you want to keep, both existing and new ones.
-
-A list of the rules to be configured in the Network Firewall type. They will be applied in the
-order they are sent. (see [below for nested schema](#nestedatt--rules))
+- `name` (String) The user-friendly name for the Network Firewall type. If not sent and the type is "geo", it will default
+to the name 'Geofilter'. If not sent and the type is "project", it will default to the name 'Firewall'.
+- `rules` (Attributes List) A list of the rules to be configured in the Network Firewall type. They will be applied in the order they
+are sent. (see [below for nested schema](#nestedatt--rules))
 - `state` (String) Change the state of the Network Firewall, triggering the CloudCIX Robot to perform the requested action.
 Users can only request state changes from certain current states:
 

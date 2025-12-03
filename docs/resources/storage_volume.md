@@ -18,6 +18,7 @@ description: |-
 ### Required
 
 - `project_id` (Number) The ID of the Project which this Storage Volume should be in.
+- `specs` (Attributes List) List of specs (SKUs) for the Storage Volume drive. (see [below for nested schema](#nestedatt--specs))
 
 ### Optional
 
@@ -27,9 +28,8 @@ The ID of a Compute Instance with the type "hyperv" the Storage Volume is to be 
 - `metadata` (Attributes) Required if type is "cephfs".
 
 Metadata for the Storage Volume drive with the type "cephfs". (see [below for nested schema](#nestedatt--metadata))
-- `name` (String) The user-friendly name for the Storage Volume. If not sent, it will default to current name.
-- `specs` (Attributes List) List of specs (SKUs) for the Storage Volume drive. Only required if increasing the current size of
-the Storage Volume. (see [below for nested schema](#nestedatt--specs))
+- `name` (String) The user-friendly name for the Storage Volume type. If not sent and the type is "cephfs", it will default
+to the name 'Ceph'. If not sent and the type is "hyperv", it will default to the name 'Storage HyperV'.
 - `state` (String) Change the state of the Storage Volume, triggering the CloudCIX Robot to perform the requested action.
 Users can only request state changes from certain current states:
 
@@ -49,6 +49,15 @@ Users can only request state changes from certain current states:
 - `updated` (String) Timestamp, in ISO format, of when the Storage Volume was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Storage Volumes instance.
 
+<a id="nestedatt--specs"></a>
+### Nested Schema for `specs`
+
+Optional:
+
+- `quantity` (Number) The quantity (GB) of the SKU to configure the Storage Volume drive with.
+- `sku_name` (String) The name of the SKU for the Storage Volume drive.
+
+
 <a id="nestedatt--metadata"></a>
 ### Nested Schema for `metadata`
 
@@ -59,15 +68,6 @@ mount this Ceph file system volume to. If not sent, it will default to an empty 
 - `detach_instance_ids` (List of Number) A list of IDs for running or stopped Compute Instances with the type "lxd" in the project to
 unmount this Ceph file system volume from. If not sent, it will default to an empty list.
 - `mount_path` (String) The mount path for the Ceph file system volume inside the LXC instance.
-
-
-<a id="nestedatt--specs"></a>
-### Nested Schema for `specs`
-
-Optional:
-
-- `quantity` (Number) The quantity (GB) of the SKU to configure the Storage Volume drive with.
-- `sku_name` (String) The name of the SKU for the Storage Volume drive.
 
 
 <a id="nestedatt--contra_instances"></a>
