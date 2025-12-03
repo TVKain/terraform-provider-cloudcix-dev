@@ -30,7 +30,7 @@ func (m NetworkFirewallModel) MarshalJSON() (data []byte, err error) {
 }
 
 func (m NetworkFirewallModel) MarshalJSONForUpdate(state NetworkFirewallModel) (data []byte, err error) {
-	return apijson.MarshalForPatch(m, state)
+	return apijson.MarshalForUpdate(m, state)
 }
 
 type NetworkFirewallRulesModel struct {

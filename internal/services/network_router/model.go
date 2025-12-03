@@ -32,7 +32,7 @@ func (m NetworkRouterModel) MarshalJSON() (data []byte, err error) {
 }
 
 func (m NetworkRouterModel) MarshalJSONForUpdate(state NetworkRouterModel) (data []byte, err error) {
-	return apijson.MarshalForPatch(m, state)
+	return apijson.MarshalForUpdate(m, state)
 }
 
 type NetworkRouterMetadataModel struct {
