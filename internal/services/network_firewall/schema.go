@@ -34,7 +34,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
 			},
 			"name": schema.StringAttribute{
-				Description: "The user-friendly name for the Network Firewall type. If not sent, it will default to current name.",
+				Description: "The user-friendly name for the Network Firewall type. If not sent and the type is \"geo\", it will default\nto the name 'Geofilter'. If not sent and the type is \"project\", it will default to the name 'Firewall'.",
 				Optional:    true,
 			},
 			"state": schema.StringAttribute{
@@ -42,7 +42,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				Optional:    true,
 			},
 			"rules": schema.ListNestedAttribute{
-				Description: "CRITICAL WARNING: This completely replaces ALL existing firewall rules. Any rules not included\nin this update will be permanently deleted. You must include the complete list of all rules\nyou want to keep, both existing and new ones.\n\nA list of the rules to be configured in the Network Firewall type. They will be applied in the\norder they are sent.",
+				Description: "A list of the rules to be configured in the Network Firewall type. They will be applied in the order they\nare sent.",
 				Optional:    true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{

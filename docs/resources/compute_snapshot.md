@@ -22,8 +22,8 @@ description: |-
 
 ### Optional
 
-- `name` (String) The user-friendly name for the Compute Snapshots Resource. If not sent, it will default to the name
-current name.
+- `name` (String) The user-friendly name for the Compute Snapshot Resource. If not sent, it will default to the name
+"Compute Snapshot"
 - `state` (String) Change the state of the Compute Snapshot, triggering the CloudCIX Robot to perform the requested action.
 Users can only request state changes from certain current states:
 

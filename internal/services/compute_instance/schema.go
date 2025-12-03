@@ -5,7 +5,6 @@ package compute_instance
 import (
 	"context"
 
-	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/customfield"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
@@ -42,7 +41,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 						Optional:    true,
 					},
 					"instance_type": schema.StringAttribute{
-						Description: "Optional, The Compute Instance instance type of the VM. Valid options are \"container\"\nor \"virtual-machine\". If not sent it will default to \"container\".",
+						Description: "Optional, The Compute Instance instance type of the VM. Valid options\nare \"container\" or \"virtual-machine\". If not sent it will default to \"container\".",
 						Optional:    true,
 					},
 					"userdata": schema.StringAttribute{
@@ -72,7 +71,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				Optional:    true,
 			},
 			"name": schema.StringAttribute{
-				Description: "The user-friendly name for the Compute Intsance type. If not sent and the type is \"lxd\", it will default\nto the name 'LXD'. If not sent and the type is \"hyperv\", it will default to the name 'VM HyperV'.",
+				Description: "The user-friendly name for the Compute Intsance type. If not sent and the type is \"lxd\", it will default\nto the name 'LXD'. If not sent and the type is \"hyperv\", it will default to the name 'HyperV'.",
 				Optional:    true,
 			},
 			"state": schema.StringAttribute{
@@ -81,14 +80,11 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 			},
 			"interfaces": schema.ListNestedAttribute{
 				Description: "Optional. A list of network interfaces that represent the interfaces that will be configured on the LXD\ninstance.",
-				Computed:    true,
 				Optional:    true,
-				CustomType:  customfield.NewNestedObjectListType[ComputeInstanceInterfacesModel](ctx),
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"gateway": schema.BoolAttribute{
 							Description: "Flag representing if this interface will be the Gateway Interface to the Public\nInternet.",
-							Computed:    true,
 							Optional:    true,
 						},
 						"ipv4_addresses": schema.ListNestedAttribute{
@@ -109,13 +105,11 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 						},
 						"ipv6_addresses": schema.ListNestedAttribute{
 							Description: "A list of IPv6 address objects to be assigned to this interface. All addresses in this list\nmust be from the same network as the `ipv4_addresses`.",
-							Computed:    true,
 							Optional:    true,
-							CustomType:  customfield.NewNestedObjectListType[ComputeInstanceInterfacesIpv6AddressesModel](ctx),
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"address": schema.StringAttribute{
-										Description: "An IPv6 address to be configured on this interface on\nthe Compute Instance instance.",
+										Description: "An IPv6 address to be configured on this interface\non the Compute Instance instance.",
 										Optional:    true,
 									},
 								},
