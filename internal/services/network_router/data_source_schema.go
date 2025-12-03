@@ -174,20 +174,16 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 				CustomType:  customfield.NewNestedObjectListType[NetworkRouterNetworksDataSourceModel](ctx),
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
+						"destination": schema.StringAttribute{
+							Description: "The destination address range of the target network of the static route. Returned if the\ntype is \"static_route\".",
+							Computed:    true,
+						},
 						"ipv4": schema.StringAttribute{
 							Description: `The IPv4 address range of the network. Returned if the type is "router".`,
 							Computed:    true,
 						},
 						"ipv6": schema.StringAttribute{
 							Description: `The IPv6 address range of the network. Returned if the type is "router".`,
-							Computed:    true,
-						},
-						"vlan": schema.Int64Attribute{
-							Description: `The VLAN ID of the network. Returned if the type is "router".`,
-							Computed:    true,
-						},
-						"destination": schema.StringAttribute{
-							Description: "The destination address range of the target network of the static route. Returned if the\ntype is \"static_route\".",
 							Computed:    true,
 						},
 						"name": schema.StringAttribute{
@@ -200,6 +196,10 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 						},
 						"nexthop": schema.StringAttribute{
 							Description: "An IP address from one of the networks configured on the Router in the Project to forward the\npacket to. Returned if the type is \"static_route\".",
+							Computed:    true,
+						},
+						"vlan": schema.Int64Attribute{
+							Description: `The VLAN ID of the network. Returned if the type is "router".`,
 							Computed:    true,
 						},
 					},
