@@ -33,6 +33,22 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				Optional:      true,
 				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
 			},
+			"networks": schema.ListNestedAttribute{
+				Description: "Option if type is \"router\". If not sent, defaults will be applied.\n\nAn array of the list of networks defined on the Router. To create a new network on the Network\nRouter, append an object to the list with an `ipv4` key for an available RFC 1918 address range. The `ipv6`\nand `vlan` values will be generated based on what is available in the region. If networks is not sent, the\ndefault address range 10.0.0.1/24 will be assigned to `ipv4`.",
+				Required:    true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"ipv4": schema.StringAttribute{
+							Description: "The IPv4 address range of the network",
+							Optional:    true,
+						},
+						"name": schema.StringAttribute{
+							Description: "The name of the network",
+							Optional:    true,
+						},
+					},
+				},
+			},
 			"name": schema.StringAttribute{
 				Description: "The user-friendly name for the Network Router.  If not sent and the type is \"router\", it will default to\nthe name 'Router'. If not sent and the type is \"static_route\", it will default to the name 'Static Route'.",
 				Optional:    true,
@@ -56,22 +72,6 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 					"nexthop": schema.StringAttribute{
 						Description: "An IP address from one of the networks configured on the Router in the Project to forward the\npacket to.",
 						Optional:    true,
-					},
-				},
-			},
-			"networks": schema.ListNestedAttribute{
-				Description: "Option if type is \"router\". If not sent, defaults will be applied.\n\nAn array of the list of networks defined on the Router. To create a new network on the Network\nRouter, append an object to the list with an `ipv4` key for an available RFC 1918 address range. The `ipv6`\nand `vlan` values will be generated based on what is available in the region. If networks is not sent, the\ndefault address range 10.0.0.1/24 will be assigned to `ipv4`.",
-				Optional:    true,
-				NestedObject: schema.NestedAttributeObject{
-					Attributes: map[string]schema.Attribute{
-						"ipv4": schema.StringAttribute{
-							Description: "The IPv4 address range of the network",
-							Optional:    true,
-						},
-						"name": schema.StringAttribute{
-							Description: "The name of the network",
-							Optional:    true,
-						},
 					},
 				},
 			},
