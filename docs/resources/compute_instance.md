@@ -109,6 +109,10 @@ the Compute Instance instance.
 - `nat` (Boolean) Optional, Flag indicating if this address should be NATted to a Public IP Address.
 If not sent, it will default to False.
 
+Read-Only:
+
+- `public_ip` (String) Public IP
+
 
 <a id="nestedatt--interfaces--ipv6_addresses"></a>
 ### Nested Schema for `interfaces.ipv6_addresses`

@@ -5,6 +5,7 @@ package compute_instance
 import (
 	"context"
 
+	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/customfield"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
@@ -80,7 +81,9 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 			},
 			"interfaces": schema.ListNestedAttribute{
 				Description: "Optional. A list of network interfaces that represent the interfaces that will be configured on the LXD\ninstance.",
+				Computed:    true,
 				Optional:    true,
+				CustomType:  customfield.NewNestedObjectListType[ComputeInstanceInterfacesModel](ctx),
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"gateway": schema.BoolAttribute{
@@ -89,7 +92,9 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 						},
 						"ipv4_addresses": schema.ListNestedAttribute{
 							Description: "A list of IPv4 address objects to be assigned to this interface. All addresses in this list\nmust be from the same network.",
+							Computed:    true,
 							Optional:    true,
+							CustomType:  customfield.NewNestedObjectListType[ComputeInstanceInterfacesIpv4AddressesModel](ctx),
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"address": schema.StringAttribute{
@@ -99,6 +104,10 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 									"nat": schema.BoolAttribute{
 										Description: "Optional, Flag indicating if this address should be NATted to a Public IP Address.\nIf not sent, it will default to False.",
 										Optional:    true,
+									},
+									"public_ip": schema.StringAttribute{
+										Description: "Public IP",
+										Computed:    true,
 									},
 								},
 							},

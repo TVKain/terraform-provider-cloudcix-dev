@@ -24,6 +24,7 @@ resource "cloudcix-dev_compute_instance" "example_compute_instance" {
     ipv4_addresses = [{
       address = "10.0.0.10"
       nat = true
+      public_ip = "public_ip"
     }]
     ipv6_addresses = [{
       address = "2a02:2078:9:1234::20"
