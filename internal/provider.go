@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/TVKain/cloudcix-go"
+	"github.com/TVKain/cloudcix-go/config"
 	"github.com/TVKain/cloudcix-go/option"
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/services/compute_backup"
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/services/compute_gpu"
@@ -39,8 +40,11 @@ type CloudcixDevProvider struct {
 
 // CloudcixDevProviderModel describes the provider data model.
 type CloudcixDevProviderModel struct {
-	BaseURL types.String `tfsdk:"base_url" json:"base_url,optional"`
-	APIKey  types.String `tfsdk:"api_key" json:"api_key,optional"`
+	BaseURL           types.String `tfsdk:"base_url" json:"base_url,optional"`
+	APIKey            types.String `tfsdk:"api_key" json:"api_key,optional"`
+	Username          types.String `tfsdk:"username" json:"username,optional"`
+	Password          types.String `tfsdk:"password" json:"password,optional"`
+	ConfigurationFile types.String `tfsdk:"configuration_file" json:"configuration_file,optional"`
 }
 
 func (p *CloudcixDevProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
@@ -58,6 +62,16 @@ func ProviderSchema(ctx context.Context) schema.Schema {
 			"api_key": schema.StringAttribute{
 				Optional: true,
 			},
+			"username": schema.StringAttribute{
+				Optional: true,
+			},
+			"password": schema.StringAttribute{
+				Optional:  true,
+				Sensitive: true,
+			},
+			"configuration_file": schema.StringAttribute{
+				Optional: true,
+			},
 		},
 	}
 }
@@ -73,18 +87,44 @@ func (p *CloudcixDevProvider) Configure(ctx context.Context, req provider.Config
 	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
 
 	opts := []option.RequestOption{}
+	var settings *config.Settings
+	var err error
+
+	if !data.ConfigurationFile.IsNull() && !data.ConfigurationFile.IsUnknown() {
+		settings, err = config.LoadSettings(data.ConfigurationFile.ValueString())
+		if err != nil {
+			resp.Diagnostics.AddError("Failed to load settings file", err.Error())
+			return
+		}
+	} else {
+		settings, _ = config.LoadSettings()
+	}
 
 	if !data.BaseURL.IsNull() && !data.BaseURL.IsUnknown() {
-		opts = append(opts, option.WithBaseURL(data.BaseURL.ValueString()))
+		settings.CLOUDCIX_API_URL = data.BaseURL.ValueString()
 	} else if o, ok := os.LookupEnv("CLOUDCIX_BASE_URL"); ok {
-		opts = append(opts, option.WithBaseURL(o))
+		settings.CLOUDCIX_API_URL = o
 	}
 
 	if !data.APIKey.IsNull() && !data.APIKey.IsUnknown() {
-		opts = append(opts, option.WithAPIKey(data.APIKey.ValueString()))
+		settings.CLOUDCIX_API_KEY = data.APIKey.ValueString()
 	} else if o, ok := os.LookupEnv("CLOUDCIX_API_KEY"); ok {
-		opts = append(opts, option.WithAPIKey(o))
-	} else {
+		settings.CLOUDCIX_API_KEY = o
+	}
+
+	if !data.Username.IsNull() && !data.Username.IsUnknown() {
+		settings.CLOUDCIX_API_USERNAME = data.Username.ValueString()
+	} else if o, ok := os.LookupEnv("CLOUDCIX_API_USERNAME"); ok {
+		settings.CLOUDCIX_API_USERNAME = o
+	}
+
+	if !data.Password.IsNull() && !data.Password.IsUnknown() {
+		settings.CLOUDCIX_API_PASSWORD = data.Password.ValueString()
+	} else if o, ok := os.LookupEnv("CLOUDCIX_API_PASSWORD"); ok {
+		settings.CLOUDCIX_API_PASSWORD = o
+	}
+
+	if settings.CLOUDCIX_API_KEY == "" {
 		resp.Diagnostics.AddAttributeError(
 			path.Root("api_key"),
 			"Missing api_key value",
@@ -93,7 +133,8 @@ func (p *CloudcixDevProvider) Configure(ctx context.Context, req provider.Config
 		return
 	}
 
-	client := cloudcix.NewClient(
+	client := cloudcix.NewClientWithSettings(
+		settings,
 		opts...,
 	)
 
