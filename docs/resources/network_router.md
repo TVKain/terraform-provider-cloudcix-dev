@@ -32,6 +32,19 @@ An array of the list of networks defined on the Router. To create a new network 
 Router, append an object to the list with an `ipv4` key for an available RFC 1918 address range. The `ipv6`
 and `vlan` values will be generated based on what is available in the region. If networks is not sent, the
 default address range 10.0.0.1/24 will be assigned to `ipv4`. (see [below for nested schema](#nestedatt--networks))
+- `state` (String) Change the state of the Network Router, triggering the CloudCIX Robot to perform the requested action.
+
+Available state transitions:
+
+From running state, you can transition to:
+- update_running - Apply pending configuration changes while keeping the router operational
+- delete - Mark the router for deletion (requires all other project resources to be deleted first)
+
+From delete_queue state, you can transition to:
+- restart - Restore a router that was previously marked for deletion
+
+Note: To delete a router, all other resources in the project must first be in one of these states:
+delete, delete_queue, or deleting.
 - `type` (String) The type of Network Router to create. Valid options are:
 - "router"
  A virtual route that manages IP forwarding, and participate in routing decisions
@@ -46,7 +59,6 @@ default address range 10.0.0.1/24 will be assigned to `ipv4`. (see [below for ne
 The default value is 7 days for a Router.
 - `id` (Number) The ID of the Router Resource record
 - `specs` (Attributes List) An array of the specs for the Router Resource (see [below for nested schema](#nestedatt--specs))
-- `state` (String) The current state of the Router Resource
 - `updated` (String) Timestamp, in ISO format, of when the Router Resource record was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Network Routers instance.
 

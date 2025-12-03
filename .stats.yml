@@ -1,4 +1,4 @@
-configured_endpoints: 21
+configured_endpoints: 44
 openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/acme-TVKain%2Fcloudcix-ed08dd8a85c1adcbfe7edaa8baf05191b99f3bc44241e12a554820ca04af0b93.yml
 openapi_spec_hash: 7fced66666c559a434525b33c66aee81
-config_hash: a29fb822a60aa62ee18c51f23df92b44
+config_hash: b5752a1fbaf3e1e38f7c4b55ea22611a

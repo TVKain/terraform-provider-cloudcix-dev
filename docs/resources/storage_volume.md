@@ -25,8 +25,15 @@ description: |-
 - `instance_id` (Number) Required if type is "hyperv".
 
 The ID of a Compute Instance with the type "hyperv" the Storage Volume is to be mounted to.
+- `metadata` (Attributes) Required if type is "cephfs".
+
+Metadata for the Storage Volume drive with the type "cephfs". (see [below for nested schema](#nestedatt--metadata))
 - `name` (String) The user-friendly name for the Storage Volume type. If not sent and the type is "cephfs", it will default
 to the name 'Ceph'. If not sent and the type is "hyperv", it will default to the name 'Storage HyperV'.
+- `state` (String) Change the state of the Storage Volume, triggering the CloudCIX Robot to perform the requested action.
+Users can only request state changes from certain current states:
+
+- running -> update_running or delete
 - `type` (String) The type of Storage Volume to create. Valid options are:
 - "cephfs"
   A Ceph file system volume which can be mounted to one or more Compute Instances of the type "lxd"
@@ -39,8 +46,6 @@ to the name 'Ceph'. If not sent and the type is "hyperv", it will default to the
 - `created` (String) Timestamp, in ISO format, of when the Storage Volume was created.
 - `id` (Number) The ID of the Storage Volume record
 - `instance` (Attributes) The "hyperv" Compute Instance the "hyperv" Storage Volume is attached to. (see [below for nested schema](#nestedatt--instance))
-- `metadata` (Attributes) The metadata object of "ceph" Storage Volumes (see [below for nested schema](#nestedatt--metadata))
-- `state` (String) The current state of the Storage Volume
 - `updated` (String) Timestamp, in ISO format, of when the Storage Volume was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Storage Volumes instance.
 
@@ -51,6 +56,18 @@ Optional:
 
 - `quantity` (Number) The quantity (GB) of the SKU to configure the Storage Volume drive with.
 - `sku_name` (String) The name of the SKU for the Storage Volume drive.
+
+
+<a id="nestedatt--metadata"></a>
+### Nested Schema for `metadata`
+
+Optional:
+
+- `attach_instance_ids` (List of Number) A list of IDs for running or stopped Compute Instances with the type "lxd" in the project to
+mount this Ceph file system volume to. If not sent, it will default to an empty list.
+- `detach_instance_ids` (List of Number) A list of IDs for running or stopped Compute Instances with the type "lxd" in the project to
+unmount this Ceph file system volume from. If not sent, it will default to an empty list.
+- `mount_path` (String) The mount path for the Ceph file system volume inside the LXC instance.
 
 
 <a id="nestedatt--contra_instances"></a>
@@ -71,13 +88,3 @@ Read-Only:
 - `id` (Number) The ID of the "hyperv" Compute Instance the "hyperv" Storage Volume is attached to.
 - `name` (String) The user-friendly name of the "hyperv" Compute Instance the "hyperv" Storage Volume is attached to.
 - `state` (String) The current state of the "hyperv" Compute Instance the "hyperv" Storage Volume is attached to.
-
-
-<a id="nestedatt--metadata"></a>
-### Nested Schema for `metadata`
-
-Read-Only:
-
-- `attach_instance_ids` (List of Number) List of IDs of "lxd" Compute instances which the "ceph" Storage Volume should be attached to.
-- `detach_instance_ids` (List of Number) List of IDs of "lxd" Compute instances which the "ceph" Storage Volume should be detached from.
-- `mount_path` (String) The mpunt path of the "ceph" Storage Volume on the "lxd" Compute instances.

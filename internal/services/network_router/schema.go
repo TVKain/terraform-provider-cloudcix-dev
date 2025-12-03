@@ -9,8 +9,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 )
@@ -23,22 +21,25 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 			"id": schema.Int64Attribute{
 				Description:   "The ID of the Router Resource record",
 				Computed:      true,
-				PlanModifiers: []planmodifier.Int64{int64planmodifier.UseStateForUnknown(), int64planmodifier.RequiresReplace()},
+				PlanModifiers: []planmodifier.Int64{int64planmodifier.UseStateForUnknown()},
 			},
 			"project_id": schema.Int64Attribute{
 				Description:   "The ID of the User's Project into which this Network Router should be added.",
 				Required:      true,
 				PlanModifiers: []planmodifier.Int64{int64planmodifier.RequiresReplace()},
 			},
-			"name": schema.StringAttribute{
-				Description:   "The user-friendly name for the Network Router.  If not sent and the type is \"router\", it will default to\nthe name 'Router'. If not sent and the type is \"static_route\", it will default to the name 'Static Route'.",
-				Optional:      true,
-				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
-			},
 			"type": schema.StringAttribute{
 				Description:   "The type of Network Router to create. Valid options are:\n- \"router\"\n A virtual route that manages IP forwarding, and participate in routing decisions\n for the Project.\n- \"static_route\"\n  Maps a destination network to a nexthop IP, enabling deterministic packet forwarding.",
 				Optional:      true,
 				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
+			},
+			"name": schema.StringAttribute{
+				Description: "The user-friendly name for the Network Router.  If not sent and the type is \"router\", it will default to\nthe name 'Router'. If not sent and the type is \"static_route\", it will default to the name 'Static Route'.",
+				Optional:    true,
+			},
+			"state": schema.StringAttribute{
+				Description: "Change the state of the Network Router, triggering the CloudCIX Robot to perform the requested action.\n\nAvailable state transitions:\n\nFrom running state, you can transition to:\n- update_running - Apply pending configuration changes while keeping the router operational\n- delete - Mark the router for deletion (requires all other project resources to be deleted first)\n\nFrom delete_queue state, you can transition to:\n- restart - Restore a router that was previously marked for deletion\n\nNote: To delete a router, all other resources in the project must first be in one of these states:\ndelete, delete_queue, or deleting.",
+				Optional:    true,
 			},
 			"metadata": schema.SingleNestedAttribute{
 				Description: "Required if type is \"static_route\".\n\nMetadata for the Static Route resource.",
@@ -57,7 +58,6 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 						Optional:    true,
 					},
 				},
-				PlanModifiers: []planmodifier.Object{objectplanmodifier.RequiresReplace()},
 			},
 			"networks": schema.ListNestedAttribute{
 				Description: "Option if type is \"router\". If not sent, defaults will be applied.\n\nAn array of the list of networks defined on the Router. To create a new network on the Network\nRouter, append an object to the list with an `ipv4` key for an available RFC 1918 address range. The `ipv6`\nand `vlan` values will be generated based on what is available in the region. If networks is not sent, the\ndefault address range 10.0.0.1/24 will be assigned to `ipv4`.",
@@ -74,7 +74,6 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 						},
 					},
 				},
-				PlanModifiers: []planmodifier.List{listplanmodifier.RequiresReplace()},
 			},
 			"created": schema.StringAttribute{
 				Description: "Timestamp, in ISO format, of when the Router Resource record was created.",
@@ -82,10 +81,6 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 			},
 			"grace_period": schema.Int64Attribute{
 				Description: "Number of days after a user sets the state of the Router to Scrub (8) before it is executed by robot.\nThe default value is 7 days for a Router.",
-				Computed:    true,
-			},
-			"state": schema.StringAttribute{
-				Description: "The current state of the Router Resource",
 				Computed:    true,
 			},
 			"updated": schema.StringAttribute{

@@ -16,11 +16,11 @@ type NetworkFirewallContentEnvelope struct {
 type NetworkFirewallModel struct {
 	ID        types.Int64                                             `tfsdk:"id" json:"id,computed"`
 	ProjectID types.Int64                                             `tfsdk:"project_id" json:"project_id,required"`
-	Name      types.String                                            `tfsdk:"name" json:"name,optional"`
 	Type      types.String                                            `tfsdk:"type" json:"type,optional"`
+	Name      types.String                                            `tfsdk:"name" json:"name,optional"`
+	State     types.String                                            `tfsdk:"state" json:"state,optional"`
 	Rules     *[]*NetworkFirewallRulesModel                           `tfsdk:"rules" json:"rules,optional"`
 	Created   types.String                                            `tfsdk:"created" json:"created,computed"`
-	State     types.String                                            `tfsdk:"state" json:"state,computed"`
 	Updated   types.String                                            `tfsdk:"updated" json:"updated,computed"`
 	Uri       types.String                                            `tfsdk:"uri" json:"uri,computed"`
 	Specs     customfield.NestedObjectList[NetworkFirewallSpecsModel] `tfsdk:"specs" json:"specs,computed"`
@@ -31,7 +31,7 @@ func (m NetworkFirewallModel) MarshalJSON() (data []byte, err error) {
 }
 
 func (m NetworkFirewallModel) MarshalJSONForUpdate(state NetworkFirewallModel) (data []byte, err error) {
-	return apijson.MarshalForUpdate(m, state)
+	return apijson.MarshalForPatch(m, state)
 }
 
 type NetworkFirewallRulesModel struct {
@@ -43,7 +43,7 @@ type NetworkFirewallRulesModel struct {
 	Port        types.String         `tfsdk:"port" json:"port,optional"`
 	Protocol    types.String         `tfsdk:"protocol" json:"protocol,optional"`
 	Source      types.String         `tfsdk:"source" json:"source,optional"`
-	Zone        jsontypes.Normalized `tfsdk:"zone" json:"zone,optional"`
+	Zone        jsontypes.Normalized `tfsdk:"zone" json:"zone,optional,no_refresh"`
 }
 
 type NetworkFirewallSpecsModel struct {

@@ -28,6 +28,12 @@ description: |-
 instance. (see [below for nested schema](#nestedatt--interfaces))
 - `name` (String) The user-friendly name for the Compute Intsance type. If not sent and the type is "lxd", it will default
 to the name 'LXD'. If not sent and the type is "hyperv", it will default to the name 'HyperV'.
+- `state` (String) Change the state of the Compute Instance, triggering the CloudCIX Robot to perform the requested action.
+Users can only request state changes from certain current states, with specific allowed target states:
+
+- running        -> stop, delete, or update_running
+- stopped        -> restart, delete, or update_stopped
+- delete_queue   -> restart or stop
 - `type` (String) The type of Compute Instance to create. Valid options are:
 - "hyperv"
 - "lxd"
@@ -36,7 +42,6 @@ to the name 'LXD'. If not sent and the type is "hyperv", it will default to the 
 
 - `created` (String) Timestamp, in ISO format, of when the Compute Instance record was created.
 - `id` (Number) The ID of the Compute Instance record
-- `state` (String) The current state of the Compute Instance
 - `updated` (String) Timestamp, in ISO format, of when the Compute Instance record was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Compute Instance.
 

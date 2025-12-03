@@ -10,7 +10,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 )
@@ -23,22 +22,25 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 			"id": schema.Int64Attribute{
 				Description:   "The ID of the Network Firewall record",
 				Computed:      true,
-				PlanModifiers: []planmodifier.Int64{int64planmodifier.UseStateForUnknown(), int64planmodifier.RequiresReplace()},
+				PlanModifiers: []planmodifier.Int64{int64planmodifier.UseStateForUnknown()},
 			},
 			"project_id": schema.Int64Attribute{
 				Description:   "The ID of the Project which this Network Firewall should be created in. Each project can have\nexactly ONE project firewall and ONE geo firewall maximum.",
 				Required:      true,
 				PlanModifiers: []planmodifier.Int64{int64planmodifier.RequiresReplace()},
 			},
-			"name": schema.StringAttribute{
-				Description:   "The user-friendly name for the Network Firewall type. If not sent and the type is \"geo\", it will default\nto the name 'Geofilter'. If not sent and the type is \"project\", it will default to the name 'Firewall'.",
-				Optional:      true,
-				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
-			},
 			"type": schema.StringAttribute{
 				Description:   "The type of Network Firewall to create. Each project can have exactly ONE of each type.\nValid options are:\n- \"geo\"\n  A Geofilter Firewall to allow or block traffic from/to specific countries using global\n  IP Address Groups (member_id = 0) that contain country IP ranges.\n- \"project\"\n  A Project Firewall with fine-grained rules for specific source/destination IPs, ports,\n  and protocols. Can reference your member's IP Address Groups using '@groupname' syntax.",
 				Optional:      true,
 				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
+			},
+			"name": schema.StringAttribute{
+				Description: "The user-friendly name for the Network Firewall type. If not sent and the type is \"geo\", it will default\nto the name 'Geofilter'. If not sent and the type is \"project\", it will default to the name 'Firewall'.",
+				Optional:    true,
+			},
+			"state": schema.StringAttribute{
+				Description: "Change the state of the Network Firewall, triggering the CloudCIX Robot to perform the requested action.\nUsers can only request state changes from certain current states:\n\n- running -> update_running or delete",
+				Optional:    true,
 			},
 			"rules": schema.ListNestedAttribute{
 				Description: "A list of the rules to be configured in the Network Firewall type. They will be applied in the order they\nare sent.",
@@ -84,14 +86,9 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 						},
 					},
 				},
-				PlanModifiers: []planmodifier.List{listplanmodifier.RequiresReplace()},
 			},
 			"created": schema.StringAttribute{
 				Description: "Timestamp, in ISO format, of when the Network Firewall record was created.",
-				Computed:    true,
-			},
-			"state": schema.StringAttribute{
-				Description: "The current state of the Network Firewall",
 				Computed:    true,
 			},
 			"updated": schema.StringAttribute{
