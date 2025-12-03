@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/config"
 	"github.com/TVKain/cloudcix-go/option"
+	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/config"
 )
 
 // GetToken attempts to generate a CloudCIX token for the given credentials
@@ -17,7 +17,7 @@ func GetToken(email, password, apiKey string, opts ...option.RequestOption) (str
 		CLOUDCIX_API_PASSWORD: password,
 		CLOUDCIX_API_KEY:      apiKey,
 	}
-	
+
 	tokenManager := NewTokenManager(settings)
 	return tokenManager.GetValidToken(context.Background(), opts...)
 }
@@ -28,11 +28,11 @@ func GetAdminToken(settingsFile ...string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("failed to load settings: %w", err)
 	}
-	
+
 	if err := settings.Validate(); err != nil {
 		return "", fmt.Errorf("invalid settings: %w", err)
 	}
-	
+
 	tokenManager := NewTokenManager(settings)
 	return tokenManager.GetValidToken(context.Background())
 }
@@ -50,10 +50,10 @@ func WithAutoAuth(tokenManager *TokenManager) option.RequestOption {
 		if err != nil {
 			return nil, err
 		}
-		
+
 		// Add auth header
 		req.Header.Set("X-Auth-Token", token)
-		
+
 		return next(req)
 	})
 }

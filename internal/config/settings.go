@@ -19,7 +19,7 @@ type Settings struct {
 	CLOUDCIX_API_PASSWORD string
 	CLOUDCIX_API_KEY      string
 	// Default region ID for creating resources
-	CLOUDCIX_REGION_ID    int
+	CLOUDCIX_REGION_ID int
 }
 
 // DefaultSettings returns the default configuration
@@ -33,7 +33,7 @@ func DefaultSettings() *Settings {
 // LoadSettings loads configuration from environment variables and optionally from a file
 func LoadSettings(settingsFile ...string) (*Settings, error) {
 	settings := DefaultSettings()
-	
+
 	// Load from environment variables first
 	if val := os.Getenv("CLOUDCIX_API_URL"); val != "" {
 		settings.CLOUDCIX_API_URL = val
@@ -58,7 +58,7 @@ func LoadSettings(settingsFile ...string) (*Settings, error) {
 			settings.CLOUDCIX_REGION_ID = regionID
 		}
 	}
-	
+
 	// If a settings file is provided, load from it (overrides env vars)
 	if len(settingsFile) > 0 && settingsFile[0] != "" {
 		err := settings.loadFromFile(settingsFile[0])
@@ -66,7 +66,7 @@ func LoadSettings(settingsFile ...string) (*Settings, error) {
 			return nil, fmt.Errorf("failed to load settings file: %w", err)
 		}
 	}
-	
+
 	return settings, nil
 }
 
@@ -77,25 +77,25 @@ func (s *Settings) loadFromFile(filename string) error {
 		return err
 	}
 	defer file.Close()
-	
+
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
-		
+
 		// Skip empty lines and comments
 		if line == "" || strings.HasPrefix(line, "#") {
 			continue
 		}
-		
+
 		// Parse KEY=VALUE
 		parts := strings.SplitN(line, "=", 2)
 		if len(parts) != 2 {
 			continue
 		}
-		
+
 		key := strings.TrimSpace(parts[0])
 		value := strings.Trim(strings.TrimSpace(parts[1]), `"`)
-		
+
 		switch key {
 		case "CLOUDCIX_API_URL":
 			s.CLOUDCIX_API_URL = value
@@ -115,7 +115,7 @@ func (s *Settings) loadFromFile(filename string) error {
 			}
 		}
 	}
-	
+
 	return scanner.Err()
 }
 
@@ -142,7 +142,7 @@ func (s *Settings) MembershipURL() string {
 	if s.CLOUDCIX_API_V2_URL != "" {
 		return s.CLOUDCIX_API_V2_URL
 	}
-	
+
 	// For CloudCIX, we need to use the subdomain approach since api.cloudcix.com doesn't exist
 	// Convert base URL to membership subdomain
 	baseURL := strings.TrimSuffix(s.CLOUDCIX_API_URL, "/")
@@ -153,7 +153,7 @@ func (s *Settings) MembershipURL() string {
 	return baseURL + "/membership/"
 }
 
-// ComputeURL returns the compute API URL  
+// ComputeURL returns the compute API URL
 func (s *Settings) ComputeURL() string {
 	// For CloudCIX, we need to use the subdomain approach
 	baseURL := strings.TrimSuffix(s.CLOUDCIX_API_URL, "/")

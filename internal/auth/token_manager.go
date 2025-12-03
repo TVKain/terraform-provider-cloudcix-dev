@@ -6,9 +6,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/config"
 	"github.com/TVKain/cloudcix-go"
 	"github.com/TVKain/cloudcix-go/option"
+	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/config"
 )
 
 // TokenInfo holds token details and expiration
@@ -42,7 +42,7 @@ type TokenRequest struct {
 	ApiKey   string `json:"api_key"`
 }
 
-// TokenResponse represents the response from token creation  
+// TokenResponse represents the response from token creation
 type TokenResponse struct {
 	Token string `json:"token"`
 }
@@ -50,7 +50,7 @@ type TokenResponse struct {
 // GetValidToken returns a valid token, refreshing if necessary
 func (tm *TokenManager) GetValidToken(ctx context.Context, opts ...option.RequestOption) (string, error) {
 	tm.mutex.RLock()
-	
+
 	// Check if current token is still valid
 	if tm.currentToken != nil && time.Now().Add(tm.refreshBuffer).Before(tm.currentToken.ExpiresAt) {
 		token := tm.currentToken.Token
@@ -58,7 +58,7 @@ func (tm *TokenManager) GetValidToken(ctx context.Context, opts ...option.Reques
 		return token, nil
 	}
 	tm.mutex.RUnlock()
-	
+
 	// Need to refresh token
 	return tm.refreshToken(ctx, opts...)
 }
@@ -67,35 +67,35 @@ func (tm *TokenManager) GetValidToken(ctx context.Context, opts ...option.Reques
 func (tm *TokenManager) refreshToken(ctx context.Context, opts ...option.RequestOption) (string, error) {
 	tm.mutex.Lock()
 	defer tm.mutex.Unlock()
-	
+
 	// Double-check in case another goroutine refreshed while we waited
 	if tm.currentToken != nil && time.Now().Add(tm.refreshBuffer).Before(tm.currentToken.ExpiresAt) {
 		return tm.currentToken.Token, nil
 	}
-	
+
 	// Create token request
 	tokenReq := TokenRequest{
 		Email:    tm.settings.CLOUDCIX_API_USERNAME,
 		Password: tm.settings.CLOUDCIX_API_PASSWORD,
 		ApiKey:   tm.settings.CLOUDCIX_API_KEY,
 	}
-	
+
 	// Make request to membership API
 	var tokenResp TokenResponse
-	
+
 	// Use the membership API URL
-	membershipOpts := append(opts, 
+	membershipOpts := append(opts,
 		option.WithBaseURL(tm.settings.MembershipURL()),
 	)
-	
+
 	// Use cloudcix.NewClient to make the request
 	client := cloudcix.NewClient(membershipOpts...)
 	err := client.Post(ctx, "auth/login/", tokenReq, &tokenResp)
-	
+
 	if err != nil {
 		return "", fmt.Errorf("failed to obtain token: %w", err)
 	}
-	
+
 	// Store new token with expiration (2 hours from now)
 	now := time.Now()
 	tm.currentToken = &TokenInfo{
@@ -103,7 +103,7 @@ func (tm *TokenManager) refreshToken(ctx context.Context, opts ...option.Request
 		ExpiresAt: now.Add(2 * time.Hour),
 		IssuedAt:  now,
 	}
-	
+
 	return tm.currentToken.Token, nil
 }
 
@@ -118,10 +118,10 @@ func (tm *TokenManager) InvalidateToken() {
 func (tm *TokenManager) IsTokenValid() bool {
 	tm.mutex.RLock()
 	defer tm.mutex.RUnlock()
-	
+
 	if tm.currentToken == nil {
 		return false
 	}
-	
+
 	return time.Now().Add(tm.refreshBuffer).Before(tm.currentToken.ExpiresAt)
 }
