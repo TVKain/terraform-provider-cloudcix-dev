@@ -21,15 +21,17 @@ description: |-
 
 ### Optional
 
-- `metadata` (Attributes) Metadata for the Netork Routers of the type "static_route". (see [below for nested schema](#nestedatt--metadata))
-- `name` (String) The user-friendly name for the Network Router. If not sent, it will default to current name.
-- `networks` (Attributes List) Networks for the Netork Routers of the type "router".
+- `metadata` (Attributes) Required if type is "static_route".
 
-An array of the list of networks defined on the Network Router.
-Existing networks (vlan property is not None) can have their names updated but IPv4/IPv6 ranges and VLAN
-cannot be modified. To create a new network on the Network Router, append an object to the list with an
-`ipv4` key for an available RFC 1918 address range. The `ipv6` and `vlan` values will be generated based
-on what is available in the region. (see [below for nested schema](#nestedatt--networks))
+Metadata for the Static Route resource. (see [below for nested schema](#nestedatt--metadata))
+- `name` (String) The user-friendly name for the Network Router.  If not sent and the type is "router", it will default to
+the name 'Router'. If not sent and the type is "static_route", it will default to the name 'Static Route'.
+- `networks` (Attributes List) Option if type is "router". If not sent, defaults will be applied.
+
+An array of the list of networks defined on the Router. To create a new network on the Network
+Router, append an object to the list with an `ipv4` key for an available RFC 1918 address range. The `ipv6`
+and `vlan` values will be generated based on what is available in the region. If networks is not sent, the
+default address range 10.0.0.1/24 will be assigned to `ipv4`. (see [below for nested schema](#nestedatt--networks))
 - `state` (String) Change the state of the Network Router, triggering the CloudCIX Robot to perform the requested action.
 
 Available state transitions:
@@ -66,11 +68,16 @@ The default value is 7 days for a Router.
 Optional:
 
 - `destination` (String) CIDR notation of the destination address range of the target network of the static route.
-The destination cannot be updated.
+
+Note:
+- The sent address range cannot overlap with the destination of other Static Routes in the same
+  Project.
+- The sent address range can overlap with the networks configured on the Router in the Project.
+- The sent address range cannot overlap with the "remote_ts" of Network VPNs in the same Project.
 - `nat` (Boolean) Flag indicating if traffic from the destination can be routed to the Public internet via the
-Project's Router.
+Project's Router. It will default to False if not sent.
 - `nexthop` (String) An IP address from one of the networks configured on the Router in the Project to forward the
-packet to. The nexthop cannot be updated.
+packet to.
 
 
 <a id="nestedatt--networks"></a>
@@ -79,9 +86,7 @@ packet to. The nexthop cannot be updated.
 Optional:
 
 - `ipv4` (String) The IPv4 address range of the network
-- `ipv6` (String) The IPv6 address range of the network
 - `name` (String) The name of the network
-- `vlan` (Number) The VLAN ID of the network.
 
 
 <a id="nestedatt--specs"></a>

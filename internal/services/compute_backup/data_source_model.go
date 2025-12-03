@@ -16,7 +16,7 @@ type ComputeBackupDataSourceModel struct {
 	Created   types.String                                                    `tfsdk:"created" json:"created,computed"`
 	Name      types.String                                                    `tfsdk:"name" json:"name,computed"`
 	ProjectID types.Int64                                                     `tfsdk:"project_id" json:"project_id,computed"`
-	State     types.Int64                                                     `tfsdk:"state" json:"state,computed"`
+	State     types.String                                                    `tfsdk:"state" json:"state,computed"`
 	Type      types.String                                                    `tfsdk:"type" json:"type,computed"`
 	Updated   types.String                                                    `tfsdk:"updated" json:"updated,computed"`
 	Uri       types.String                                                    `tfsdk:"uri" json:"uri,computed"`
@@ -27,7 +27,7 @@ type ComputeBackupDataSourceModel struct {
 type ComputeBackupInstanceDataSourceModel struct {
 	ID    types.Int64  `tfsdk:"id" json:"id,computed"`
 	Name  types.String `tfsdk:"name" json:"name,computed"`
-	State types.Int64  `tfsdk:"state" json:"state,computed"`
+	State types.String `tfsdk:"state" json:"state,computed"`
 }
 
 type ComputeBackupSpecsDataSourceModel struct {

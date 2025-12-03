@@ -28,10 +28,10 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 			},
 			"name": schema.StringAttribute{
 				Description: "The name of the Project. Must be unique within an Address' Project collection.",
-				Optional:    true,
+				Required:    true,
 			},
 			"note": schema.StringAttribute{
-				Description: "A note about the project to store information. No length limit.",
+				Description: "An optional note providing a description of what the Project is used for.",
 				Optional:    true,
 			},
 			"address_id": schema.Int64Attribute{

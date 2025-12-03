@@ -39,7 +39,7 @@ Read-Only:
 
 - `id` (Number) The ID of the "lxd" Compute Instance the Compute GPU is attached to.
 - `name` (String) The user-friendly name of the "lxd" Compute Instance the Compute GPU is attached to.
-- `state` (Number) The current state of the "lxd" Compute Instance the Compute GPU is attached to.
+- `state` (String) The current state of the "lxd" Compute Instance the Compute GPU is attached to.
 
 
 <a id="nestedatt--specs"></a>

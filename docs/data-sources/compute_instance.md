@@ -26,7 +26,7 @@ executed by robot.
 - `name` (String) The human-friendly name given to this Compute Instance
 - `project_id` (Number) The id of the Project that this Compute Instance belongs to
 - `specs` (Attributes) (see [below for nested schema](#nestedatt--specs))
-- `state` (Number) The current state of the Compute Instance
+- `state` (String) The current state of the Compute Instance
 - `type` (String) The type of the Compute Instance
 - `updated` (String) Timestamp, in ISO format, of when the Compute Instance record was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Compute Instance.

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.17.1 (2025-12-03)
+
+Full Changelog: [v0.17.0...v0.17.1](https://github.com/TVKain/terraform-provider-cloudcix-dev/compare/v0.17.0...v0.17.1)
+
+### Chores
+
+* remove custom code ([ab4788c](https://github.com/TVKain/terraform-provider-cloudcix-dev/commit/ab4788cd128fe5094d802b82ccfe480f464144ff))
+* update SDK settings ([94c4b5a](https://github.com/TVKain/terraform-provider-cloudcix-dev/commit/94c4b5ab595efe454a9e32751039e3b29b03097d))
+
 ## 0.17.0 (2025-12-02)
 
 Full Changelog: [v0.16.0...v0.17.0](https://github.com/TVKain/terraform-provider-cloudcix-dev/compare/v0.16.0...v0.17.0)

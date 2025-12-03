@@ -21,8 +21,8 @@ description: |-
 
 ### Optional
 
-- `metadata` (Attributes) Optional. The metadata required to configure the Network VPN instance (see [below for nested schema](#nestedatt--metadata))
-- `name` (String) The user-friendly name for the Network VPN type. If not sent, it will default to current name.
+- `metadata` (Attributes) Optional. The metadata required to configure the Network VPN instance. (see [below for nested schema](#nestedatt--metadata))
+- `name` (String) The user-friendly name for the Network VPN. If not sent, it will default to the name 'VPNS2S'
 - `state` (String) Change the state of the Network VPN, triggering the CloudCIX Robot to perform the requested action.
 Users can only request state changes from certain current states:
 
@@ -45,7 +45,7 @@ Optional:
 
 - `child_sas` (Attributes List) An array of Child SAs (Security Associations) to create the initial routes for the VPN. (see [below for nested schema](#nestedatt--metadata--child_sas))
 - `ike_authentication` (String) Optional. A string containing a comma separated array of authentication algorithms for the IKE
-phase of the Network VPN. If not sent, it will default to the current value.
+phase of the Network VPN. If not sent, it will default to `SHA384`.
 
 The IKE phase authentication algorithms supported are;
 - `SHA1`
@@ -55,7 +55,7 @@ The IKE phase authentication algorithms supported are;
 Please ensure that each entry in the array matches one of the above strings exactly.
 Duplicate entries will be ignored.
 - `ike_dh_groups` (String) Optional. A string containing a comma separated array of Diffie-Helmen groups for the IKE phase
-of the Network VPN. If not sent, it will default to the current value.
+of the Network VPN. If not sent, it will default to `Group 24`.
 
 The IKE phase Diffie-Helmen groups supported are;
 - `Group 1`
@@ -68,7 +68,7 @@ The IKE phase Diffie-Helmen groups supported are;
 Please ensure that each entry in the array matches one of the above strings exactly.
 Duplicate entries will be ignored.
 - `ike_encryption` (String) Optional. A string containing a comma separated array of encryption algorithms for the IKE phase of
-the Network VPN. If not sent, it will default to the current value.
+the Network VPN. If not sent, it will default to "256 bit AES-CBC".
 
 The IKE phase encryption algorithms supported are;
 - `128 bit AES-CBC`
@@ -78,14 +78,14 @@ The IKE phase encryption algorithms supported are;
 Please ensure that each entry in the array matches one of the above strings exactly.
 Duplicate entries will be ignored.
 - `ike_gateway_type` (String) The type of data that is stored in the `ike_gateway_value` field. It can only either "public_ip" or
-"hostname". If not sent, it will default to the current value.
+"hostname". If not sent, it will default to "public_ip".
 - `ike_gateway_value` (String) The value used as the IKE gateway for the Network VPN. The type for this value depends on what type
 was sent for the "ike_gateway_type".
 
 For "public_ip", this value must be a string containing an IP address.
 For "hostname", this value must be a valid hostname.
 - `ike_lifetime` (Number) Optional. The lifetime of the IKE phase in seconds. Must be a value between 180 and 86400 inclusive.
-If not sent, it will default to the current value.
+If not sent, it will default to 28800.
 - `ike_pre_shared_key` (String) The pre shared key to use for setting up the IKE phase of the Network VPN.
 
 Note that the pre shared key cannot contain any of the following special characters;
@@ -99,7 +99,7 @@ Note that the pre shared key cannot contain any of the following special charact
 - `|`
 - `=`
 - `ike_version` (String) Optional. String value of the chosen version for the IKE phase. If not sent, it will default to
-the current value.
+"v2-only".
 
 The IKE phase versions supported are;
 - `v1-only`
@@ -107,7 +107,7 @@ The IKE phase versions supported are;
 
 Please ensure the sent string matches one of these exactly.
 - `ipsec_authentication` (String) Optional. A string containing a comma separated array of authentication algorithms for the IPSec
-phase of the Site-to-Site Network VPN. If not sent, it will default to the current value.
+phase of the Site-to-Site Network VPN. If not sent, it will default to "SHA256".
 
 The IPSec phase authentication algorithms supported are;
 - `SHA1`
@@ -116,7 +116,7 @@ The IPSec phase authentication algorithms supported are;
 Please ensure that each entry in the array matches one of the above strings exactly.
 Duplicate entries will be ignored.
 - `ipsec_encryption` (String) Optional. A string containing a comma separated array of encryption algorithms for the IPSEC phase
-of the Network VPN. If not sent, it will default to the current value.
+of the Network VPN. If not sent, it will default to "AES 256".
 
 The IPSEC phase encryption algorithms supported are;
 - `AES 128`
@@ -129,7 +129,7 @@ The IPSEC phase encryption algorithms supported are;
 Please ensure that each entry in the array matches one of the above strings exactly.
 Duplicate entries will be ignored.
 - `ipsec_establish_time` (String) Optional. String value of the chosen establish_time for the IPSec phase. If not sent, it will
-default to the current value.
+default to "Immediately".
 
 The IPSec phase establish time values supported are;
 - `Immediately`
@@ -137,9 +137,9 @@ The IPSec phase establish time values supported are;
 
 Please ensure the sent string matches one of these exactly.
 - `ipsec_lifetime` (Number) Optional. The lifetime of the IPSec phase in seconds. It be a value between 180 and 86400 inclusive.
-If not sent, it will default to the current value.
+If not sent, it will default to 3600.
 - `ipsec_pfs_groups` (String) Optional. A string containing a comma separated array of Perfect Forward Secrecy (PFS) groups for
-the IPSec phase of the Network VPN. If not sent, it will default to the current value.
+the IPSec phase of the Network VPN. If not sent, it will default to "Group 20".
 
 The IPSec phase PFS groups supported are;
 - `Group 1`
@@ -153,7 +153,7 @@ The IPSec phase PFS groups supported are;
 Please ensure that each entry in the array matches one of the above strings exactly.
 Duplicate entries will be ignored.
 - `traffic_selector` (Boolean) Optional. Boolean value stating if traffic selectors are to be used in configuring vpn tunnel.
-If not sent, it will default to the current value.
+If not sent, it will default to false.
 
 By default, 0.0.0.0/0 will be used for the default local and remote CIDRs.
 If true, then each of the local and remote CIDRs will be added to the configuration negotiation

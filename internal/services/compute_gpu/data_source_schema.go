@@ -30,7 +30,7 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 				Description: "The id of the Project that this Compute GPU belongs to",
 				Computed:    true,
 			},
-			"state": schema.Int64Attribute{
+			"state": schema.StringAttribute{
 				Description: "The current state of the Compute GPU",
 				Computed:    true,
 			},
@@ -55,7 +55,7 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 						Description: `The user-friendly name of the "lxd" Compute Instance the Compute GPU is attached to.`,
 						Computed:    true,
 					},
-					"state": schema.Int64Attribute{
+					"state": schema.StringAttribute{
 						Description: `The current state of the "lxd" Compute Instance the Compute GPU is attached to.`,
 						Computed:    true,
 					},

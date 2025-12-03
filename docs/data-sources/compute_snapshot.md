@@ -25,7 +25,7 @@ is "hyperv". (see [below for nested schema](#nestedatt--metadata))
 - `name` (String) The user-friendly name given to this Compute Snapshots instance
 - `project_id` (Number) The id of the Project that this Compute Snapshots belongs to
 - `specs` (Attributes List) An array of the specs for the Compute Snapshots (see [below for nested schema](#nestedatt--specs))
-- `state` (Number) The current state of the Compute Snapshots
+- `state` (String) The current state of the Compute Snapshots
 - `type` (String) The type of the Compute Snapshots
 - `updated` (String) Timestamp, in ISO format, of when the Compute Snapshots record was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Compute Snapshots instance.
@@ -37,7 +37,7 @@ Read-Only:
 
 - `id` (Number) The ID of the Compute Instance the Compute Snapshot is of.
 - `name` (String) The user-friendly name of the Compute Instance the Compute Snapshot is of.
-- `state` (Number) The current state of the Compute Instance the Compute Snapshot is of.
+- `state` (String) The current state of the Compute Instance the Compute Snapshot is of.
 
 
 <a id="nestedatt--metadata"></a>

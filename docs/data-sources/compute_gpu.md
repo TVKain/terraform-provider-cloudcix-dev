@@ -23,7 +23,7 @@ description: |-
 - `name` (String) The user-friendly name given to this Compute GPU
 - `project_id` (Number) The id of the Project that this Compute GPU belongs to
 - `specs` (Attributes List) An array of the specs for the Compute GPU (see [below for nested schema](#nestedatt--specs))
-- `state` (Number) The current state of the Compute GPU
+- `state` (String) The current state of the Compute GPU
 - `updated` (String) Timestamp, in ISO format, of when the Compute GPU record was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Compute GPU instance.
 
@@ -34,7 +34,7 @@ Read-Only:
 
 - `id` (Number) The ID of the "lxd" Compute Instance the Compute GPU is attached to.
 - `name` (String) The user-friendly name of the "lxd" Compute Instance the Compute GPU is attached to.
-- `state` (Number) The current state of the "lxd" Compute Instance the Compute GPU is attached to.
+- `state` (String) The current state of the "lxd" Compute Instance the Compute GPU is attached to.
 
 
 <a id="nestedatt--specs"></a>

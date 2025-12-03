@@ -18,7 +18,7 @@ type ComputeSnapshotModel struct {
 	ProjectID  types.Int64                                             `tfsdk:"project_id" json:"project_id,required"`
 	Type       types.String                                            `tfsdk:"type" json:"type,optional"`
 	Name       types.String                                            `tfsdk:"name" json:"name,optional"`
-	State      types.String                                            `tfsdk:"state" json:"state,optional,no_refresh"`
+	State      types.String                                            `tfsdk:"state" json:"state,optional"`
 	Created    types.String                                            `tfsdk:"created" json:"created,computed"`
 	Updated    types.String                                            `tfsdk:"updated" json:"updated,computed"`
 	Uri        types.String                                            `tfsdk:"uri" json:"uri,computed"`
@@ -32,13 +32,13 @@ func (m ComputeSnapshotModel) MarshalJSON() (data []byte, err error) {
 }
 
 func (m ComputeSnapshotModel) MarshalJSONForUpdate(state ComputeSnapshotModel) (data []byte, err error) {
-	return apijson.MarshalForUpdate(m, state)
+	return apijson.MarshalForPatch(m, state)
 }
 
 type ComputeSnapshotInstanceModel struct {
 	ID    types.Int64  `tfsdk:"id" json:"id,computed"`
 	Name  types.String `tfsdk:"name" json:"name,computed"`
-	State types.Int64  `tfsdk:"state" json:"state,computed"`
+	State types.String `tfsdk:"state" json:"state,computed"`
 }
 
 type ComputeSnapshotMetadataModel struct {

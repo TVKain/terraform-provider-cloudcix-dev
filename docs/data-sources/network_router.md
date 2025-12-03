@@ -26,7 +26,7 @@ The default value is 7 days for a Router.
 - `networks` (Attributes List) An array of the list of networks defined on the Router (see [below for nested schema](#nestedatt--networks))
 - `project_id` (Number) The id of the Project that this Router Resource belongs to
 - `specs` (Attributes List) An array of the specs for the Router Resource (see [below for nested schema](#nestedatt--specs))
-- `state` (Number) The current state of the Router Resource
+- `state` (String) The current state of the Router Resource
 - `type` (String) The type of the Network Router
 - `updated` (String) Timestamp, in ISO format, of when the Router Resource record was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Network Routers instance.

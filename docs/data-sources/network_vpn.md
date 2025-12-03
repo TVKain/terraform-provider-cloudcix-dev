@@ -23,7 +23,7 @@ description: |-
 - `name` (String) The user-friendly name given to this Network VPN instance
 - `project_id` (Number) The id of the Project that this Network VPN belongs to
 - `specs` (Attributes List) An array of the specs for the Network VPN (see [below for nested schema](#nestedatt--specs))
-- `state` (Number) The current state of the Network VPN
+- `state` (String) The current state of the Network VPN
 - `type` (String) The type of the Network VPN
 - `updated` (String) Timestamp, in ISO format, of when the Network VPN record was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Network VPN instance.
