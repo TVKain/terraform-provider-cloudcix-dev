@@ -7,8 +7,9 @@ import (
 	"os"
 
 	"github.com/TVKain/cloudcix-go"
-	"github.com/TVKain/cloudcix-go/config"
 	"github.com/TVKain/cloudcix-go/option"
+	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/auth"
+	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/config"
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/services/compute_backup"
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/services/compute_gpu"
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/services/compute_image"
@@ -133,10 +134,27 @@ func (p *CloudcixDevProvider) Configure(ctx context.Context, req provider.Config
 		return
 	}
 
-	client := cloudcix.NewClientWithSettings(
-		settings,
-		opts...,
-	)
+	// Only validate and setup auto-auth if credentials are provided
+	if settings != nil && settings.CLOUDCIX_API_USERNAME != "" && settings.CLOUDCIX_API_PASSWORD != "" && settings.CLOUDCIX_API_KEY != "" {
+		// Create token manager for auto-auth
+		tokenManager := auth.NewTokenManager(settings)
+
+		// Add auth middleware and compute API base URL
+		baseOpts := []option.RequestOption{
+			option.WithBaseURL(settings.ComputeURL()), // Use compute API URL
+			option.WithMiddleware(auth.AuthRetryMiddleware(tokenManager)),
+			auth.WithAutoAuth(tokenManager), // Auto-auth middleware
+		}
+
+		opts = append(baseOpts, opts...)
+	} else {
+		// Fallback to old behavior for testing or when credentials are not available
+		if settings != nil && settings.CLOUDCIX_API_URL != "" {
+			opts = append(opts, option.WithBaseURL(settings.ComputeURL()))
+		}
+	}
+
+	client := cloudcix.NewClient(opts...)
 
 	resp.DataSourceData = &client
 	resp.ResourceData = &client
