@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.17.1 (2025-12-03)
+
+Full Changelog: [v0.17.0...v0.17.1](https://github.com/TVKain/terraform-provider-cloudcix-dev/compare/v0.17.0...v0.17.1)
+
+### Bug Fixes
+
+* correctly mark a subset of fields shared between create and update calls as required ([5914859](https://github.com/TVKain/terraform-provider-cloudcix-dev/commit/59148595788af1525ad60be82c12e33ca0187169))
+
+
+### Chores
+
+* ensure tests build as part of lint step ([89bc436](https://github.com/TVKain/terraform-provider-cloudcix-dev/commit/89bc43660082e11ab981040bc826167c300bf61c))
+
 ## 0.17.0 (2025-12-02)
 
 Full Changelog: [v0.16.0...v0.17.0](https://github.com/TVKain/terraform-provider-cloudcix-dev/compare/v0.16.0...v0.17.0)
