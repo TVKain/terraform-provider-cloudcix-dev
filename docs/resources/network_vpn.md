@@ -23,6 +23,10 @@ description: |-
 
 - `metadata` (Attributes) Optional. The metadata required to configure the Network VPN instance. (see [below for nested schema](#nestedatt--metadata))
 - `name` (String) The user-friendly name for the Network VPN. If not sent, it will default to the name 'VPNS2S'
+- `state` (String) Change the state of the Network VPN, triggering the CloudCIX Robot to perform the requested action.
+Users can only request state changes from certain current states:
+
+- running -> update_running or delete
 - `type` (String) The type of Network VPN to create. Valid options are:
 - "site-to-site"
 
@@ -31,7 +35,6 @@ description: |-
 - `created` (String) Timestamp, in ISO format, of when the Network VPN record was created.
 - `id` (Number) The ID of the Network VPN record
 - `specs` (Attributes List) An array of the specs for the Network VPN (see [below for nested schema](#nestedatt--specs))
-- `state` (String) The current state of the Network VPN
 - `updated` (String) Timestamp, in ISO format, of when the Network VPN record was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Network VPN instance.
 

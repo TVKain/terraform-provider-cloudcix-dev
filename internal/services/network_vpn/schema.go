@@ -9,7 +9,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 )
@@ -22,22 +21,25 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 			"id": schema.Int64Attribute{
 				Description:   "The ID of the Network VPN record",
 				Computed:      true,
-				PlanModifiers: []planmodifier.Int64{int64planmodifier.UseStateForUnknown(), int64planmodifier.RequiresReplace()},
+				PlanModifiers: []planmodifier.Int64{int64planmodifier.UseStateForUnknown()},
 			},
 			"project_id": schema.Int64Attribute{
 				Description:   "The ID of the User's Project into which this Network VPN should be added.",
 				Required:      true,
 				PlanModifiers: []planmodifier.Int64{int64planmodifier.RequiresReplace()},
 			},
-			"name": schema.StringAttribute{
-				Description:   "The user-friendly name for the Network VPN. If not sent, it will default to the name 'VPNS2S'",
-				Optional:      true,
-				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
-			},
 			"type": schema.StringAttribute{
 				Description:   "The type of Network VPN to create. Valid options are:\n- \"site-to-site\"",
 				Optional:      true,
 				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
+			},
+			"name": schema.StringAttribute{
+				Description: "The user-friendly name for the Network VPN. If not sent, it will default to the name 'VPNS2S'",
+				Optional:    true,
+			},
+			"state": schema.StringAttribute{
+				Description: "Change the state of the Network VPN, triggering the CloudCIX Robot to perform the requested action.\nUsers can only request state changes from certain current states:\n\n- running -> update_running or delete",
+				Optional:    true,
 			},
 			"metadata": schema.SingleNestedAttribute{
 				Description: "Optional. The metadata required to configure the Network VPN instance.",
@@ -116,14 +118,9 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 						Optional:    true,
 					},
 				},
-				PlanModifiers: []planmodifier.Object{objectplanmodifier.RequiresReplace()},
 			},
 			"created": schema.StringAttribute{
 				Description: "Timestamp, in ISO format, of when the Network VPN record was created.",
-				Computed:    true,
-			},
-			"state": schema.StringAttribute{
-				Description: "The current state of the Network VPN",
 				Computed:    true,
 			},
 			"updated": schema.StringAttribute{

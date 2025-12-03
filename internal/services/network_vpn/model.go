@@ -15,11 +15,11 @@ type NetworkVpnContentEnvelope struct {
 type NetworkVpnModel struct {
 	ID        types.Int64                                        `tfsdk:"id" json:"id,computed"`
 	ProjectID types.Int64                                        `tfsdk:"project_id" json:"project_id,required"`
-	Name      types.String                                       `tfsdk:"name" json:"name,optional"`
 	Type      types.String                                       `tfsdk:"type" json:"type,optional"`
+	Name      types.String                                       `tfsdk:"name" json:"name,optional"`
+	State     types.String                                       `tfsdk:"state" json:"state,optional"`
 	Metadata  *NetworkVpnMetadataModel                           `tfsdk:"metadata" json:"metadata,optional"`
 	Created   types.String                                       `tfsdk:"created" json:"created,computed"`
-	State     types.String                                       `tfsdk:"state" json:"state,computed"`
 	Updated   types.String                                       `tfsdk:"updated" json:"updated,computed"`
 	Uri       types.String                                       `tfsdk:"uri" json:"uri,computed"`
 	Specs     customfield.NestedObjectList[NetworkVpnSpecsModel] `tfsdk:"specs" json:"specs,computed"`
@@ -30,7 +30,7 @@ func (m NetworkVpnModel) MarshalJSON() (data []byte, err error) {
 }
 
 func (m NetworkVpnModel) MarshalJSONForUpdate(state NetworkVpnModel) (data []byte, err error) {
-	return apijson.MarshalForUpdate(m, state)
+	return apijson.MarshalForPatch(m, state)
 }
 
 type NetworkVpnMetadataModel struct {
@@ -42,7 +42,7 @@ type NetworkVpnMetadataModel struct {
 	IkeGatewayValue     types.String                        `tfsdk:"ike_gateway_value" json:"ike_gateway_value,optional"`
 	IkeLifetime         types.Int64                         `tfsdk:"ike_lifetime" json:"ike_lifetime,optional"`
 	IkePreSharedKey     types.String                        `tfsdk:"ike_pre_shared_key" json:"ike_pre_shared_key,optional"`
-	IkeVersion          types.String                        `tfsdk:"ike_version" json:"ike_version,optional"`
+	IkeVersion          types.String                        `tfsdk:"ike_version" json:"ike_version,optional,no_refresh"`
 	IpsecAuthentication types.String                        `tfsdk:"ipsec_authentication" json:"ipsec_authentication,optional"`
 	IpsecEncryption     types.String                        `tfsdk:"ipsec_encryption" json:"ipsec_encryption,optional"`
 	IpsecEstablishTime  types.String                        `tfsdk:"ipsec_establish_time" json:"ipsec_establish_time,optional"`
