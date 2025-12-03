@@ -25,7 +25,7 @@ description: |-
 - `name` (String) The user-friendly name given to this Storage Volume
 - `project_id` (Number) The ID of the Project that this Storage Volume belongs to
 - `specs` (Attributes List) An array of the specs for the Storage Volume (see [below for nested schema](#nestedatt--specs))
-- `state` (Number) The current state of the Storage Volume
+- `state` (String) The current state of the Storage Volume
 - `type` (String) The type of the Storage Volume
 - `updated` (String) Timestamp, in ISO format, of when the Storage Volume was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Storage Volumes instance.
@@ -37,7 +37,7 @@ Read-Only:
 
 - `id` (Number) The ID of the Compute Instance the Storage Volume is attached to.
 - `name` (String) The user-friendly name given to the Compute Instance the Storage Volume is attached to.
-- `state` (Number) The current state of the Compute Instance the Storage Volume is attached to.
+- `state` (String) The current state of the Compute Instance the Storage Volume is attached to.
 
 
 <a id="nestedatt--instance"></a>
@@ -47,7 +47,7 @@ Read-Only:
 
 - `id` (Number) The ID of the "hyperv" Compute Instance the "hyperv" Storage Volume is attached to.
 - `name` (String) The user-friendly name of the "hyperv" Compute Instance the "hyperv" Storage Volume is attached to.
-- `state` (Number) The current state of the "hyperv" Compute Instance the "hyperv" Storage Volume is attached to.
+- `state` (String) The current state of the "hyperv" Compute Instance the "hyperv" Storage Volume is attached to.
 
 
 <a id="nestedatt--metadata"></a>

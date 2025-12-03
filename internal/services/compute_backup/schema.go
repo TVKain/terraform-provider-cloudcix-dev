@@ -39,7 +39,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
 			},
 			"name": schema.StringAttribute{
-				Description: "The user-friendly name for the Compute Backups Resource. If not sent, it will default to the\ncurrent name.",
+				Description: "The user-friendly name for the Compute Backup. If not sent, it will default to the name\n\"Backup HyperV\" or \"Backup LXD\" depending on the type chosen.",
 				Optional:    true,
 			},
 			"state": schema.StringAttribute{
@@ -71,7 +71,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 						Description: "The user-friendly name of the Compute Instance the Compute Backup is of.",
 						Computed:    true,
 					},
-					"state": schema.Int64Attribute{
+					"state": schema.StringAttribute{
 						Description: "The current state of the Compute Instance the Compute Backup is of.",
 						Computed:    true,
 					},

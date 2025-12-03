@@ -16,7 +16,7 @@ type ComputeGPUDataSourceModel struct {
 	Created   types.String                                                 `tfsdk:"created" json:"created,computed"`
 	Name      types.String                                                 `tfsdk:"name" json:"name,computed"`
 	ProjectID types.Int64                                                  `tfsdk:"project_id" json:"project_id,computed"`
-	State     types.Int64                                                  `tfsdk:"state" json:"state,computed"`
+	State     types.String                                                 `tfsdk:"state" json:"state,computed"`
 	Updated   types.String                                                 `tfsdk:"updated" json:"updated,computed"`
 	Uri       types.String                                                 `tfsdk:"uri" json:"uri,computed"`
 	Instance  customfield.NestedObject[ComputeGPUInstanceDataSourceModel]  `tfsdk:"instance" json:"instance,computed"`
@@ -26,7 +26,7 @@ type ComputeGPUDataSourceModel struct {
 type ComputeGPUInstanceDataSourceModel struct {
 	ID    types.Int64  `tfsdk:"id" json:"id,computed"`
 	Name  types.String `tfsdk:"name" json:"name,computed"`
-	State types.Int64  `tfsdk:"state" json:"state,computed"`
+	State types.String `tfsdk:"state" json:"state,computed"`
 }
 
 type ComputeGPUSpecsDataSourceModel struct {

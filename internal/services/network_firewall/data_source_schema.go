@@ -30,7 +30,7 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 				Description: "The id of the Project that this Network Firewall belongs to",
 				Computed:    true,
 			},
-			"state": schema.Int64Attribute{
+			"state": schema.StringAttribute{
 				Description: "The current state of the Network Firewall",
 				Computed:    true,
 			},
@@ -90,6 +90,10 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 						},
 						"version": schema.Int64Attribute{
 							Description: `IP version (4 or 6). Returned if the type is "project".`,
+							Computed:    true,
+						},
+						"zone": schema.StringAttribute{
+							Description: "The zone in the firewall that the rule is applied to.",
 							Computed:    true,
 						},
 					},

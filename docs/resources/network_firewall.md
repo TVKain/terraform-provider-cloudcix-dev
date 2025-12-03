@@ -22,13 +22,10 @@ exactly ONE project firewall and ONE geo firewall maximum.
 
 ### Optional
 
-- `name` (String) The user-friendly name for the Network Firewall type. If not sent, it will default to current name.
-- `rules` (Attributes List) CRITICAL WARNING: This completely replaces ALL existing firewall rules. Any rules not included
-in this update will be permanently deleted. You must include the complete list of all rules
-you want to keep, both existing and new ones.
-
-A list of the rules to be configured in the Network Firewall type. They will be applied in the
-order they are sent. (see [below for nested schema](#nestedatt--rules))
+- `name` (String) The user-friendly name for the Network Firewall type. If not sent and the type is "geo", it will default
+to the name 'Geofilter'. If not sent and the type is "project", it will default to the name 'Firewall'.
+- `rules` (Attributes List) A list of the rules to be configured in the Network Firewall type. They will be applied in the order they
+are sent. (see [below for nested schema](#nestedatt--rules))
 - `state` (String) Change the state of the Network Firewall, triggering the CloudCIX Robot to perform the requested action.
 Users can only request state changes from certain current states:
 
@@ -102,6 +99,18 @@ that indicates what the destination of traffic should be in order to match this 
 It can also be just a `*` character, which will indicate that any source is allowed.
 
 Both source and destination must use the same IP Version.
+- `zone` (String) Required if type is "project".
+
+A zone is a logical grouping of network interfaces or traffic sources that share the
+same trust level. Firewall rules are defined in terms of traffic flows, simplifying policy
+management. If not sent, it will default to `Public`.
+
+Supported options are:
+- `Public`: Represents connections between the CloudCIX Project networks and the public
+  internet.
+- `Private`: Represents connections between the CloudCIX Project networks.
+- `VPNS2S`: Represents connections between the CloudCIX Project Networks and the Customers'
+  on-premises network.
 
 
 <a id="nestedatt--specs"></a>

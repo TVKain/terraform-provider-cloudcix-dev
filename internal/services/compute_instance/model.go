@@ -4,7 +4,6 @@ package compute_instance
 
 import (
 	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/apijson"
-	"github.com/TVKain/terraform-provider-cloudcix-dev/internal/customfield"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -13,18 +12,18 @@ type ComputeInstanceContentEnvelope struct {
 }
 
 type ComputeInstanceModel struct {
-	ID          types.Int64                                                  `tfsdk:"id" json:"id,computed"`
-	ProjectID   types.Int64                                                  `tfsdk:"project_id" json:"project_id,required"`
-	Type        types.String                                                 `tfsdk:"type" json:"type,optional"`
-	Metadata    *ComputeInstanceMetadataModel                                `tfsdk:"metadata" json:"metadata,required"`
-	Specs       *[]*ComputeInstanceSpecsModel                                `tfsdk:"specs" json:"specs,required,no_refresh"`
-	GracePeriod types.Int64                                                  `tfsdk:"grace_period" json:"grace_period,optional"`
-	Name        types.String                                                 `tfsdk:"name" json:"name,optional"`
-	State       types.String                                                 `tfsdk:"state" json:"state,optional,no_refresh"`
-	Interfaces  customfield.NestedObjectList[ComputeInstanceInterfacesModel] `tfsdk:"interfaces" json:"interfaces,computed_optional"`
-	Created     types.String                                                 `tfsdk:"created" json:"created,computed"`
-	Updated     types.String                                                 `tfsdk:"updated" json:"updated,computed"`
-	Uri         types.String                                                 `tfsdk:"uri" json:"uri,computed"`
+	ID          types.Int64                        `tfsdk:"id" json:"id,computed"`
+	ProjectID   types.Int64                        `tfsdk:"project_id" json:"project_id,required"`
+	Type        types.String                       `tfsdk:"type" json:"type,optional"`
+	Metadata    *ComputeInstanceMetadataModel      `tfsdk:"metadata" json:"metadata,required"`
+	Specs       *[]*ComputeInstanceSpecsModel      `tfsdk:"specs" json:"specs,required,no_refresh"`
+	GracePeriod types.Int64                        `tfsdk:"grace_period" json:"grace_period,optional"`
+	Name        types.String                       `tfsdk:"name" json:"name,optional"`
+	State       types.String                       `tfsdk:"state" json:"state,optional"`
+	Interfaces  *[]*ComputeInstanceInterfacesModel `tfsdk:"interfaces" json:"interfaces,optional"`
+	Created     types.String                       `tfsdk:"created" json:"created,computed"`
+	Updated     types.String                       `tfsdk:"updated" json:"updated,computed"`
+	Uri         types.String                       `tfsdk:"uri" json:"uri,computed"`
 }
 
 func (m ComputeInstanceModel) MarshalJSON() (data []byte, err error) {
@@ -32,7 +31,7 @@ func (m ComputeInstanceModel) MarshalJSON() (data []byte, err error) {
 }
 
 func (m ComputeInstanceModel) MarshalJSONForUpdate(state ComputeInstanceModel) (data []byte, err error) {
-	return apijson.MarshalForUpdate(m, state)
+	return apijson.MarshalForPatch(m, state)
 }
 
 type ComputeInstanceMetadataModel struct {
@@ -47,9 +46,9 @@ type ComputeInstanceSpecsModel struct {
 }
 
 type ComputeInstanceInterfacesModel struct {
-	Gateway       types.Bool                                                                `tfsdk:"gateway" json:"gateway,computed_optional"`
-	Ipv4Addresses *[]*ComputeInstanceInterfacesIpv4AddressesModel                           `tfsdk:"ipv4_addresses" json:"ipv4_addresses,optional"`
-	Ipv6Addresses customfield.NestedObjectList[ComputeInstanceInterfacesIpv6AddressesModel] `tfsdk:"ipv6_addresses" json:"ipv6_addresses,computed_optional"`
+	Gateway       types.Bool                                      `tfsdk:"gateway" json:"gateway,optional"`
+	Ipv4Addresses *[]*ComputeInstanceInterfacesIpv4AddressesModel `tfsdk:"ipv4_addresses" json:"ipv4_addresses,optional"`
+	Ipv6Addresses *[]*ComputeInstanceInterfacesIpv6AddressesModel `tfsdk:"ipv6_addresses" json:"ipv6_addresses,optional"`
 }
 
 type ComputeInstanceInterfacesIpv4AddressesModel struct {

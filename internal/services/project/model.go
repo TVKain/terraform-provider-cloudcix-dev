@@ -14,7 +14,7 @@ type ProjectContentEnvelope struct {
 type ProjectModel struct {
 	ID         types.Int64  `tfsdk:"id" json:"id,computed"`
 	RegionID   types.Int64  `tfsdk:"region_id" json:"region_id,required"`
-	Name       types.String `tfsdk:"name" json:"name,optional"`
+	Name       types.String `tfsdk:"name" json:"name,required"`
 	Note       types.String `tfsdk:"note" json:"note,optional"`
 	AddressID  types.Int64  `tfsdk:"address_id" json:"address_id,computed"`
 	Closed     types.Bool   `tfsdk:"closed" json:"closed,computed"`
@@ -30,5 +30,5 @@ func (m ProjectModel) MarshalJSON() (data []byte, err error) {
 }
 
 func (m ProjectModel) MarshalJSONForUpdate(state ProjectModel) (data []byte, err error) {
-	return apijson.MarshalForUpdate(m, state)
+	return apijson.MarshalForPatch(m, state)
 }

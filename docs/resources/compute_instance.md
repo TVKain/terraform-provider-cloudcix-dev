@@ -27,7 +27,7 @@ description: |-
 - `interfaces` (Attributes List) Optional. A list of network interfaces that represent the interfaces that will be configured on the LXD
 instance. (see [below for nested schema](#nestedatt--interfaces))
 - `name` (String) The user-friendly name for the Compute Intsance type. If not sent and the type is "lxd", it will default
-to the name 'LXD'. If not sent and the type is "hyperv", it will default to the name 'VM HyperV'.
+to the name 'LXD'. If not sent and the type is "hyperv", it will default to the name 'HyperV'.
 - `state` (String) Change the state of the Compute Instance, triggering the CloudCIX Robot to perform the requested action.
 Users can only request state changes from certain current states, with specific allowed target states:
 
@@ -52,8 +52,8 @@ Optional:
 
 - `dns` (String) Optional. A string containing IP Addresses, separated by commas, that represent the DNS servers
 that the Compute Instance will use.
-- `instance_type` (String) Optional, The Compute Instance instance type of the VM. Valid options are "container"
-or "virtual-machine". If not sent it will default to "container".
+- `instance_type` (String) Optional, The Compute Instance instance type of the VM. Valid options
+are "container" or "virtual-machine". If not sent it will default to "container".
 - `userdata` (String) Cloud Init allows Mime Multi-part messages, or files that start with a given set of strings. It is
 a requirement to configure at minimum one user with a password or ssh key that is in the sudo group.
 
@@ -115,5 +115,5 @@ If not sent, it will default to False.
 
 Optional:
 
-- `address` (String) An IPv6 address to be configured on this interface on
-the Compute Instance instance.
+- `address` (String) An IPv6 address to be configured on this interface
+on the Compute Instance instance.

@@ -39,8 +39,24 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				Optional:      true,
 				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
 			},
+			"specs": schema.ListNestedAttribute{
+				Description: "List of specs (SKUs) for the Storage Volume drive.",
+				Required:    true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"quantity": schema.Int64Attribute{
+							Description: "The quantity (GB) of the SKU to configure the Storage Volume drive with.",
+							Optional:    true,
+						},
+						"sku_name": schema.StringAttribute{
+							Description: "The name of the SKU for the Storage Volume drive.",
+							Optional:    true,
+						},
+					},
+				},
+			},
 			"name": schema.StringAttribute{
-				Description: "The user-friendly name for the Storage Volume. If not sent, it will default to current name.",
+				Description: "The user-friendly name for the Storage Volume type. If not sent and the type is \"cephfs\", it will default\nto the name 'Ceph'. If not sent and the type is \"hyperv\", it will default to the name 'Storage HyperV'.",
 				Optional:    true,
 			},
 			"state": schema.StringAttribute{
@@ -64,22 +80,6 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 					"mount_path": schema.StringAttribute{
 						Description: "The mount path for the Ceph file system volume inside the LXC instance.",
 						Optional:    true,
-					},
-				},
-			},
-			"specs": schema.ListNestedAttribute{
-				Description: "List of specs (SKUs) for the Storage Volume drive. Only required if increasing the current size of\nthe Storage Volume.",
-				Optional:    true,
-				NestedObject: schema.NestedAttributeObject{
-					Attributes: map[string]schema.Attribute{
-						"quantity": schema.Int64Attribute{
-							Description: "The quantity (GB) of the SKU to configure the Storage Volume drive with.",
-							Optional:    true,
-						},
-						"sku_name": schema.StringAttribute{
-							Description: "The name of the SKU for the Storage Volume drive.",
-							Optional:    true,
-						},
 					},
 				},
 			},
@@ -109,7 +109,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 							Description: "The user-friendly name given to the Compute Instance the Storage Volume is attached to.",
 							Computed:    true,
 						},
-						"state": schema.Int64Attribute{
+						"state": schema.StringAttribute{
 							Description: "The current state of the Compute Instance the Storage Volume is attached to.",
 							Computed:    true,
 						},
@@ -129,7 +129,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 						Description: `The user-friendly name of the "hyperv" Compute Instance the "hyperv" Storage Volume is attached to.`,
 						Computed:    true,
 					},
-					"state": schema.Int64Attribute{
+					"state": schema.StringAttribute{
 						Description: `The current state of the "hyperv" Compute Instance the "hyperv" Storage Volume is attached to.`,
 						Computed:    true,
 					},

@@ -15,7 +15,7 @@ type ComputeGPUContentEnvelope struct {
 type ComputeGPUModel struct {
 	ID        types.Int64                                        `tfsdk:"id" path:"id,required"`
 	Name      types.String                                       `tfsdk:"name" json:"name,optional"`
-	State     types.String                                       `tfsdk:"state" json:"state,optional,no_refresh"`
+	State     types.String                                       `tfsdk:"state" json:"state,optional"`
 	Created   types.String                                       `tfsdk:"created" json:"created,computed"`
 	ProjectID types.Int64                                        `tfsdk:"project_id" json:"project_id,computed"`
 	Updated   types.String                                       `tfsdk:"updated" json:"updated,computed"`
@@ -29,13 +29,13 @@ func (m ComputeGPUModel) MarshalJSON() (data []byte, err error) {
 }
 
 func (m ComputeGPUModel) MarshalJSONForUpdate(state ComputeGPUModel) (data []byte, err error) {
-	return apijson.MarshalForUpdate(m, state)
+	return apijson.MarshalForPatch(m, state)
 }
 
 type ComputeGPUInstanceModel struct {
 	ID    types.Int64  `tfsdk:"id" json:"id,computed"`
 	Name  types.String `tfsdk:"name" json:"name,computed"`
-	State types.Int64  `tfsdk:"state" json:"state,computed"`
+	State types.String `tfsdk:"state" json:"state,computed"`
 }
 
 type ComputeGPUSpecsModel struct {

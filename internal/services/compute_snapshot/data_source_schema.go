@@ -30,7 +30,7 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 				Description: "The id of the Project that this Compute Snapshots belongs to",
 				Computed:    true,
 			},
-			"state": schema.Int64Attribute{
+			"state": schema.StringAttribute{
 				Description: "The current state of the Compute Snapshots",
 				Computed:    true,
 			},
@@ -59,7 +59,7 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 						Description: "The user-friendly name of the Compute Instance the Compute Snapshot is of.",
 						Computed:    true,
 					},
-					"state": schema.Int64Attribute{
+					"state": schema.StringAttribute{
 						Description: "The current state of the Compute Instance the Compute Snapshot is of.",
 						Computed:    true,
 					},

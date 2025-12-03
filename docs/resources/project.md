@@ -17,12 +17,12 @@ description: |-
 
 ### Required
 
+- `name` (String) The name of the Project. Must be unique within an Address' Project collection.
 - `region_id` (Number) The Address ID of the CloudCIX region that the Project will be deployed in.
 
 ### Optional
 
-- `name` (String) The name of the Project. Must be unique within an Address' Project collection.
-- `note` (String) A note about the project to store information. No length limit.
+- `note` (String) An optional note providing a description of what the Project is used for.
 
 ### Read-Only
 

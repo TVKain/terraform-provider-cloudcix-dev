@@ -34,7 +34,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
 			},
 			"name": schema.StringAttribute{
-				Description: "The user-friendly name for the Network Firewall type. If not sent, it will default to current name.",
+				Description: "The user-friendly name for the Network Firewall type. If not sent and the type is \"geo\", it will default\nto the name 'Geofilter'. If not sent and the type is \"project\", it will default to the name 'Firewall'.",
 				Optional:    true,
 			},
 			"state": schema.StringAttribute{
@@ -42,7 +42,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				Optional:    true,
 			},
 			"rules": schema.ListNestedAttribute{
-				Description: "CRITICAL WARNING: This completely replaces ALL existing firewall rules. Any rules not included\nin this update will be permanently deleted. You must include the complete list of all rules\nyou want to keep, both existing and new ones.\n\nA list of the rules to be configured in the Network Firewall type. They will be applied in the\norder they are sent.",
+				Description: "A list of the rules to be configured in the Network Firewall type. They will be applied in the order they\nare sent.",
 				Optional:    true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -76,6 +76,10 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 						},
 						"source": schema.StringAttribute{
 							Description: "Required if type is \"project\".\n\nA Subnet, IP Address or the name of a Project Network IP Group with `@` prepended\nthat indicates what the destination of traffic should be in order to match this rule.\n\nIt can also be just a `*` character, which will indicate that any source is allowed.\n\nBoth source and destination must use the same IP Version.",
+							Optional:    true,
+						},
+						"zone": schema.StringAttribute{
+							Description: "Required if type is \"project\".\n\nA zone is a logical grouping of network interfaces or traffic sources that share the\nsame trust level. Firewall rules are defined in terms of traffic flows, simplifying policy\nmanagement. If not sent, it will default to `Public`.\n\nSupported options are:\n- `Public`: Represents connections between the CloudCIX Project networks and the public\n  internet.\n- `Private`: Represents connections between the CloudCIX Project networks.\n- `VPNS2S`: Represents connections between the CloudCIX Project Networks and the Customers'\n  on-premises network.",
 							Optional:    true,
 						},
 					},

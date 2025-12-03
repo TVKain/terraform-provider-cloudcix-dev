@@ -23,7 +23,7 @@ description: |-
 - `project_id` (Number) The id of the Project that this Network Firewall belongs to
 - `rules` (Attributes List) List of rules for this Network Firewall. (see [below for nested schema](#nestedatt--rules))
 - `specs` (Attributes List) An array of the specs for the Network Firewall (see [below for nested schema](#nestedatt--specs))
-- `state` (Number) The current state of the Network Firewall
+- `state` (String) The current state of the Network Firewall
 - `type` (String) The type of the Network Firewall
 - `updated` (String) Timestamp, in ISO format, of when the Network Firewall record was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Network Firewall instance.
@@ -44,6 +44,7 @@ Returned if the type is "project".
 - `protocol` (String) Network protocol (any, icmp, tcp, udp). Returned if the type is "project".
 - `source` (String) Source address or subnet. Use * for any. Returned if the type is "project".
 - `version` (Number) IP version (4 or 6). Returned if the type is "project".
+- `zone` (String) The zone in the firewall that the rule is applied to.
 
 
 <a id="nestedatt--specs"></a>

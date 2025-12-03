@@ -27,5 +27,5 @@ func (m NetworkIPGroupModel) MarshalJSON() (data []byte, err error) {
 }
 
 func (m NetworkIPGroupModel) MarshalJSONForUpdate(state NetworkIPGroupModel) (data []byte, err error) {
-	return apijson.MarshalForUpdate(m, state)
+	return apijson.MarshalForPatch(m, state)
 }

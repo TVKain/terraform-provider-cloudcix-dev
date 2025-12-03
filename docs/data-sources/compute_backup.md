@@ -23,7 +23,7 @@ description: |-
 - `name` (String) The user-friendly name given to this Compute Backups instance
 - `project_id` (Number) The id of the Project that this Compute Backups belongs to
 - `specs` (Attributes List) An array of the specs for the Compute Backups (see [below for nested schema](#nestedatt--specs))
-- `state` (Number) The current state of the Compute Backups
+- `state` (String) The current state of the Compute Backups
 - `type` (String) The type of the Compute Backups
 - `updated` (String) Timestamp, in ISO format, of when the Compute Backups record was last updated.
 - `uri` (String) URL that can be used to run methods in the API associated with the Compute Backups instance.
@@ -35,7 +35,7 @@ Read-Only:
 
 - `id` (Number) The ID of the Compute Instance the Compute Backup is of.
 - `name` (String) The user-friendly name of the Compute Instance the Compute Backup is of.
-- `state` (Number) The current state of the Compute Instance the Compute Backup is of.
+- `state` (String) The current state of the Compute Instance the Compute Backup is of.
 
 
 <a id="nestedatt--specs"></a>

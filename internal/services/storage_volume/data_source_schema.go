@@ -31,7 +31,7 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 				Description: "The ID of the Project that this Storage Volume belongs to",
 				Computed:    true,
 			},
-			"state": schema.Int64Attribute{
+			"state": schema.StringAttribute{
 				Description: "The current state of the Storage Volume",
 				Computed:    true,
 			},
@@ -61,7 +61,7 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 							Description: "The user-friendly name given to the Compute Instance the Storage Volume is attached to.",
 							Computed:    true,
 						},
-						"state": schema.Int64Attribute{
+						"state": schema.StringAttribute{
 							Description: "The current state of the Compute Instance the Storage Volume is attached to.",
 							Computed:    true,
 						},
@@ -81,7 +81,7 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 						Description: `The user-friendly name of the "hyperv" Compute Instance the "hyperv" Storage Volume is attached to.`,
 						Computed:    true,
 					},
-					"state": schema.Int64Attribute{
+					"state": schema.StringAttribute{
 						Description: `The current state of the "hyperv" Compute Instance the "hyperv" Storage Volume is attached to.`,
 						Computed:    true,
 					},

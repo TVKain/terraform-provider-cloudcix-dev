@@ -30,7 +30,7 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 				Description: "The id of the Project that this Network VPN belongs to",
 				Computed:    true,
 			},
-			"state": schema.Int64Attribute{
+			"state": schema.StringAttribute{
 				Description: "The current state of the Network VPN",
 				Computed:    true,
 			},

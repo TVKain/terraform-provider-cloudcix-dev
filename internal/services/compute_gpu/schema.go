@@ -58,7 +58,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 						Description: `The user-friendly name of the "lxd" Compute Instance the Compute GPU is attached to.`,
 						Computed:    true,
 					},
-					"state": schema.Int64Attribute{
+					"state": schema.StringAttribute{
 						Description: `The current state of the "lxd" Compute Instance the Compute GPU is attached to.`,
 						Computed:    true,
 					},
