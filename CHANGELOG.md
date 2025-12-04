@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.22.1 (2025-12-04)
+
+Full Changelog: [v0.22.0...v0.22.1](https://github.com/TVKain/terraform-provider-cloudcix-dev/compare/v0.22.0...v0.22.1)
+
+### Chores
+
+* **internal:** codegen related update ([c36b404](https://github.com/TVKain/terraform-provider-cloudcix-dev/commit/c36b404a0cefb4ce97b35e7607a28340a6dab59f))
+
 ## 0.22.0 (2025-12-03)
 
 Full Changelog: [v0.21.0...v0.22.0](https://github.com/TVKain/terraform-provider-cloudcix-dev/compare/v0.21.0...v0.22.0)
